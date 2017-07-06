@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+
+<head ms-controller="head">
+    <meta charset="utf-8" />
+    <title>hello!</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title></title>
+</head>
+
+<body>
+    <h1>hahss88aha</h1>
+    <a href="javascript:location.href=location.href;" class="button">刷新</a>
+
+    <script>
+   var  BNJSReady = function (readyCallback) {
+   	if (readyCallback && typeof readyCallback==='function') {
+   		
+   		if(window.BNJS && typeof window.BNJS == 'object' && BNJS._isAllReady)
+       readyCallback()
+   	}else{
+   		document.addEventListener('BNJSReady',function( ){
+   			readyCallback();
+   		},false)
+   	}
+   }
+ 
+      BNJSReady(function () {
+      	alert('XXXX', typeof BNJS);
+          BNJS.ui.title.setTitle('test')
+          BNJS.ui.hideLoadingPage()
+      })
+   
+    </script>
+</body>
+
+</html>
