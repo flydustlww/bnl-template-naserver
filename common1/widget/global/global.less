@@ -1,0 +1,127 @@
+/*
+ * TODO : 
+ * if this can be solved with alias for less loader
+ */
+
+@import "~dep/reset/reset.less";
+@import "../util/util.less";
+body {
+    background-color: @bg-color;
+}
+
+body,
+button,
+input,
+select,
+textarea,
+pre {
+    font-size: 12px;
+    font-family: "Droid Sans", "Droid Sans Fallback", "Helvetica Neue", Helvetica, STHeiTi, sans-serif;
+    // font-family: Tahoma, Helvetica, "Microsoft Yahei", "微软雅黑", Arial, STHeiti;
+}
+
+body {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+}
+
+input,
+textarea {
+    -webkit-appearance: none;
+    border-radius: 0;
+}
+
+ul,
+ol {
+    list-style: none;
+}
+
+a,
+a:visited,
+a:active {
+    color: inherit;
+    text-decoration: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+p,
+span {
+    overflow: visible;
+}
+
+.border-1px {
+    .border-1px(@color: #e1e1e1, @radius: 4px);
+}
+
+.border-tp {
+    .border-tp(@color: #e1e1e1)
+}
+
+.border-bt {
+    .border-bt(@color: #e1e1e1)
+}
+
+.border-lt {
+    .border-lt(@color: #e1e1e1)
+}
+
+.border-rt {
+    .border-rt(@color: #e1e1e1)
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 1.5),
+not all {
+    .border-tp:before,
+    .border-bt:after {
+        -webkit-transform: scaleY(.667);
+    }
+    .border-rt:after,
+    .border-lt:before {
+        -webkit-transform: scaleX(.667);
+    }
+    .border-1px:after {
+        width: 150%;
+        height: 150%;
+        -webkit-transform: scale(.667);
+    }
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2),
+not all {
+    .border-tp:before,
+    .border-bt:after {
+        -webkit-transform: scaleY(.5);
+    }
+    .border-rt:after,
+    .border-lt:before {
+        -webkit-transform: scaleX(.5);
+    }
+    .border-1px:after {
+        width: 200%;
+        height: 200%;
+        -webkit-transform: scale(.5);
+    }
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 3),
+not all {
+    .border-tp:before,
+    .border-bt:after {
+        -webkit-transform: scaleY(.3333);
+    }
+    .border-rt:after,
+    .border-lt:before {
+        -webkit-transform: scaleX(.3333);
+    }
+    .border-1px:after {
+        width: 300%;
+        height: 300%;
+        -webkit-transform: scale(.3333);
+    }
+}

@@ -1,0 +1,366 @@
+@import "./mixin/icon.less";
+@import "./mixin/animate.less";
+@import "./mixin/retina.less";
+@theme-color: #f24;
+@theme-color-active: #ef2257;
+@theme-color-disabled: #ffa9be;
+@theme-bg-color: #ff5a84;
+@theme-font-color: #ff3c6e;
+@bd-color: #e0e0e0;
+@bg-color: #f3f6f5;
+// Position
+// -----------------------------------------------------------------------------
+.abs-center(@width, @height) {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -(@width / 2);
+    margin-top: -(@height / 2);
+}
+
+.abs-fill() {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.justify() {
+    text-align: justify;
+    text-align-last: justify;
+    -webkit-text-align-last: justify;
+    @media screen and (-webkit-min-device-pixel-ratio: 0) {
+        &:after {
+            content: ".";
+            display: inline-block;
+            width: 100%;
+            overflow: hidden;
+            height: 0;
+        }
+    }
+}
+
+// Transform
+// -----------------------------------------------------------------------------
+.transform(...) {
+    -webkit-transform: @arguments;
+    transform: @arguments;
+}
+
+.transform-origin(@pos) {
+    -webkit-transform-origin: @pos;
+    transform-origin: @pos;
+}
+
+// Transitions
+// -----------------------------------------------------------------------------
+.transition(@transition) {
+    -webkit-transition: @transition;
+    transition: @transition;
+}
+
+.transition-property(@transition-property) {
+    -webkit-transition-property: @transition-property;
+    transition-property: @transition-property;
+}
+
+.transition-delay(@transition-delay) {
+    -webkit-transition-delay: @transition-delay;
+    transition-delay: @transition-delay;
+}
+
+.transition-duration(@transition-duration) {
+    -webkit-transition-duration: @transition-duration;
+    transition-duration: @transition-duration;
+}
+
+.transition-timing-function(@timing-function) {
+    -webkit-transition-timing-function: @timing-function;
+    transition-timing-function: @timing-function;
+}
+
+.transition-transform(@transition) {
+    -webkit-transition: -webkit-transform @transition;
+    transition: transform @transition;
+}
+
+// Animation
+// -----------------------------------------------------------------------------
+.animation(...) {
+    -webkit-animation: @arguments;
+    animation: @arguments;
+}
+
+.animation-delay(@animation-delay) {
+    -webkit-animation-delay: @animation-delay;
+    animation-delay: @animation-delay;
+}
+
+// Text
+// -----------------------------------------------------------------------------
+.single-line() {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.multi-line(@line: 2) {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: @line;
+    -webkit-box-orient: vertical;
+}
+
+.vertical-align(...) {
+    line-height: @arguments;
+    height: @arguments;
+}
+
+.font-size(@size: 12) {
+    font-size: 12px;
+    @scale: @size / 12;
+    .transform(scale(@scale));
+    .transform-origin(50% 50%);
+}
+
+// Button && Input
+// -----------------------------------------------------------------------------
+.nuomi-input () {
+    .box-sizing(border-box);
+    display: inline-block;
+    width: 100%;
+    height: 40px;
+    padding: 12px 10px 12px;
+    font-size: 14px;
+    color: #333;
+    line-height: 16px;
+    border-radius: 2px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    &:focus,
+    &:active {
+        border-color: #4c97fe;
+    }
+}
+
+.nuomi-btn (@width: 100%, @height: 40px) {
+    @font-size: 14px;
+    .box-sizing(border-box);
+    display: inline-block;
+    width: @width;
+    height: @height;
+    padding: 0;
+    line-height: @height - 2px;
+    font-size: @font-size;
+    line-height: @font-size;
+    color: #fff;
+    text-align: center;
+    border-style: none;
+    border-radius: 2px;
+    background-color: #ff5a84;
+    &:active {
+        background-color: @theme-color;
+    }
+    &.disabled,
+    &:disabled {
+        background-color: @theme-color-disabled;
+    }
+}
+
+.nuomi-radio() {
+    width: 18px;
+    height: 18px;
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    &.checked {
+        border-color: @theme-color;
+        &:after {
+            content: '';
+            display: block;
+            margin-top: 3px;
+            margin-left: 3px;
+            width: 10px;
+            height: 5px;
+            border: 1px solid @theme-color;
+            border-top-color: transparent;
+            border-right-color: transparent;
+            .transform(scaleX(0.75) rotate(-45deg));
+        }
+    }
+}
+
+.nuomi-checkbox() {
+    width: 16px;
+    height: 16px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    &.checked {
+        border-color: @theme-color;
+        &:after {
+            content: '';
+            display: block;
+            margin-top: 2px;
+            margin-left: 2px;
+            width: 10px;
+            height: 5px;
+            border: 1px solid @theme-color;
+            border-top-color: transparent;
+            border-right-color: transparent;
+            .transform(scaleX(0.75) rotate(-45deg));
+        }
+    }
+}
+
+// Box Model
+// -----------------------------------------------------------------------------
+.box-sizing(@content) {
+    -webkit-box-sizing: @content;
+    box-sizing: @content;
+}
+
+.box-shadow(...) {
+    -webkit-box-shadow: @arguments;
+    box-shadow: @arguments;
+}
+
+.flexbox() {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+}
+
+.flex(...) {
+    -webkit-box-flex: @arguments;
+    -webkit-flex: @arguments;
+    flex: @arguments;
+}
+
+// User select
+// For selecting text on the page
+// Formal syntax: none | text | all | element
+// -----------------------------------------------------------------------------
+.user-select(@select) {
+    -webkit-user-select: @select;
+    user-select: @select;
+}
+
+// Clearfix
+// -----------------------------------------------------------------------------
+.clearfix() {
+    &:before,
+    &:after {
+        display: table;
+        content: '';
+        line-height: 0;
+    }
+    &:after {
+        clear: both;
+    }
+}
+
+// Fragment
+// 页面中带头部的代码片段样式
+// -----------------------------------------------------------------------------
+.fragment(@bColor: #d9d9d9, @bg: #fff) {
+    margin: 10px 0;
+    border-top: 1px solid @bColor;
+    .bottom-1px(@bColor);
+    .frag-header {
+        height: 41px;
+        line-height: 40px;
+        background: @bg;
+        border-bottom: 1px solid @bColor;
+        .box-sizing(border-box);
+        .bottom-1px(@bColor);
+        .title {
+            margin-left: 12px;
+            font-size: 15px;
+            color: #363640;
+        }
+    }
+    .frag-body {
+        border-bottom: 1px solid @bColor;
+        .bottom-1px(@bColor);
+    }
+}
+
+// Loading Block
+// 加载提示块的样式
+// -----------------------------------------------------------------------------
+.loading-block(@tColor: @theme-color) {
+    width: 100%;
+    line-height: 50px;
+    text-align: center;
+    color: @tColor;
+    background-color: #fff;
+    .spinner {
+        .spinner(@tColor);
+    }
+}
+
+// Buttom Submit Block
+// 底部提交块的样式
+// -----------------------------------------------------------------------------
+.buttom-submit-btn() {
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    font-size: 17px;
+    color: #fff;
+    text-align: center;
+    border-style: none;
+    border-radius: 3px;
+    background-color: @theme-color;
+    &:disabled,
+    &.disabled {
+        color: #f2f1f1;
+        background-color: #d0cfcf;
+    }
+}
+
+.bottom-submit-block() {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    .box-sizing(border-box);
+    width: 100%;
+    padding: 8px 12px;
+    z-index: 11;
+    background-color: #fff;
+    border-top: 1px solid #e5e5e5;
+    .top-1px(#e5e5e5);
+    .submit-btn {
+        .buttom-submit-btn();
+    }
+}
+
+// 默认图片
+.img-default(@url: './img/img_placeholder_md.png', @w: 100px) {
+    background: #f2f2f2 url(@url) no-repeat 50% 50%;
+    background-size: @w, @w;
+}
+
+// 大图默认图片（灰色丸子）
+.lgimg-default(@url: './img/img_large_loading.png', @w: 100px) {
+    background: #eee url(@url) no-repeat 50% 50%;
+    background-size: @w, @w/1.16;
+}
+
+// 图片宽高比固定，高度随着屏幕分辨率的变化而变化
+// @ratio高/宽
+.img-full(@ratio) {
+    height: 0;
+    padding: 0 0 @ratio;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-color: #fff;
+}
+
+// 吸顶效果
+.sticky() {
+    position: -webkit-sticky;
+    position: sticky;
+    left: 10px;
+    top: 10px;
+}

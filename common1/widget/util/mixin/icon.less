@@ -1,0 +1,241 @@
+.icon (@size) {
+    display: inline-block;
+    width: @size;
+    height: @size;
+    line-height: @size;
+    background-repeat: no-repeat;
+    background-size: @size;
+    background-position: center;
+}
+
+.icon-home (@size) {
+    .icon(@size);
+    background-image: url('../img/home.png');
+}
+
+.icon-home-red (@size) {
+    .icon(@size);
+    background-image: url('../img/home-red.png');
+}
+
+.icon-search (@size) {
+    .icon(@size);
+    background-image: url('../img/search.png');
+}
+
+// Simple Icon Shape
+// -----------------------------------------------------------------------------
+// 向上的实体三角箭头
+.icon-triangle-up(@width,
+@color) {
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    border-left: @width dashed transparent;
+    border-right: @width dashed transparent;
+    border-bottom: @width solid @color;
+}
+
+// 向下的实体三角箭头
+.icon-triangle-down(@width,
+@color) {
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    border-left: @width dashed transparent;
+    border-right: @width dashed transparent;
+    border-top: @width solid @color;
+}
+
+// 向右的空心三角箭头
+.icon-arrow-right(@width,
+@height,
+@line-width,
+@color) {
+    width: @width;
+    height: @height;
+    border-top: @line-width solid @color;
+    border-right: @line-width solid @color;
+    .transform(rotate(45deg));
+}
+
+// 向左的空心三角箭头
+.icon-arrow-left(@width,
+@height,
+@line-width,
+@color) {
+    width: @width;
+    height: @height;
+    border-top: @line-width solid @color;
+    border-left: @line-width solid @color;
+    .transform(rotate(-45deg));
+}
+
+// 向下的空心三角箭头
+.icon-arrow-down(@width,
+@height,
+@line-width,
+@color) {
+    width: @width;
+    height: @height;
+    border-bottom: @line-width solid @color;
+    border-left: @line-width solid @color;
+    .transform(rotate(-45deg));
+}
+
+// 向上的空心三角箭头
+.icon-arrow-up(@width,
+@height,
+@line-width,
+@color) {
+    width: @width;
+    height: @height;
+    border-top: @line-width solid @color;
+    border-left: @line-width solid @color;
+    .transform(rotate(45deg));
+}
+
+.icon-close(@w: 18px,
+@h: 2px,
+@color: #fff) {
+    &:before,
+    &:after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        width: @w;
+        height: @h;
+        margin: auto;
+        .box-sizing(border-box);
+        background-color: @color;
+    }
+    &:before {
+        .transform(rotate(-45deg));
+    }
+    &:after {
+        .transform(rotate(45deg));
+    }
+}
+
+.icon-clean(@w: 18px,
+@h: 2px,
+@color: #fff,
+@bg: #ccc) {
+    @width: @w + 4px;
+    display: inline-block;
+    width: @width;
+    height: @width;
+    background-color: @bg;
+    border-radius: @width / 2;
+    &:before,
+    &:after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        width: @w;
+        height: @h;
+        margin: auto;
+        .box-sizing(border-box);
+        background-color: @color;
+    }
+    &:before {
+        .transform(rotate(-45deg));
+    }
+    &:after {
+        .transform(rotate(45deg));
+    }
+}
+
+.icon-plus(@w: 18px,
+@h: 2px,
+@color: #fff) {
+    &:before,
+    &:after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        width: @w;
+        height: @h;
+        margin: auto;
+        .box-sizing(border-box);
+        background-color: @color;
+    }
+    &:after {
+        .transform(rotate(90deg));
+    }
+}
+
+.icon-minus(@w: 18px,
+@h: 2px,
+@color: #fff) {
+    &:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        width: @w;
+        height: @h;
+        margin: auto;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        background-color: @color;
+    }
+}
+
+.icon-star() {
+    @w: 116px;
+    @h: 20px;
+    .star-gray {
+        display: inline-block;
+        background: url(../img/rate_star_gray.png) no-repeat;
+        background-size: auto 100%;
+        .star-real {
+            width: 0;
+            height: 100%;
+            background: url(../img/rate_star_orange.png) no-repeat;
+            background-size: auto 100%;
+        }
+    }
+    .star-gray10 {
+        width: 10px / @h * @w;
+        height: 10px;
+    }
+    .star-gray12 {
+        width: 12px / @h * @w;
+        height: 12px;
+    }
+    .star-gray16 {
+        width: 16px / @h * @w;
+        height: 16px;
+    }
+    .star-gray24 {
+        width: 24px / @h * @w;
+        height: 24px;
+    }
+    .star-gray32 {
+        width: 32px / @h * @w;
+        height: 32px;
+    }
+}
+
+.icon-hook(@color: @theme-color,
+@scale: 1) {
+    display: block;
+    width: 12px * @scale;
+    height: 6px * @scale;
+    border: 1px solid @color;
+    border-top-color: transparent;
+    border-right-color: transparent;
+    .transform(rotate(-45deg));
+}
