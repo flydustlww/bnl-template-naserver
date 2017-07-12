@@ -3,6 +3,7 @@
  * http://sufangyu.github.io
  * 1.0.2(2016-06-22)
  */
+/* eslint-disable */
 require('./dialog.css');(function (win, $) {
 
     /*
@@ -347,3 +348,4 @@ require('./dialog.css');(function (win, $) {
     };
 
 })(window, window.Zepto || window.jQuery);
+/* eslint-disable */

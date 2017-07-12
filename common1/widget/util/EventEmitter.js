@@ -1,5 +1,5 @@
 /**
- * @fileoverview 赋予对象或者类以分发自定义事件的能力。
+ * @file overview 赋予对象或者类以分发自定义事件的能力。
  *     用法：EventEmitter.inject(Class);
  *          EventEmitter.bind(instance);
  *
@@ -7,7 +7,7 @@
  *
  * 
  */
-
+/* eslint-disable */
 'use strict';
 
 var $ = window.Zepto;
@@ -82,3 +82,4 @@ EventEmitter.prototype.bind = function (Class) {
 
 // 导出
 exports.EventEmitter = new EventEmitter();
+/* eslint-disable */

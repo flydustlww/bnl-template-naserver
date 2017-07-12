@@ -1,3 +1,4 @@
+/* eslint-disable */
 var fs = require('fs');
 var path = require('path');
 var config = require('../config');
@@ -111,3 +112,4 @@ module.exports = {
         loaders: utils.cssLoaders()
     }
 }
+/* eslint-disable */

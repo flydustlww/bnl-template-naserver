@@ -1,11 +1,12 @@
 /**
+ * @file Describe the file
  * 跳转支付页面收拢组件
  * @author zhangyijun02@baidu.com
  * @use require('common/util/bnjs/startPay')
  */
 /* eslint-disable */
-var util = require('common/util/util');
-var utilBNJS = require('common/util/bnjs/util-bnjs');
+var util = require('widget/util/util');
+var utilBNJS = require('widget/util/bnjs/util-bnjs');
 var $ = require('dep/zepto');
 var api = require('widget/config/api');
 

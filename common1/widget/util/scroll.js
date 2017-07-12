@@ -1,5 +1,7 @@
-
-
+/**
+ * @file
+ */
+/* eslint-disable */
 /*
         监听contentEl的滑动事件，当浏览器滑动到距离页面底部distance时，触发callback.
        */
@@ -166,3 +168,4 @@ addMore.prototype.addDiv = function () {
 };
 
 exports.swipeLoad = swipeLoad;
+/* eslint-disable */

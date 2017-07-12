@@ -2,8 +2,8 @@
  * 统计相关helper函数
  * @author rangzf
  */
-
-var util = require('common/util/util');
+/* eslint-disable */
+var util = require('widget/util/util');
 
 /**
  * mtj打点功能，支持传递自定义变量
@@ -81,3 +81,4 @@ module.exports = {
     addLog: addLog,
     addMTJ: addMTJ
 };
+/* eslint-disable */

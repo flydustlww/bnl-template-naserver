@@ -1,5 +1,5 @@
 /* RADIO */
-
+/* eslint-disable */
 .regular-radio {
     display: none;
 }
@@ -54,3 +54,4 @@
     width: 24px;
     height: 24px;
 }
+/* eslint-disable */

@@ -1,7 +1,7 @@
 /**
  * @file    接口地址配置
  */
-
+/* eslint-disable */
 let item;
 let server;
 let pointgoodslist;
@@ -72,3 +72,4 @@ module.exports = {
     tasklist: tasklist,
     tasknotify: tasknotify
 };
+/* eslint-disable */

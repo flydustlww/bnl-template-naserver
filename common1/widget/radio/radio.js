@@ -1,4 +1,9 @@
 /*radio组件*/
+/**
+ * @file Describe the file
+ * @type {[type]}
+ */
+/* eslint-disable */
 var EventEmitter = require('widget/util/EventEmitter.js').EventEmitter;
 function RadioGroup(config) {
 
@@ -52,3 +57,4 @@ $.extend(RadioGroup.prototype, {
 // 具有事件分发能力
 EventEmitter.bind(RadioGroup);
 exports.RadioGroup = RadioGroup;
+/* eslint-disable */
