@@ -44,7 +44,8 @@ module.exports = {
             'dev': path.resolve(commonPath, 'dev'),
             'pkg': path.resolve(projectRoot, 'package.json'),
             // 'widget': path.resolve(srcRoot, 'widget'),
-            'components': path.resolve(srcRoot, 'components')
+            'components': path.resolve(srcRoot, 'components'),
+             vue: 'vue/dist/vue.js'
         }
     },
     resolveLoader: {

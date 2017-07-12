@@ -2,7 +2,7 @@
  * @file    接口地址配置
  */
 
-let item,server,pointgoodslist,newbilllist,GetPromoteInfo,billing;
+let item,server,pointgoodslist,newbilllist,GetPromoteInfo,billing,memberMerchant, checkActivity, codelist, juejin, searchmerchant, tasklist, tasknotify;
 console.log('__DEV__================'+__DEV__);
 // RD开发环境
 if (__DEV__) {
@@ -23,6 +23,13 @@ item = server + 'item';
 newbilllist = server +'newbilllist';
 billing = server + 'billing';
 GetPromoteInfo = server +'GetPromoteInfo';
+memberMerchant = server + 'memberMerchant';
+checkActivity = server + 'checkActivity';
+codelist = server + 'codelist';
+juejin = server + 'juejin';
+searchmerchant = server + 'searchmerchant';
+tasklist = server + 'tasklist';
+tasknotify = server + 'tasknotify';
 
 if(__DEV__ || __QA__) {
     if(/(\:8399|\/mock\/)/.test(server)) {
@@ -30,6 +37,13 @@ if(__DEV__ || __QA__) {
         newbilllist +='.json';
         GetPromoteInfo +='.json';
         billing+='.json';
+        memberMerchant += '.json';
+        checkActivity += '.json';
+        codelist  += '.json';
+        juejin += '.json';
+        searchmerchant += '.json';
+        tasklist += '.json';
+        tasknotify += '.json';
 
     }
 }
@@ -37,5 +51,12 @@ module.exports = {
     item: item,
     newbilllist: newbilllist,
     billing : billing,
-    GetPromoteInfo: GetPromoteInfo
+    GetPromoteInfo: GetPromoteInfo,
+    memberMerchant: memberMerchant,
+    checkActivity: checkActivity,
+    codelist: codelist,
+    juejin: juejin,
+    searchmerchant: searchmerchant,
+    tasklist: tasklist,
+    tasknotify: tasknotify
 };

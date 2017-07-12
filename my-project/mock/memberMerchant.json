@@ -1,0 +1,23 @@
+{
+"errno": 0,
+"msg": "success",
+"data": {
+"id": "51200",
+"alliance_name": "蜀都蓉城",
+"passport_uid": "2745073494",
+"mobile": "15873602013",
+"alliance_status": "2",
+"alliance_avatar": "http://img1.imgtn.bdimg.com/it/u=3251946061,3461157316&fm=21&gp=0.jpg",
+"alliance_type": "4",
+"invitation_code": "4iq3mk",
+"contract_no": "",
+"province_id": "1200000000",
+"city_ids": "1200070000",
+"alliance_rule_id": "0",
+"audit_time": "0",
+"update_time": "1478852777",
+"create_time": "1478852777",
+"supplier_no": "",
+"merchant_id": "16771063"
+}
+}

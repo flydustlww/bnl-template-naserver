@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>我的物料</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no"/>
+
+</head>
+
+<body>
+	<div class="header">
+	  <div class="info-tips">查询门店,将物料与门店绑定,完成认领</div>
+	  <div class="claim-button">物料认领</div>
+	</div>
+	<div class="collaps"></div>
+	<div class="material-info">
+	    <div class="header-title">已认领物料</div>
+	    <section></section>
+	</div>
+<script>
+//设置rem单位为屏幕宽度,适配神器
+    ! function() {
+        function rem() {
+            document.documentElement.style.fontSize = (document.documentElement.clientWidth || document.body.clientWidth) + 'px';
+            //设置body字体大小，不影响body内字体大小
+           document.body.style.fontSize = '16px';
+        }
+        rem();
+        window.addEventListener('resize', rem, false);
+    }();
+ </script>
+</body>
+
+</html>

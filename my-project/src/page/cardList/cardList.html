@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>物料详情</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no"/>
+
+</head>
+
+<body>
+<div class="content">
+    <div id="codeList">
+        <div class="loadingmore" style="display:none">没有更多了</div>
+    </div>
+    <script id="codeList-item-tpl" type="text/html">
+        {{each list as item i}}
+        <ul class="table-view">
+            <li class="table-view-cell list-title">
+                <span class="item-title">物料ID:</span> {{item.id}}
+                <a class="bind-btn" type="bind" itemid="{{item.id}}" product_type="{{item.product_type}}" deal_id="{{item.deal_id}}" style="display:none">重绑</a>
+                <a class="unbind-btn" type="unbind" itemid="{{item.id}}" style="margin-right:14px;">解绑</a>
+            </li>
+            {{if item.product_type!='6'}} {{if item.product_type=='5'}}
+            <li class="table-view-cell list-content">
+                <span class="item-title font-color-gray">门店ID:</span>{{item.merchant_id}}
+            </li>
+            {{else}}
+            <li class="table-view-cell list-content">
+                <span class="item-title font-color-gray">团单ID:</span>{{item.deal_id}}
+            </li>
+            {{/if}} {{/if}}
+            <li class="table-view-cell list-content">
+                {{if item.product_type=='6'}}
+                <div class="item-deal-name font-color-gray">名称:</div>
+                {{else if item.product_type=='5'}}
+                <div class="item-deal-name font-color-gray">门店名称:</div>
+                {{else}}
+                <div class="item-deal-name font-color-gray">团单名称:</div>
+                {{/if}}
+                <div class="item-deal-content">{{item.deal_info}}</div>
+            </li>
+            <li class="table-view-cell list-content">
+                <span class="item-title font-color-gray">绑定时间:</span> {{item.update_time}}
+            </li>
+            <li class="table-view-cell list-content">
+                <div class="item-deal-name font-color-gray">类别:</div>
+                <div class="item-deal-content">{{item.materiel_info}}</div>
+            </li>
+        </ul>
+        {{/each}}
+    </script>
+    <script id="none-list-tpl" type="text/html">
+        <ul class="table-view table-none-view" id="code-none">
+            <li class="none-text-list">
+                <div>
+                    <img src='img/none_bg.png'>
+                    <p class="none-text">您还没有认领物料</p>
+                </div>
+            </li>
+        </ul>
+    </script>
+</div>
+  
+<script>
+//设置rem单位为屏幕宽度,适配神器
+    ! function() {
+        function rem() {
+            document.documentElement.style.fontSize = (document.documentElement.clientWidth || document.body.clientWidth) + 'px';
+            //设置body字体大小，不影响body内字体大小
+           document.body.style.fontSize = '16px';
+        }
+        rem();
+        window.addEventListener('resize', rem, false);
+    }();
+ </script>
+</body>
+
+</html>
