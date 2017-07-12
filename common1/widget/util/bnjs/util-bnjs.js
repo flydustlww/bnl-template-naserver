@@ -2,7 +2,7 @@
  * bnjs二次封装
  * zhoufei04@baidu.com
  */
-
+/* eslint-disable */
 var util = require('../util');
 var Promise = require('dep/promise/promise.js');
 
@@ -284,3 +284,4 @@ util.ready(function (BNJS) {
     })();
 
 });
+/* eslint-disable */
