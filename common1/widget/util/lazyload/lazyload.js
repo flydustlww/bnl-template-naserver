@@ -4,7 +4,7 @@
  */
 
 define(function (require, exports, module) {
-    var onscroll = require('common/util/onscroll/onscroll');
+    var onscroll = require('widget/util/onscroll/onscroll');
     /**
      * check if element is in view
      *

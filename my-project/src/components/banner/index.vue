@@ -1,5 +1,5 @@
 <style lang="less">
-@import "~common/util/util.less";
+@import "~widget/util/util.less";
 .m-banner-slider {
     background: #fff;
     transform: translateZ(0);
@@ -73,7 +73,7 @@
 <script>
 import $ from 'dep/zepto';
 import swipe from 'dep/swipe';
-import lazyload from 'common/util/lazyload/lazyload';
+import lazyload from 'widget/util/lazyload/lazyload';
 
 export default {
     props: {

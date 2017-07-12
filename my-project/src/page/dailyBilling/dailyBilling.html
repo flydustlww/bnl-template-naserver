@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>当日佣金</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+   
+</head>
+
+<body>
+	<div class="content">
+	    <div class="segmented-control">
+	        <a class="control-item active" user_type="0">
+	            全部
+	        </a>
+	        <a class="control-item" user_type="1">
+	            新客
+	        </a>
+	        <a class="control-item" user_type="2">
+	            老客<label class="timeselect font-color-gray"></label>
+	        </a>
+	    </div>
+	    <div class="content-title" style="display:none">
+	        预计返佣
+	        <span class="total-amount item-status-pink"></span>
+	    </div>
+	    <div class="promote-list" id="promote-list">
+	        <ul class="table-view" id="promote-title" style="border-bottom:0;margin-bottom:0;display:none">
+	            <li class="table-view-cell">
+	                <input type="text" value="" class="timeselect font-color-gray"> 
+	            </li>
+	        </ul>
+	        <ul class="table-view" id="promote-content"></ul>
+	        <ul class="table-view table-none-view" id="promote-none" style="display:none">
+	            <li class="none-text-list">
+	                <div>
+	                    <img src='img/none_bg.png'>
+	                    <p class="none-text">
+	                    </p>
+	                </div>
+	            </li>
+	        </ul>
+	    </div>
+	    <script id="promote-list-tpl" type="text/html">
+	        {{each data.detail as item i k}}
+	            <li class="table-view-cell">
+	                推广佣金
+	                <span class="icon icon-down" status="down"></span>
+	                {{if item.commission >= 0}}
+	                    <span class="item-amount item-status-pink">+{{item.formatcommission}}</span>
+	                {{else}}
+	                    <span class="item-amount item-status-green">{{item.formatcommission}}</span>
+	                {{/if}}
+	                    <ul class="table-view order-detail-list">
+	                        <li class="table-view-cell order-detail-item">
+	                            <span class="font-color-gray order-detail-label">推广用户</span>
+	                            <span class="order-detail-content">{{item.promote_user}}</span>
+	                        </li>
+	                        <li class="table-view-cell order-detail-item">
+	                            <span class="font-color-gray order-detail-label">推广策略</span>
+	                            <span class="order-detail-content">{{item.formatrule_name}}</span>
+	                        </li>
+	                        <li class="table-view-cell order-detail-item">
+	                            <span class="font-color-gray order-detail-label">购买时间</span>
+	                            <span class="order-detail-content">{{item.formatpay_time}}</span>
+	                        </li>
+	                        <li class="table-view-cell order-detail-item">
+	                            <span class="font-color-gray order-detail-label">消费时间</span>
+	                            <span class="order-detail-content">{{item.formatconsumption_time}}</span>
+	                        </li>
+	                        <li class="table-view-cell order-detail-item">
+	                            <span class="font-color-gray order-detail-label">团单名称</span>
+	                            <span class="order-detail-content">{{item.formatdeal_name}}</span>
+	                        </li>
+	                        <li class="table-view-cell order-detail-item">
+	                            <span class="font-color-gray order-detail-label">订单金额</span>
+	                            <span class="order-detail-content">{{item.formatorder_price}}</span>
+	                        </li>
+	                        <li class="table-view-cell order-detail-item">
+	                            <span class="font-color-gray order-detail-label">推广类型</span>
+	                            <span class="order-detail-content">{{item.product_type}}</span>
+	                        </li>
+	                        <li class="table-view-cell order-detail-item">
+	                            <span class="font-color-gray order-detail-label">用户类型</span>
+	                            <span class="order-detail-content">{{item.user_type}}</span>
+	                        </li>
+	                    </ul>
+	            </li>
+	        {{/each}}
+	    </script>
+	    <script id="promote-none-tpl" type="text/html">
+	        <ul class="table-view table-none-view">
+	            <li class="none-text-list">
+	                <div>
+	                    <img src='img/none_bg.png' />
+	                    <p class="none-text">
+	                    </p>
+	                </div>
+	            </li>
+	        </ul>
+	    </script>
+	</div>
+</body>
+
+<html>

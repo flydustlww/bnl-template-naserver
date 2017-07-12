@@ -1,0 +1,15 @@
+.collapse{
+    border-top: 1px solid rgb(216,216,216);
+    border-bottom: 1px solid rgb(216,216,216);
+    height: 10px;
+    background-color: rgb(244,244,244);
+}
+.loadingmore {
+    text-align: center;
+    height: 43px;
+    line-height: 43px;
+    color: #99999d;
+    font-size: 1.2rem;
+    background-color:#F0F0F0;
+    /* margin-bottom: 50px; */
+}

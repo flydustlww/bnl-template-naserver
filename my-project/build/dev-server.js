@@ -13,7 +13,7 @@ var proxyTable = config.dev.proxyTable
 
 var app = express()
 var compiler = webpack(webpackConfig)
-
+console.log('+++++++++++++++++++++++++++编译output路径:'+webpackConfig.output.publicPath);
 var devMiddleware = require('webpack-dev-middleware')(compiler, {
     publicPath: webpackConfig.output.publicPath,
     stats: {

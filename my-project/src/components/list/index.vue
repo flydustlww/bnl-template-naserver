@@ -104,7 +104,7 @@ export default {
 </script>
 
 <style lang="less">
-    @import "~common/util/util.less";
+    @import "~widget/util/util.less";
     .poi-item{
         width: 100%;
         height: auto;

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>当日佣金</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"> 
+   
+</head>
+
+<body>
+    <div class="content">
+        <div class="segmented-control">
+            <a class="control-item active" user_type="0">
+                全部
+            </a>
+            <a class="control-item" user_type="1">
+                新客
+            </a>
+            <a class="control-item" user_type="2">
+                老客
+            </a>
+        </div>
+        <div class="reward-list" id="reward-list">
+            <ul class="table-view table-view-tpl" id="reward-title-html"></ul>
+            <ul class="table-view" id="reward-content-list"></ul>
+            <ul class="table-view table-none-view" style="display:none" id="reward-content-none">
+                <li class="none-text-list">
+                    <div>
+                        <img src='img/none_bg.png'>
+                        <p class="none-text">
+                        </p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <script id="reward-title-tpl" type="text/html">
+            <li class="table-view-cell">
+                <span class="font-color-gray">{{curday}}</span>
+                <span class="font-color-gray item-label">总计</span>
+                <span class="item-amount item-status-pink item-totalamount">{{totalamount}}</span>
+            </li>
+        </script>
+        <script id="reward-list-tpl" type="text/html">
+            {{each data.detail as item i}}
+                <li class="table-view-cell" id={{item.id}}>
+                    {{if item.finance_type == 1}}
+                        推广佣金
+                    {{else if item.finance_type == 2}}
+                        下级提成
+                    {{else if item.finance_type == 3}} 
+                        作弊扣减  
+                    {{/if}}
+                    <span class="icon icon-down" status="down" id={{item.id}}></span>
+                    {{if item.commission >=0}}
+                        <span class="item-amount item-status-pink">+{{item.formatcommission}}</span>
+                    {{else}}
+                        <span class="item-amount item-status-green">{{item.formatcommission}}</span>
+                    {{/if}}
+                    <ul class="table-view order-detail-list"></ul>
+                </li>
+            {{/each}}
+        </script>
+       <!--<script id="order-none-tpl" type="text/html">
+            <li class="none-text-list">
+                <div>
+                    <img src='img/none_bg.png'>
+                    <p class="none-text">
+                    </p>
+                </div>
+            </li>
+        </script>-->
+        <ul id="order-info" class="table-view order-detail-list"></ul>
+        <script id="order-detail-tpl" type="text/html">
+            {{each formatdata as item i}}
+                <li class="table-view-cell order-detail-item">
+                    <span class="font-color-gray order-detail-label">{{item.label}}</span>
+                    <span class="order-detail-content">{{item.content}}</span>
+                </li>
+            {{/each}}
+        </script>
+    </div>
+</body>
+<html>
