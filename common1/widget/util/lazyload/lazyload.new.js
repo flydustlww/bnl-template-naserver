@@ -2,7 +2,7 @@
  * @file 图片lazyload功能
  * @author nighca<nighca@live.cn>
  */
-
+/* eslint-disable */
 define(function (require, exports, module) {
     var onscroll = require('common/util/onscroll/onscroll');
     var isBackground = false;
@@ -175,3 +175,4 @@ define(function (require, exports, module) {
         lazyloadImg.updateImg();
     };
 });
+/* eslint-disable */

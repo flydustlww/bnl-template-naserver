@@ -2,7 +2,7 @@
  * @file helper methods
  * @author lb<nighca@live.cn>
  */
-
+/* eslint-disable */
 var $ = require('dep/zepto');
 
 /**
@@ -484,3 +484,4 @@ module.exports = {
     addSpace: addSpace,
     reflow: reflow
 };
+/* eslint-disable */

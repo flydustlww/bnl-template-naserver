@@ -2,6 +2,7 @@
  * @file Describe the file
  * @author name<yuchangshuang@baidu.com>
  */
+/* eslint-disable */
 import style from './myMaterial.less';
 import Vue from 'vue';
 // import 'DeferredBNJS'
@@ -181,3 +182,4 @@ let init = function () {
 // util.ready(function () {
 init();
 // });
+/* eslint-disable */

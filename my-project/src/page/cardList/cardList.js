@@ -2,7 +2,7 @@
  * @file 物料详情页面
  * @author name<yuchangshuang@baidu.com>
  */
-
+/* eslint-disable */
 import Vue from 'vue';
 require('widget/ratchet/ratchet.less');
 require('widget/dialog/dialog.css');

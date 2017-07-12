@@ -3,6 +3,7 @@
  * @author zhangyijun02@baidu.com
  * @use require('common/util/bnjs/startPay')
  */
+/* eslint-disable */
 var util = require('common/util/util');
 var utilBNJS = require('common/util/bnjs/util-bnjs');
 var $ = require('dep/zepto');
@@ -127,3 +128,4 @@ var jumpPay = function (options, callbacks) {
 module.exports = {
     jumpPay: jumpPay
 };
+/* eslint-disable */
