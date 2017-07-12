@@ -3,9 +3,9 @@
  * @author name<yuchangshuang@baidu.com>
  */
 import style from './myMaterial.less';
-import Vue from 'vue'
+import Vue from 'vue';
 // import 'DeferredBNJS'
-let $ = require('dep/zepto')
+let $ = require('dep/zepto');
 let api = require('../../config/api');
 // let utilBNJS = require('common/util/bnjs/util-bnjs');
 
@@ -13,14 +13,13 @@ let util = require('widget/util/util');
 let urlParam = require('static/js/urlParam');
 let Baidu = require('dep/baiduTemplate');
 import DeferredBNJS from 'DeferredBNJS';
-//为了兼容该死的华为荣誉6
+// 为了兼容该死的华为荣誉6
 let Promise = require('widget/util/es6-promise.js').Promise;
 let dialog = require('widget/dialog/dialog.js');
 
-//uid和sid从server取 app_version和location没有用了
+// uid和sid从server取 app_version和location没有用了
 let curUid = urlParam.getUrlParam('uid');
 let curSid = urlParam.getUrlParam('sid');
-
 
 // 物料认领按钮`
 let material_button = $('.claim-button');
@@ -30,18 +29,16 @@ let dialogTpl = require('./view/dialog.tpl');
 // 加载list模板
 var tpl = require('./view/materialItems.tpl');
 
-
 // 初始化页面级的Vue实例
 let vm = new Vue({
     el: 'body',
-    data: {  
+    data: {
         bannerList: [],
         dealList: []
     },
     components: {
     },
-    ready () {
-    }
+    ready() {}
 });
 
 /**
@@ -56,11 +53,11 @@ let materialItemView = {
         BNJSReady(() => {
             BNJS.ui.title.setTitle('我的物料');
             // DeferredBNJS.ui.title.setTitle('test');
-        })
+        });
 
-        //util.ready(function () {
+        // util.ready(function () {
 
-        //});
+        // });
         // BNJS.ui.title.setTitle('我的物料');
         me.load();
 
@@ -68,8 +65,8 @@ let materialItemView = {
     load: function () {
         let me = this;
         var params = {
-            uid : curUid,
-            sid : curSid
+            uid: curUid,
+            sid: curSid
         };
         $.ajax({
             url: api.codelist,
@@ -77,7 +74,7 @@ let materialItemView = {
             dataType: 'json',
             data: params,
             success: function (data) {
-                //如果返回错误弹窗
+                // 如果返回错误弹窗
                 if (data.errno != 0) {
                     $.dialog({
                         showTitle: false,
@@ -86,35 +83,36 @@ let materialItemView = {
                             ok: 'dialog-font-color-pink'
                         }
                     });
-                } else {
+                }
+                else {
                     me.render(data.data.list);
                 }
             },
             error: function () {
-                //this.fail();
+                // this.fail();
             }
-        })
+        });
     },
-    render: function(list){
+    render: function (list) {
         // url待与rd传参对
         var HTML = Baidu.template(tpl, {
             item: list,
-            url: "band://web?type=material_claim&url=" + window.location.protocol+'//'+ window.location.host +'/naserver/user/cardlisttpl' + '?uid=' + curUid + '&sid=' + curSid
-        })
-        $('section').html(HTML)
+            url: 'band://web?type=material_claim&url=' + window.location.protocol + '//' + window.location.host + '/naserver/user/cardlisttpl' + '?uid=' + curUid + '&sid=' + curSid
+        });
+        $('section').html(HTML);
     }
-}
+};
 
 /**
  * bindDialogHtml 弹窗异步请求
  * @param {object} resolve 
  * @param {object} reject 
  */
-let bindDialogHtml = function(resolve,reject) {
-    let html = "";
+let bindDialogHtml = function (resolve, reject) {
+    let html = '';
     $.ajax({
         url: api.memberMerchant,
-        type: "GET",
+        type: 'GET',
         data: {
             passport_uid: curUid
         },
@@ -122,15 +120,16 @@ let bindDialogHtml = function(resolve,reject) {
         success: function (res) {
             if (res.data.alliance_name) {
                 resolve(res.data);
-            } else {
+            }
+            else {
                 reject();
             }
         },
         error: function () {
             reject();
         }
-    }) 
-}
+    });
+};
 
 /**
  * 监听物料绑定按钮
@@ -170,15 +169,15 @@ let bindButton = {
             }, function () {
                 window.location.href = '/naserver/user/mendiansearch?uid=' + curUid;
             });
-        })
+        });
     }
-}
+};
 
-let init = function(){
+let init = function () {
     materialItemView.init();
     bindButton.init();
-}
+};
 
-//util.ready(function () {
-    init();
-//});
+// util.ready(function () {
+init();
+// });

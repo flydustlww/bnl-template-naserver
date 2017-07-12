@@ -6,6 +6,7 @@
 define(function (require, exports, module) {
     var onscroll = require('common/util/onscroll/onscroll');
     var isBackground = false;
+
     /**
      * check if element is in view
      *
@@ -18,8 +19,8 @@ define(function (require, exports, module) {
         var viewBottom = window.innerHeight;
 
         var boundingRect = element.getBoundingClientRect();
-        var elemTop     = boundingRect.top - threshold;
-        var elemBottom  = boundingRect.top + Math.round(boundingRect.height) + threshold;
+        var elemTop = boundingRect.top - threshold;
+        var elemBottom = boundingRect.top + Math.round(boundingRect.height) + threshold;
 
         return (viewTop <= elemTop && elemTop <= viewBottom)
             || (viewTop <= elemBottom && elemBottom <= viewBottom)
@@ -37,25 +38,26 @@ define(function (require, exports, module) {
 
         if (isBackground) {
             element.style.cssText += 'background-image: url(' + src + ');';
-        } else {
+        }
+        else {
             element.setAttribute('src', src);
         }
 
         element.lazyload = 'loaded';
-        if(!isBackground){
+        if (!isBackground) {
             element.style.cssText += 'visibility: hidden;';
             element.onload = function () {
                 element.style.cssText += 'visibility: visible;';
             };
-            element.onerror = function () {
-            };
+            element.onerror = function () {};
         }
+
     };
 
     var LazyloadImg = {
         elements: null,
         options: null,
-        updateImg: function (){
+        updateImg: function () {
             this.elements = this.options.context.querySelectorAll(this.selector);
         },
         onViewportChange: function () {
@@ -79,9 +81,10 @@ define(function (require, exports, module) {
                 ) {
                     loadImage(element, element.getAttribute(srcAttribute));
                 }
+
             }
         },
-        optionsPreProcess: function (){
+        optionsPreProcess: function () {
             var options = this.options;
             options.threshold = options.threshold || 0;
             var srcAttribute = 'data-' + (options.dataAttribute || 'src');
@@ -89,6 +92,7 @@ define(function (require, exports, module) {
             var context = this.context = options.context || document.body;
 
         },
+
         /**
          * init a set of lazyload <img>s
          *
@@ -105,7 +109,6 @@ define(function (require, exports, module) {
             window.addEventListener('orientationchange', onViewportChange);
         }
     };
-
 
     /**
      * register a set of elements
@@ -147,6 +150,7 @@ define(function (require, exports, module) {
                     element.inView = false;
                     callback.call(element, false);
                 }
+
             }
         };
 

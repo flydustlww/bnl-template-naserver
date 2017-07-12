@@ -4,6 +4,7 @@
  */
 
 var $ = require('dep/zepto');
+
 /**
  * @param {string} url, origin url
  * @param {params=} params, additional params
@@ -51,6 +52,7 @@ if (__DEV__) {
                 start(url, params, action, direction);
                 return;
             }
+
             // get params in url (schema)
             var urlParams = {};
             params = params || {};
@@ -61,6 +63,7 @@ if (__DEV__) {
                 if (!params.hasOwnProperty(kv[0])) {
                     params[kv[0]] = kv[1];
                 }
+
             });
             // debugger
             // no comppage given or open page in other packages
@@ -147,6 +150,7 @@ var forEach = function (obj, method) {
             if (method.call(this, obj[i], i) === false) {
                 break;
             }
+
         }
         return;
     }
@@ -155,6 +159,7 @@ var forEach = function (obj, method) {
         if (obj.hasOwnProperty(key) && method.call(this, obj[key], key) === false) {
             return;
         }
+
     }
 };
 
@@ -188,6 +193,7 @@ var filter = function (obj, method) {
         if (method(val, key)) {
             target[key] = val;
         }
+
     });
 };
 
@@ -335,6 +341,7 @@ var formatDate = function (template, date) {
     if (!date) {
         return '';
     }
+
     template = template.replace(/\$([a-zA-Z])/g, function (_, key) {
         return '${' + key + '}';
     });
@@ -362,6 +369,7 @@ var hasAny = function (target, list) {
         if (target.indexOf(list[i]) >= 0) {
             return true;
         }
+
     }
     return false;
 };
@@ -408,6 +416,7 @@ var unique = function (arr) {
             r.push(v);
             o[v] = 1;
         }
+
     });
 
     o = null;

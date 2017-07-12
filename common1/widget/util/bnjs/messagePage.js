@@ -50,6 +50,6 @@ util.ready(function (BNJS) {
         if ($msgbox.length) {
             $msgbox.hide();
         }
+
     };
 });
-

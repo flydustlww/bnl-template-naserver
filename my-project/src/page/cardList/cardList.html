@@ -1,21 +1,22 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
     <meta charset="utf-8">
     <title>物料详情</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="format-detection" content="telephone=no"/>
-
+    <meta name="format-detection" content="telephone=no">
 </head>
-
 <body>
-<div class="content">
-    <div id="codeList">
-        <div class="loadingmore" style="display:none">没有更多了</div>
-    </div>
-    <script id="codeList-item-tpl" type="text/html">
+    <div class="content">
+        <div id="codeList">
+            <div class="loadingmore" style="display:none">
+                没有更多了
+            </div>
+        </div>
+        <script id="codeList-item-tpl" type="text/html">
         {{each list as item i}}
         <ul class="table-view">
             <li class="table-view-cell list-title">
@@ -51,8 +52,8 @@
             </li>
         </ul>
         {{/each}}
-    </script>
-    <script id="none-list-tpl" type="text/html">
+        </script>
+        <script id="none-list-tpl" type="text/html">
         <ul class="table-view table-none-view" id="code-none">
             <li class="none-text-list">
                 <div>
@@ -61,21 +62,19 @@
                 </div>
             </li>
         </ul>
-    </script>
-</div>
-  
-<script>
-//设置rem单位为屏幕宽度,适配神器
-    ! function() {
+        </script>
+    </div>
+    <script>
+    // 设置rem单位为屏幕宽度,适配神器
+    !function () {
         function rem() {
             document.documentElement.style.fontSize = (document.documentElement.clientWidth || document.body.clientWidth) + 'px';
-            //设置body字体大小，不影响body内字体大小
-           document.body.style.fontSize = '16px';
+            // 设置body字体大小，不影响body内字体大小
+            document.body.style.fontSize = '16px';
         }
         rem();
         window.addEventListener('resize', rem, false);
     }();
- </script>
+    </script>
 </body>
-
 </html>

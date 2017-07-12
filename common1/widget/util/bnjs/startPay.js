@@ -34,14 +34,17 @@ var jumpPay = function (options, callbacks) {
     if (options.orderId) { // 有orderId，走继续支付流程
         staticParams.logpage = 'OrderPay';
         targetUrl = api.pay;
-    } else if (options.arrivalDate && options.money) { // 创建订单流程，走新支付流程
+    }
+    else if (options.arrivalDate && options.money) { // 创建订单流程，走新支付流程
         staticParams.logpage = 'OrderSubmit';
         targetUrl = api.ordercreate;
     }
+
     if (staticParams.logpage) {
         if (__DEV__) {
             console.log($.extend(options, staticParams));
         }
+
         utilBNJS.postNA({
             url: targetUrl,
             params: $.extend(options, staticParams),
@@ -51,6 +54,7 @@ var jumpPay = function (options, callbacks) {
             if (callbacks.onOrderSuccess) {
                 callbacks.onOrderSuccess();
             }
+
             // data = {
             //     customerId : 170,
             //     deviceType : 1,
@@ -92,6 +96,7 @@ var jumpPay = function (options, callbacks) {
                     if (callbacks.onPaySuccess) {
                         callbacks.onPaySuccess();
                     }
+
                     BNJS.page.start('bainuo://component?compid=pinecone_reserve&comppage=pay_success', {
                         orderId: data.orderId
                     }, 1);
@@ -100,6 +105,7 @@ var jumpPay = function (options, callbacks) {
                     if (callbacks.onPayFail) {
                         return callbacks.onPayFail();
                     }
+
                     // BNJS.ui.toast.show('支付失败~');
                 }
             }));
@@ -107,6 +113,7 @@ var jumpPay = function (options, callbacks) {
             if (__DEV__) {
                 console.log('err:', err);
             }
+
             if (callbacks.onOrderFail) {
                 return callbacks.onOrderFail(err);
             }
@@ -114,6 +121,7 @@ var jumpPay = function (options, callbacks) {
             BNJS.ui.toast.show(err.errmsg);
         });
     }
+
 };
 
 module.exports = {

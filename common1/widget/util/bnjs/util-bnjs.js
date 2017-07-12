@@ -45,7 +45,7 @@ util.ready(function (BNJS) {
             method = 'getNA';
         }
 
-        options.needChecklogin = options.needChecklogin || true;// 默认需要检查登录
+        options.needChecklogin = options.needChecklogin || true; // 默认需要检查登录
 
         return new Promise(function (resolve, reject) {
             BNJS.http[method]({
@@ -79,7 +79,7 @@ util.ready(function (BNJS) {
                     BNJS.env.network(function (resNet) {
                         // 断网提示
                         if (resNet.network === 'non') {
-                            BNJS.ui.showErrorPage('网络不给力哦…', 1, 9011);// 新丸子图
+                            BNJS.ui.showErrorPage('网络不给力哦…', 1, 9011); // 新丸子图
                             reject(resNet);
                             return false;
                         }
@@ -111,7 +111,8 @@ util.ready(function (BNJS) {
                     onFail: function () {
                         if (options.loginFail) {
                             options.loginFail();
-                        } else {
+                        }
+                        else {
                             fail();
                         }
                     }
@@ -134,6 +135,7 @@ util.ready(function (BNJS) {
         if (!BNJS.location.selectCityCode) {
             BNJS._updateLocation(BNJS.execSync('location', 'getLocation'));
         }
+
         return BNJS.location.selectCityCode;
     };
 
@@ -143,11 +145,13 @@ util.ready(function (BNJS) {
             if (__DEV__) {
                 return callback('');
             }
+
             return BNJS.account.getMobile({
                 onSuccess: function (res) {
                     if (res.mobile !== '') {
                         callback(res.mobile);
-                    } else {
+                    }
+                    else {
                         callback('');
                     }
                 },
@@ -184,7 +188,8 @@ util.ready(function (BNJS) {
 
                 if (typeof value !== 'string') {
                     ls.setItem(key, JSON.stringify(value));
-                } else {
+                }
+                else {
                     ls.setItem(key, value);
                 }
 
@@ -213,7 +218,8 @@ util.ready(function (BNJS) {
                     if ('string' === typeof res) {
                         try {
                             res = JSON.parse(res);
-                        } catch (e) {
+                        }
+                        catch (e) {
                             // 不转换
                             // console.log(res);
                         }
@@ -221,6 +227,7 @@ util.ready(function (BNJS) {
 
                     return resolve(res);
                 }
+
                 bs.getItem(key, function (response) {
                     res = response.data;
 
@@ -231,11 +238,14 @@ util.ready(function (BNJS) {
                             ls.setItem(key, res);
                             try {
                                 res = JSON.parse(res);
-                            } catch (e) {}
-                        } else {
+                            }
+                            catch (e) {}
+                        }
+                        else {
                             ls.setItem(key, JSON.stringify(res));
                         }
                     }
+
                     resolve(res);
                 }, function (err) {
                     reject(err);
@@ -254,11 +264,13 @@ util.ready(function (BNJS) {
                     if (__DEV__) {
                         console.log('storage.remove', key, '删除成功~');
                     }
+
                     resolve(res.data);
                 }, function (res) {
                     if (__DEV__) {
                         console.log('storage.remove', key, '删除失败！');
                     }
+
                     reject(res);
                 });
             });
