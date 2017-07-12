@@ -1,26 +1,19 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
     <meta charset="utf-8">
     <title>当日佣金</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black"> 
-   
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
 </head>
-
 <body>
     <div class="content">
         <div class="segmented-control">
-            <a class="control-item active" user_type="0">
-                全部
-            </a>
-            <a class="control-item" user_type="1">
-                新客
-            </a>
-            <a class="control-item" user_type="2">
-                老客
-            </a>
+            <a class="control-item active" user_type="0"> 全部 </a>
+            <a class="control-item" user_type="1"> 新客 </a>
+            <a class="control-item" user_type="2"> 老客 </a>
         </div>
         <div class="reward-list" id="reward-list">
             <ul class="table-view table-view-tpl" id="reward-title-html"></ul>
@@ -28,7 +21,7 @@
             <ul class="table-view table-none-view" style="display:none" id="reward-content-none">
                 <li class="none-text-list">
                     <div>
-                        <img src='img/none_bg.png'>
+                        <img src="img/none_bg.png">
                         <p class="none-text">
                         </p>
                     </div>
@@ -62,7 +55,7 @@
                 </li>
             {{/each}}
         </script>
-       <!--<script id="order-none-tpl" type="text/html">
+        <!--<script id="order-none-tpl" type="text/html">
             <li class="none-text-list">
                 <div>
                     <img src='img/none_bg.png'>
@@ -83,3 +76,5 @@
     </div>
 </body>
 <html>
+</html>
+</html>

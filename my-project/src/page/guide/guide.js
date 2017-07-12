@@ -1,13 +1,13 @@
 import style from './guide.less';
 
-import Vue from 'vue'
-import banner from 'components/banner'
-import list from 'components/list'
-import 'DeferredBNJS'
+import Vue from 'vue';
+import banner from 'components/banner';
+import list from 'components/list';
+import 'DeferredBNJS';
 var api = require('../../config/api');
 var utilBNJS = require('widget/util/bnjs/util-bnjs');
 var util = require('widget/util/util');
-var $ = require('dep/zepto')
+var $ = require('dep/zepto');
 
 // 初始化页面级的Vue实例
 // var vm = new Vue({
@@ -53,18 +53,18 @@ var $ = require('dep/zepto')
 //             //BNJS.ui.showErrorPage('页面有些问题，请稍后再试试1', 1);
 //             }
 //         })
-     
+
 //     }
 // }
 console.log('test');
 BNJSReady(() => {
     console.log('BNJSReady');
     BNJS.ui.title.setTitle('lby测试BNJS');
-   /* 注册广播接收器 */
-      BNJS.page.registerReceiver('com.nuomi.merchant.broadcast.LOGIN', function(res){ 
-      BNJS.ui.toast.show('PAGE_REFRESH接收器注册成功！')
-      BNJS.page.start('baidunuomimerchant://component?url=http://172.22.149.96:8399/page/login.html',{},1)
-      });
 
-})
+    /* 注册广播接收器 */
+    BNJS.page.registerReceiver('com.nuomi.merchant.broadcast.LOGIN', function (res) {
+        BNJS.ui.toast.show('PAGE_REFRESH接收器注册成功！');
+        BNJS.page.start('baidunuomimerchant://component?url=http://172.22.149.96:8399/page/login.html', {}, 1);
+    });
 
+});

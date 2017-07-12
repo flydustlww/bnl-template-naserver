@@ -5,7 +5,7 @@
  *  登录效果
  */
 
-module.exports.init = function  () {
+module.exports.init = function () {
     // body...
     var $btnsms = $('.btn-sms');
     var $view = $('#view');
@@ -14,9 +14,9 @@ module.exports.init = function  () {
     // var $textPassport = $('.passport-text');
     var $inputPhone = $('#PASSP__1__mobilenum');
     var $inputCode = $('#PASSP__1__password');
-    var $rowCode = $('#PASSP__1__password'); //验证码输入框
-   // var $rowPhone = $('#PASSP__1__mobilenum'); //手机号输入框
-    var $btnCode = $('.pass-button-send'); //获取验证码 重发提示
+    var $rowCode = $('#PASSP__1__password'); // 验证码输入框
+    // var $rowPhone = $('#PASSP__1__mobilenum'); //手机号输入框
+    var $btnCode = $('.pass-button-send'); // 获取验证码 重发提示
     var $btnConfirm = $('#PASSP__1__submitWrapper');
     var $btnResend = $('.btn-resend');
 
@@ -65,8 +65,9 @@ module.exports.init = function  () {
         if ($btnConfirm.hasClass('button-inactive')) {
             return;
         }
-      //form submit
-      //  login();
+
+        // form submit
+        //  login();
     });
 
     // $textPassport.on('click', '.change-phone', function () {
@@ -102,7 +103,7 @@ module.exports.init = function  () {
     //     });
     // });
 
-     /**
+    /**
      * 验证手机号是否合法
      *
      * @param {string} phone phone
@@ -111,7 +112,6 @@ module.exports.init = function  () {
     function verifyPhone(phone) {
         return /^1[3|4|5|7|8][0-9]\d{8}$/.test(phone);
     }
-
 
     /**
      * 获取passport手机验证码
@@ -124,13 +124,13 @@ module.exports.init = function  () {
         // $textPassport.html('<span class="phone-number">领券手机号：'
         //     + phone);
         //    + '<i class="change-phone">更改</i></span>');
-        //动态密码发送成功 提示隐藏
-      //  $("#PASSP__1__msgWrapper").hide();
+        // 动态密码发送成功 提示隐藏
+        //  $("#PASSP__1__msgWrapper").hide();
         // 隐藏手机号
-      // $rowPhone.css({ opacity:0, position: 'absolute',top:'-999rem'});// $rowPhone.hide();
+        // $rowPhone.css({ opacity:0, position: 'absolute',top:'-999rem'});// $rowPhone.hide();
         // 显示验证码行
         $rowCode.show();
-      // $btnCode.css({width:'6.70rem','margin-left': '0.25rem','background': '0,0','border': '1px solid #fff', 'color': '#fff',    'opacity': '.8','padding':0});
+        // $btnCode.css({width:'6.70rem','margin-left': '0.25rem','background': '0,0','border': '1px solid #fff', 'color': '#fff',    'opacity': '.8','padding':0});
         // 更改重发按钮的样式
         // $btnResend.html('重发(60)');
         // // 禁止发送验证码按钮
@@ -198,4 +198,4 @@ module.exports.init = function  () {
     // }
     // bindRule();
 
-}
+};

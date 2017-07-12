@@ -1,49 +1,42 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
     <meta charset="utf-8">
     <title>当日佣金</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
-   
 </head>
-
 <body>
-	<div class="content">
-	    <div class="segmented-control">
-	        <a class="control-item active" user_type="0">
-	            全部
-	        </a>
-	        <a class="control-item" user_type="1">
-	            新客
-	        </a>
-	        <a class="control-item" user_type="2">
-	            老客<label class="timeselect font-color-gray"></label>
-	        </a>
-	    </div>
-	    <div class="content-title" style="display:none">
-	        预计返佣
-	        <span class="total-amount item-status-pink"></span>
-	    </div>
-	    <div class="promote-list" id="promote-list">
-	        <ul class="table-view" id="promote-title" style="border-bottom:0;margin-bottom:0;display:none">
-	            <li class="table-view-cell">
-	                <input type="text" value="" class="timeselect font-color-gray"> 
-	            </li>
-	        </ul>
-	        <ul class="table-view" id="promote-content"></ul>
-	        <ul class="table-view table-none-view" id="promote-none" style="display:none">
-	            <li class="none-text-list">
-	                <div>
-	                    <img src='img/none_bg.png'>
-	                    <p class="none-text">
-	                    </p>
-	                </div>
-	            </li>
-	        </ul>
-	    </div>
-	    <script id="promote-list-tpl" type="text/html">
+    <div class="content">
+        <div class="segmented-control">
+            <a class="control-item active" user_type="0"> 全部 </a>
+            <a class="control-item" user_type="1"> 新客 </a>
+            <a class="control-item" user_type="2"> 老客<label class="timeselect font-color-gray"></label> </a>
+        </div>
+        <div class="content-title" style="display:none">
+            预计返佣
+            <span class="total-amount item-status-pink"></span>
+        </div>
+        <div class="promote-list" id="promote-list">
+            <ul class="table-view" id="promote-title" style="border-bottom:0;margin-bottom:0;display:none">
+                <li class="table-view-cell">
+                    <input type="text" value="" class="timeselect font-color-gray">
+                </li>
+            </ul>
+            <ul class="table-view" id="promote-content"></ul>
+            <ul class="table-view table-none-view" id="promote-none" style="display:none">
+                <li class="none-text-list">
+                    <div>
+                        <img src="img/none_bg.png">
+                        <p class="none-text">
+                        </p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <script id="promote-list-tpl" type="text/html">
 	        {{each data.detail as item i k}}
 	            <li class="table-view-cell">
 	                推广佣金
@@ -89,8 +82,8 @@
 	                    </ul>
 	            </li>
 	        {{/each}}
-	    </script>
-	    <script id="promote-none-tpl" type="text/html">
+        </script>
+        <script id="promote-none-tpl" type="text/html">
 	        <ul class="table-view table-none-view">
 	            <li class="none-text-list">
 	                <div>
@@ -100,8 +93,9 @@
 	                </div>
 	            </li>
 	        </ul>
-	    </script>
-	</div>
+        </script>
+    </div>
 </body>
-
 <html>
+</html>
+</html>

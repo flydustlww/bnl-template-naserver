@@ -1,175 +1,180 @@
 @yahei:MICROSOFT YaHei,Helvetica,Tahoma,sans-serif;
 @charset "UTF-8";
-html{background-color:#ffffff;}
-input{
-	-webkit-appearance:none;
-	appearance:none;
-	-webkit-tap-highlight-color: rgba(255,0,0,0);
-	outline:none;
-	border:0px;
-	padding:0px;
-	margin: 1px;
-	background-color:white;
+html {
+    background-color: #fff;
+}
+input {
+    margin: 1px;
+    padding: 0;
+    border: 0;
+    outline: none;
+    background-color: white;
+
+    -webkit-appearance: none;
+            appearance: none;
+    -webkit-tap-highlight-color: rgba(255,0,0,0);
 }
 
-body{
-	margin: 0;
+body {
+    margin: 0;
 }
-header{
-	padding: 50/750rem 30/750rem 79/750rem 30/750rem;
-	.nav{
-		display: flex;
-		padding: 0 70/750rem 0 70/750rem;
-	}
-	.circle-1-border{
-		width: 30/750rem;
-		height: 30/750rem;
-		border-radius: 50%;
-		border: 1px solid #6069E6;
-		display: inline-block;
-	}
-	.circle-1-dot{
-		width: 13/750rem;
-		height: 13/750rem;
-		border-radius: 50%;
-		background-color: #6069E6;
-		margin: 8/750rem auto;
-	}
-	.text{
-		text-align: center;
-		margin-top: 48/750rem;
-		display: flex;
+header {
+    padding: 50/750rem 30/750rem 79/750rem 30/750rem;
+    .nav {
+        display: flex;
+        padding: 0 70/750rem 0 70/750rem;
+    }
+    .circle-1-border {
+        display: inline-block;
+        width: 30/750rem;
+        height: 30/750rem;
+        border: 1px solid #6069e6;
+        border-radius: 50%;
+    }
+    .circle-1-dot {
+        width: 13/750rem;
+        height: 13/750rem;
+        margin: 8/750rem auto;
+        border-radius: 50%;
+        background-color: #6069e6;
+    }
+    .text {
+        display: flex;
+        margin-top: 48/750rem;
+        text-align: center;
+    }
+    .text-1 {
+        display: inline-block;
+        font-size: 28/750rem;
+        line-height: 28/750rem;
+        color: #6069e6;
 
-	}
-	.text-1{
-		flex: 1;
-		display: inline-block;
-		font-size: 28/750rem;
-		color: #6069E6;
-		line-height: 28/750rem;
-	}
-	.line{
-		flex:1;
-		width: 236/750rem;
-		display: inline-block;
-		height: 1px;
-		border: none;
-		border-top: 1px solid #6069E6;
-	}
-	.line-disabled{
-		flex:1;
-		width: 236/750rem;
-		display: inline-block;
-		height: 1px;
-		border: none;
-		border-top: 1px solid #cccccc;	
-	}
-	.circle-1-border-disabled{
-		width: 30/750rem;
-		height: 30/750rem;
-		border-radius: 50%;
-		border: 1px solid #cccccc;
-		display: inline-block;
-	}
-	.circle-1-dot-disabled{
-		width: 13/750rem;
-		height: 13/750rem;
-		border-radius: 50%;
-		background-color: #cccccc;
-		margin: 8/750rem auto;
-	}
-}
-#PASSP__1__mobilenum{
-	padding-left: 20/750rem;
-	width: 350/640rem;
-	height: 96/750rem;
-	font-size: 24/750rem;
-	line-height: 24/750rem;
+        flex: 1;
+    }
+    .line {
+        display: inline-block;
+        width: 236/750rem;
+        height: 1px;
+        border: none;
+        border-top: 1px solid #6069e6;
 
-	input::-webkit-input-placeholder{
-		color:#cccccc;
-	}
+        flex: 1;
+    }
+    .line-disabled {
+        display: inline-block;
+        width: 236/750rem;
+        height: 1px;
+        border: none;
+        border-top: 1px solid #ccc;
+
+        flex: 1;
+    }
+    .circle-1-border-disabled {
+        display: inline-block;
+        width: 30/750rem;
+        height: 30/750rem;
+        border: 1px solid #ccc;
+        border-radius: 50%;
+    }
+    .circle-1-dot-disabled {
+        width: 13/750rem;
+        height: 13/750rem;
+        margin: 8/750rem auto;
+        border-radius: 50%;
+        background-color: #ccc;
+    }
 }
-#smsLogin{
-	margin: 0 20/640rem ; 
+#PASSP__1__mobilenum {
+    width: 350/640rem;
+    height: 96/750rem;
+    padding-left: 20/750rem;
+    font-size: 24/750rem;
+    line-height: 24/750rem;
+
+    input: :-webkit-input-placeholder {
+        color: #ccc;
+    }
+}
+#smsLogin {
+    margin: 0 20/640rem;
 }
 
-div.phone{
-	width: 61/640rem;
-	height: 72/640rem;
-	float: left;
-	background:url(img/phone.png) no-repeat;
-	background-position: center;
-	background-size: cover;
+div.phone {
+    float: left;
+    width: 61/640rem;
+    height: 72/640rem;
+    background: url(img/phone.png) no-repeat;
+    background-position: center;
+    background-size: cover;
 }
-#PASSP__1__mobilenumWrapper{
-	border: 1px solid #cccccc;
+#PASSP__1__mobilenumWrapper {
+    border: 1px solid #ccc;
 }
-#PASSP__1__password{
-	height: 96/750rem;
-	font-size: 24/750rem;
-	line-height: 24/750rem;
+#PASSP__1__password {
+    height: 96/750rem;
+    font-size: 24/750rem;
+    line-height: 24/750rem;
 }
-#PASSP__1__passwordWrapper{
-	padding-left: 20/750rem;
-	border: 1px solid rgb(216,216,216);
-	background-color: white;
-	position: relative;
+#PASSP__1__passwordWrapper {
+    position: relative;
+    padding-left: 20/750rem;
+    border: 1px solid rgb(216,216,216);
+    background-color: white;
 }
 // 发送动态验证码
-.pass-button-send{
-	// border-left:1px solid rgb(216,216,216);
-	border-radius: 0;
+.pass-button-send {
+    // border-left:1px solid rgb(216,216,216);
+    border-radius: 0;
 }
-#PASSP__1__smsCodeSend{
-	height:96/750rem;
-	color:#ffffff;
-	background-color: #6069E6;
-	font-size:28/750rem;
-	position: absolute;
-    right: 0px;
+#PASSP__1__smsCodeSend {
+    position: absolute;
     top: 0;
-    padding:0 20/640rem;  
+    right: 0;
+    height: 96/750rem;
+    padding: 0 20/640rem;
+    font-size: 28/750rem;
+    color: #fff;
+    background-color: #6069e6;
 }
-.pass-tip-smsCodeSend{
-	display: none;
+.pass-tip-smsCodeSend {
+    display: none;
 }
-#PASSP__1__submit{
-	width: 100%;
-	height: 72/640rem;
-	font-size: 28/640rem;
-	border:0px;
-	border: 2px solid #6069E6;
-	border-radius: 4px;
-	color: #6069E6;
+#PASSP__1__submit {
+    width: 100%;
+    height: 72/640rem;
+    border: 0;
+    border: 2px solid #6069e6;
+    font-size: 28/640rem;
+    color: #6069e6;
+    border-radius: 4px;
 }
 div.key {
-	background-size: 100%;
-	width: 61/640rem;
-	height: 72/640rem;
-	float: left;
-	background:url(img/key.png) no-repeat;
-	background-position: center;
-	background-size: cover;
+    float: left;
+    width: 61/640rem;
+    height: 72/640rem;
+    background: url(img/key.png) no-repeat;
+    background-position: center;
+    background-size: 100%;
+    background-size: cover;
 }
-.passurl{
-	color: #6069E6;
-	font-size: 28/750rem;
-	text-decoration: none;
+.passurl {
+    font-size: 28/750rem;
+    text-decoration: none;
+    color: #6069e6;
 }
-.word{
-	input {
-		-webkit-appearance:none;
-		width: 24/750rem;
-		height: 24/750rem;
-		border: 1px solid #6069E6;
+.word {
+    font-size: 28/750rem;
+    color: #666;
+    input {
+        width: 24/750rem;
+        height: 24/750rem;
+        border: 1px solid #6069e6;
         border-radius: 4px;
-	}
-	font-size:28/750rem;
-	color:#666666;
-}
-#PASSP__1__msgWrapper{
-	color:#FA3250;
-	font-size:24/750rem;
 
+        -webkit-appearance: none;
+    }
+}
+#PASSP__1__msgWrapper {
+    font-size: 24/750rem;
+    color: #fa3250;
 }

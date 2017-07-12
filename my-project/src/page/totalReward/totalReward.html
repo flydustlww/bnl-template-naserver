@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
     <meta charset="utf-8">
     <title>累计佣金</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
 </head>
-
 <body>
     <div class="content">
         <div class="content-title" style="display:none">
@@ -15,8 +15,6 @@
             <span class="total-amount item-status-pink"></span>
         </div>
         <ul class="table-view" id="bill-list">
-            
-
         </ul>
         <script id="bill-list-tpl" type="text/html">
             {{each data.bill_list as item i}}
@@ -29,7 +27,6 @@
                 </li>
             {{/each}}
         </script>
-       
         <script id="none-list-tpl" type="text/html">
             <li class="none-text-list">
                 <div>
@@ -40,8 +37,7 @@
                 </div>
             </li>
         </script>
-
-            <!-- <li class="table-view-cell">
+        <!-- <li class="table-view-cell">
                 <a class="navigate-right">
                     2016.05.15
                     <span class="item-status item-status-green">支付成功</span>
@@ -84,6 +80,5 @@
                 </a>
             </li> -->
     </div>
-
 </body>
 </html>
