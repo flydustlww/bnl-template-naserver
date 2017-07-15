@@ -1,8 +1,6 @@
 import style from './guide.less';
 
 import Vue from 'vue';
-import banner from 'components/banner';
-import list from 'components/list';
 import 'DeferredBNJS';
 var api = require('../../config/api');
 var utilBNJS = require('widget/util/bnjs/util-bnjs');

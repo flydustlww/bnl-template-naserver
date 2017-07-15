@@ -2,6 +2,14 @@
  * @file    接口地址配置
  */
 /* eslint-disable */
+
+/**
+ * myaccount 接口地址
+ * http://band.baidu.com/naserver/user/myaccount?sid=112656384_201707&app_version=5.8.0&timestamp=1499930942771&location=1.0.0&sign=29FB10A5DA0073913397A41E70E1221D
+ * 
+ * getnewmsginfo 接口地址
+ * http://band.baidu.com/naserver/mymessage/getnewmsginfo?sid=112656384_201707&app_version=5.8.0&timestamp=1499930209857&location=1.0.0&sign=7AA9A0C38B3A02C26905CE0F0462712C
+ */
 let item;
 let server;
 let pointgoodslist;
@@ -15,6 +23,8 @@ let juejin;
 let searchmerchant;
 let tasklist;
 let tasknotify;
+let myaccount;
+let getnewmsginfo;
 console.log('__DEV__================' + __DEV__);
 // RD开发环境
 if (__DEV__) {
@@ -42,6 +52,8 @@ juejin = server + 'juejin';
 searchmerchant = server + 'searchmerchant';
 tasklist = server + 'tasklist';
 tasknotify = server + 'tasknotify';
+myaccount = server + 'myaccount';
+getnewmsginfo = server + 'getnewmsginfo';
 
 if (__DEV__ || __QA__) {
     if (/(\:8399|\/mock\/)/.test(server)) {
@@ -56,6 +68,8 @@ if (__DEV__ || __QA__) {
         searchmerchant += '.json';
         tasklist += '.json';
         tasknotify += '.json';
+        myaccount += '.json';
+        getnewmsginfo += '.json';
     }
 }
 
@@ -70,6 +84,8 @@ module.exports = {
     juejin: juejin,
     searchmerchant: searchmerchant,
     tasklist: tasklist,
-    tasknotify: tasknotify
+    tasknotify: tasknotify,
+    myaccount: myaccount,
+    getnewmsginfo: getnewmsginfo,
 };
 /* eslint-disable */

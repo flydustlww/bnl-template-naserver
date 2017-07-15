@@ -177,7 +177,7 @@
 let api = require('../../config/api');
 import $ from 'dep/zepto';
 let Baidu = require('dep/baiduTemplate');
-//为了兼容该死的华为荣誉6
+// 为了兼容该死的华为荣誉6
 let Promise = require('widget/util/es6-promise.js').Promise;
 let dialog = require('widget/dialog/dialog.js');
 let urlParam = require('static/js/urlParam');
@@ -239,8 +239,7 @@ export default {
 	                    that.items = res;
 	                }else{
 	                    that.isShowTps = false;
-	                    that.isShowLists = true; 
-	                    console.log(res)      
+	                    that.isShowLists = true;      
 	                    that.items = res.slice(0,20);
 	                }
 	                

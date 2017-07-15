@@ -1,0 +1,19 @@
+{
+    "errno": 0,
+    "msg": "succ",
+    "data": {
+        "total_amount": 4000,
+        "is_verified": 1,
+        "city_name": "北京市",
+        "alliance_id": "64828",
+        "alliance_name": "鹏润酒店",
+        "alliance_avatar": "http://img1.imgtn.bdimg.com/it/u=3251946061,3461157316&fm=21&gp=0.jpg",
+        "passport_username": "徐胜男Sky",
+        "mobile": "13771789746",
+        "promote_count": "32",
+        "first_dimention_time": "1464688916",
+        "avatar": "http://himg.bdimg.com/sys/portrait/item/0000e5be90e8839ce794b7536b79b706.jpg?1499931036",
+        "real_name": "徐胜男",
+        "certificate_no": "3710**********2514"
+    }
+}
