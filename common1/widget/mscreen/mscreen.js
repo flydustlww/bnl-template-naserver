@@ -1,5 +1,5 @@
 /**
- * [setRem 整屏rem]
+ * @file 整屏方案
  * @Author   yuchangshuang@baidu.com
  * @DateTime 2016-11-23T16:14:19+0800
  * @param    {[number]}                 options.W   [设计图宽]    [必选]
@@ -14,7 +14,7 @@ var newH = 0;
 var tid = null;
 var that;
 var newClient = function (opts) {
-    var clientW = document.documentElement.clientWidth || window.innerWidth || document.body.clientWidth;  //兼容小米note3
+    var clientW = document.documentElement.clientWidth || window.innerWidth || document.body.clientWidth; // 兼容小米note3
     var clientH = document.documentElement.clientHeight || window.innerHeight || document.body.clientHeight;
     var percentDesign = opts.W / opts.H;
     var percentClient = clientW / clientH;
@@ -23,7 +23,8 @@ var newClient = function (opts) {
         newW = percentDesign * clientH;
         newH = clientH;
         document.documentElement.style.fontSize = newW + 'px';
-    } else {
+    }
+    else {
         newW = clientW;
         newH = clientW / percentDesign;
         document.documentElement.style.fontSize = clientW + 'px';
@@ -39,7 +40,8 @@ var newClient = function (opts) {
             opts.obj.style.top = opts.topH;
             opts.obj.style.transform = 'translate3d(-50%, 0, 0)';
             opts.obj.style.webkitTransform = 'translate3d(-50%, 0, 0)';
-        } else {
+        }
+        else {
             opts.obj.style.top = '50%';
             opts.obj.style.transform = 'translate3d(-50%, -50%, 0)';
             opts.obj.style.webkitTransform = 'translate3d(-50%, -50%, 0)';
@@ -48,7 +50,8 @@ var newClient = function (opts) {
 
     if (clientW >= 414) {
         docEl.setAttribute('data-fontscale', 2);
-    } else {
+    }
+    else {
         docEl.setAttribute('data-fontscale', 1);
     }
 };
@@ -58,7 +61,7 @@ module.exports = function (options) {
     opts.W = options.W === undefined ? 640 : Number(options.W);
     opts.H = options.H === undefined ? 960 : Number(options.H);
     opts.obj = options.obj || null;
-    opts.topH = options.topH || "50%";
+    opts.topH = options.topH || '50%';
     opts.cancelResize = options.cancelResize || false;
     if (!opts.cancelResize) {
         window.addEventListener('resize', function () {
@@ -69,7 +72,6 @@ module.exports = function (options) {
         }, false);
     }
 
-
     window.addEventListener('pageshow', function (e) {
         if (e.persisted) {
             clearTimeout(tid);
@@ -77,17 +79,19 @@ module.exports = function (options) {
                 newClient(opts);
             }, 300);
         }
+
     }, false);
 
     if (doc.readyState === 'complete') {
         doc.body.style.fontSize = '12px';
-    } else {
+    }
+    else {
         doc.addEventListener('DOMContentLoaded', function (e) {
             doc.body.style.fontSize = '12px';
         }, false);
     }
 
     newClient(opts);
-    return
+    return;
 
 };

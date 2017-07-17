@@ -21,7 +21,7 @@ let vm = new Vue({
         return h(unionCenter);
     }
 });
-
+/* eslint-disable */
 BNJSReady(() => {
     /* 注册广播接收器 */
     BNJS.page.registerReceiver('com.nuomi.merchant.broadcast.PERSONALPROFILE', function (res) {
