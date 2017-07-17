@@ -7,6 +7,7 @@
  * @param    {[object]}                 options.obj   [包裹元素]  [可选]
  * @param    {[string]}                 options.topH   [包裹元素距离顶部距离，缺省默认上下居中] [可选]
  */
+/* eslint-disable */
 var doc = window.document;
 var docEl = doc.documentElement;
 var newW = 0;
@@ -95,3 +96,4 @@ module.exports = function (options) {
     return;
 
 };
+/* eslint-disable */
