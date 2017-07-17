@@ -1,5 +1,5 @@
 /**
- * @file Describe the file
+ * @file UniconCenter 联盟中心页面
  * @author name<yuchangshuang@baidu.com>
  */
 
@@ -22,4 +22,11 @@ let vm = new Vue({
     }
 });
 
+BNJSReady(() => {
+    /* 注册广播接收器 */
+    BNJS.page.registerReceiver('com.nuomi.merchant.broadcast.PERSONALPROFILE', function (res) {
+        BNJS.ui.toast.show('个人信息页');
+        BNJS.page.start('baidunuomimerchant://component?url=compid=bnl&comppage=userMessage', {}, 1);
+    });
+});
 /* eslint-disable */

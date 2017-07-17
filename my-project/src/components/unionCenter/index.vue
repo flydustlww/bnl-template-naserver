@@ -84,6 +84,8 @@
                 .rem(left, 30);
                 .rem(top, 38);
                 background-size: 35/750rem 35/750rem;
+                background-repeat: no-repeat;
+                background-position: center center;
             }            
             .icon-material {
                 background-image: url('../../page/unionCenter/img/material.png');
@@ -127,8 +129,9 @@
         <ul class="union-list">
             <li class="my-material"><span class="icon icon-material"></span><p class="border-bt">我的物料</p></li>
             <li class="baiduwallet"><span class="icon icon-baiduwallet"></span><p class="border-bt">百度钱包</p></li>
-            <li class="my-message"><span class="icon icon-message"></span><p class="border-bt">我的消息</p></li>
+            <li class="my-message" @click="myMessageclick"><span class="icon icon-message"></span><p class="border-bt">我的消息</p></li>
         </ul>
+        <a href="BaiduNuomiMerchant://bindingphone?channel=alliance&notificationName=com.nuomi.merchant.broadcast.PERSONALPROFILE&bottomText=填写完成,去退出重新登录" class="quick">去填写角色</a>
     </div>
 </template>
 <script>
@@ -230,6 +233,9 @@ export default {
                     }
                 })
             }
+        },
+        myMessageclick: function() {
+            window.location.href = "BaiduNuomiMerchant://mymessagedetail?typeName=公告&typeId=1";
         }
 	}
 }

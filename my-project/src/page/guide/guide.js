@@ -62,7 +62,7 @@ BNJSReady(() => {
     /* 注册广播接收器 */
     BNJS.page.registerReceiver('com.nuomi.merchant.broadcast.LOGIN', function (res) {
         BNJS.ui.toast.show('PAGE_REFRESH接收器注册成功！');
-        BNJS.page.start('baidunuomimerchant://component?url=http://172.22.149.96:8399/page/login.html', {}, 1);
+        BNJS.page.start('baidunuomimerchant://component?url=compid=bnl&comppage=login', {}, 1);
     });
 
 });
