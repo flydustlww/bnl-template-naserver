@@ -1,108 +1,12 @@
 <style lang="less" scoped>
-.rem(@name, @px){
-    @{name}: @px / 750 * 1rem;
-}
-.union-wrap {
-    .union-top {
-        .rem(height, 342);
-        background: url('../../page/unionCenter/img/bg.jpg');
-        .union-user {
-            overflow: hidden;
-            .user-img {
-                float: left;
-                .rem(height, 56);
-                .rem(width, 56);
-                .rem(margin-top, 34);
-                .rem(margin-left, 30);
-                .rem(margin-right, 20);
-                img {
-                    .rem(height, 56);
-                    .rem(width, 56);                    
-                }
-            }
-            .user-message {
-                float: left;
-                p {
-                    .rem(font-size, 28);
-                    color: #fff;
-                    &:nth-child(1) {
-                        .rem(line-height, 56);
-                        .rem(margin-top, 16);
-                    }
-                    .user-name {
-                    }
-                    &.area {
-                        .rem(font-size, 24);
-                        color: rgba(255, 255, 255, 0.7);
-                    }
-                }
-            }
-        }
-        .union-number {
-            .rem(margin-top, 72);
-            ul {
-                overflow: hidden;
-                li {
-                    float: left;
-                    color: #fff;
-                    text-align: center;
-                    .rem(height, 100);
-                    .rem(width, 374);
-                    div {
-                        .rem(font-size, 60);
-                    }
-                    p {
-                        .rem(line-height, 56);
-                        .rem(font-size, 24);
-                    }
-                    &.today {
 
-                    }
-                    &.total {
-
-                    }
-                }
-            }
-        }
-    }
-    .union-list {
-        li {
-            position: relative;
-            .rem(height, 105);
-            .rem(line-height, 105);
-            .rem(padding-left, 100);
-            p {
-                .rem(height, 105);
-                color: #333;
-                .rem(font-size, 32);
-            }
-            .icon {
-                .rem(width, 35);
-                .rem(height, 35);
-                display: block;
-                position: absolute;
-                .rem(left, 30);
-                .rem(top, 38);
-                background-size: 35/750rem 35/750rem;
-                background-repeat: no-repeat;
-                background-position: center center;
-            }            
-            .icon-material {
-                background-image: url('../../page/unionCenter/img/material.png');
-            }
-            .icon-baiduwallet {
-                background-image: url('../../page/unionCenter/img/baiduwallet.png');
-            }
-            .icon-message {
-                background-image: url('../../page/unionCenter/img/message.png');
-            }            
-        }
-    }
-}
 </style>
 
 <template>
     <div class="union-wrap">
+        <section class="union-info-wrap">
+            <p><span class="union-info">您尚未实名认证，将无法进行佣金结算</span><span class="union-info-link">立即认证&nbsp;></span></p>
+        </section>
         <section class="union-top">
             <div class="union-user">
                 <div class="user-img">
@@ -131,7 +35,7 @@
             <li class="baiduwallet"><span class="icon icon-baiduwallet"></span><p class="border-bt">百度钱包</p></li>
             <li class="my-message" @click="myMessageclick"><span class="icon icon-message"></span><p class="border-bt">我的消息</p></li>
         </ul>
-        <a href="BaiduNuomiMerchant://bindingphone?channel=alliance&notificationName=com.nuomi.merchant.broadcast.PERSONALPROFILE&bottomText=填写完成,去退出重新登录" class="quick">去填写角色</a>
+        <!--<a href="BaiduNuomiMerchant://bindingphone?channel=alliance&notificationName=com.nuomi.merchant.broadcast.PERSONALPROFILE&bottomText=填写完成,去退出重新登录" class="quick">去填写角色</a>-->
     </div>
 </template>
 <script>
@@ -140,7 +44,7 @@ require('../../page/unionCenter/unionCenter.less');
 let api = require('../../config/api');
 import $ from 'dep/zepto';
 let Baidu = require('dep/baiduTemplate');
-// 为了兼容该死的华为荣誉6
+// 为了兼容该死的华为荣耀6
 let Promise = require('widget/util/es6-promise.js').Promise;
 let dialog = require('widget/dialog/dialog.js');
 let urlParam = require('static/js/urlParam');
@@ -161,6 +65,9 @@ export default {
 	},
     created: function(){
         this.getData();
+        // this.firstUniondialog();
+        // this.addVertifydialog();
+        this.addUniondialog()
     },
 	methods: {
         getData: function() {
@@ -236,6 +143,82 @@ export default {
         },
         myMessageclick: function() {
             window.location.href = "BaiduNuomiMerchant://mymessagedetail?typeName=公告&typeId=1";
+        },
+        firstUniondialog: function(data) {
+            $.dialog({
+                showTitle : false,
+                dialogClass: 'firstUnion',
+                contentHtml : '恭喜您加入<br><span>"海底捞上地店商户联盟"</span><br>成为百度糯米商户联盟第8位会员',
+                buttonClass : {
+                    ok : 'dialog-font-color-white'
+                }           
+            });
+        },
+        addVertifydialog: function(data) {
+            $.dialog({
+                type: 'confirm',
+                showTitle: false,
+                contentHtml: "您尚未实名认证!<br>将无法进行佣金结算",
+                buttonText: {
+                    ok: '立即认证',
+                    cancel: '稍后再说'
+                },
+                buttonClass: {
+                    ok: 'dialog-font-color-blue',
+                    cancel: 'dialog-btn-cancel'
+                },
+                onClickOk: function () {
+                    console.log("ok");
+                },
+                onClickCancel: function () {
+                    console.log("error");
+                }
+            });            
+        },
+        addUniondialog: function(data) {
+            // 未加登录判断
+            
+/*             $.dialog({
+                type: 'confirm',
+                showTitle: false,
+                dialogClass: 'addUnion',
+                contentHtml: "<p>您尚未加入联盟!</p>系统检测您登录的手机号尚未填<br>写角色信息，故无法加入联盟认<br>领物料和推广，请您尽快完善。",
+                buttonText: {
+                    ok: '立即填写',
+                    cancel: '稍后处理'
+                },
+                buttonClass: {
+                    ok: 'dialog-font-color-blue',
+                    cancel: 'dialog-btn-cancel'
+                },
+                onClickOk: function () {
+                    console.log("ok");
+                },
+                onClickCancel: function () {
+                    console.log("error");
+                }
+            }); */
+            // 判断百糯连弹窗
+            $.dialog({
+                type: 'confirm',
+                showTitle: false,
+                dialogClass: 'addUnion',
+                contentHtml: "<p>您尚未加入联盟!</p>您尚未加入联盟或您的百度账号<br>手机号暂未加入联盟。如您未加入联盟请去<br>填写角色，如已加入请用联盟手机号登录。",
+                buttonText: {
+                    ok: '未加入，去填写',
+                    cancel: '已加入，稍后登录'
+                },
+                buttonClass: {
+                    ok: 'dialog-font-color-blue',
+                    cancel: 'dialog-btn-cancel'
+                },
+                onClickOk: function () {
+                    console.log("ok");
+                },
+                onClickCancel: function () {
+                    console.log("error");
+                }
+            });                
         }
 	}
 }

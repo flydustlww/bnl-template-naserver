@@ -5,7 +5,6 @@
 @font-face
 {
     font-family: 'PingFangSC-Regular';
-    // src: url('../static/fonts/ratchicons.ttf');
 }
 body,html{
     font-family:'PingFangSC-Regular','Microsoft YaHei';
@@ -73,4 +72,180 @@ input{
 }
 .border-1px:after {
     background: #E0E0E0;
+}
+
+.rem(@name, @px){
+    @{name}: @px / 750 * 1rem;
+}
+
+body {
+    .union-wrap {
+        .union-info-wrap {
+            .rem(height, 78);
+            background: #FFF8EF;
+            p {
+                .rem(font-size, 26);
+                .rem(height, 78);
+                .rem(line-height, 78);
+                .rem(padding-left, 30);
+                .rem(padding-right, 30);
+                color: #FF9900;
+                overflow: hidden;
+                .union-info {
+                    float: left;
+                }
+                .union-info-link {
+                    float: right;
+                } 
+            }
+        }
+        .union-top {
+            .rem(height, 342);
+            background: url('./img/bg.jpg');
+            .union-user {
+                overflow: hidden;
+                .user-img {
+                    float: left;
+                    .rem(height, 56);
+                    .rem(width, 56);
+                    .rem(margin-top, 34);
+                    .rem(margin-left, 30);
+                    .rem(margin-right, 20);
+                    img {
+                        .rem(height, 56);
+                        .rem(width, 56);                    
+                    }
+                }
+                .user-message {
+                    float: left;
+                    p {
+                        .rem(font-size, 28);
+                        color: #fff;
+                        &:nth-child(1) {
+                            .rem(line-height, 56);
+                            .rem(margin-top, 16);
+                        }
+                        .user-name {
+                        }
+                        &.area {
+                            .rem(font-size, 24);
+                            color: rgba(255, 255, 255, 0.7);
+                        }
+                    }
+                }
+            }
+            .union-number {
+                .rem(margin-top, 72);
+                ul {
+                    overflow: hidden;
+                    li {
+                        float: left;
+                        color: #fff;
+                        text-align: center;
+                        .rem(height, 100);
+                        .rem(width, 374);
+                        div {
+                            .rem(font-size, 60);
+                        }
+                        p {
+                            .rem(line-height, 56);
+                            .rem(font-size, 24);
+                        }
+                        &.today {
+
+                        }
+                        &.total {
+
+                        }
+                    }
+                }
+            }
+        }
+        .union-list {
+            li {
+                position: relative;
+                .rem(height, 105);
+                .rem(line-height, 105);
+                .rem(padding-left, 100);
+                p {
+                    .rem(height, 105);
+                    color: #333;
+                    .rem(font-size, 32);
+                }
+                .icon {
+                    .rem(width, 35);
+                    .rem(height, 35);
+                    display: block;
+                    position: absolute;
+                    .rem(left, 30);
+                    .rem(top, 38);
+                    background-size: 35/750rem 35/750rem;
+                    background-repeat: no-repeat;
+                    background-position: center center;
+                }            
+                .icon-material {
+                    background-image: url('./img/material.png');
+                }
+                .icon-baiduwallet {
+                    background-image: url('./img/baiduwallet.png');
+                }
+                .icon-message {
+                    background-image: url('./img/message.png');
+                }            
+            }
+        }
+    }
+    
+    .dialog-content-bd{
+        text-align: center;
+        .rem(font-size, 28);
+        .rem(line-height, 48);
+        color: #333;
+    }
+    .dialog-content-ft {
+        .dialog-font-color-blue {
+            color: #6069E6; 
+        }
+    }
+    .firstUnion{
+        .dialog-content {
+            .rem(width, 540);
+        }        
+        .dialog-content-bd {
+            span {
+                color: #565ECC;
+            }
+        }
+        .dialog-content-ft {
+            .rem(padding-left, 55); 
+            .rem(padding-right, 55);
+            .rem(padding-bottom, 50);
+            border: none;
+            a {
+                background: linear-gradient( to left top, #6C4CD4, #6069E6);
+                background: -webkit-linear-gradient( to left top, #6C4CD4, #6069E6);
+                &:last-child {
+                    border-top-right-radius: 5px;
+                }
+                &:first-child {
+                    border-top-left-radius: 5px;
+                }
+            }
+            .dialog-font-color-white {
+                color: #fff;
+            }
+            &:after{
+                border: none;
+            }
+        }
+    }
+    .addUnion {
+        .dialog-content-bd {
+            p {
+                .rem(font-size, 32);
+                .rem(line-height, 55);
+                font-weight: bold;
+            }
+        }
+    }
 }

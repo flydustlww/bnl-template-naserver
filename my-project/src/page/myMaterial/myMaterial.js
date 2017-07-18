@@ -179,7 +179,10 @@ let init = function () {
     bindButton.init();
 };
 
-// util.ready(function () {
 init();
-// });
+
+BNJSReady(() => {
+    BNJS.ui.hideLoadingPage();
+    BNJS.ui.title.setTitle('我的物料');
+});
 /* eslint-disable */

@@ -17,6 +17,7 @@ require('dep/swipe/swiper-3.4.2.jquery.min.js');
 
 /* eslint-disable */
 BNJSReady(() => {
+    BNJS.ui.hideLoadingPage();
     console.log('BNJSReady');
     BNJS.ui.title.setTitle('个人信息页');
 });

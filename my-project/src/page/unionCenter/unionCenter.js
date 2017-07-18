@@ -23,6 +23,7 @@ let vm = new Vue({
 });
 /* eslint-disable */
 BNJSReady(() => {
+    BNJS.ui.hideLoadingPage();
     /* 注册广播接收器 */
     BNJS.page.registerReceiver('com.nuomi.merchant.broadcast.PERSONALPROFILE', function (res) {
         BNJS.ui.toast.show('个人信息页');
