@@ -2,7 +2,7 @@
 //     Zepto.js
 //     (c) 2010-2015 Thomas Fuchs
 //     Zepto.js may be freely distributed under the MIT license.
-
+/* eslint-disable */
 var Zepto = (function() {
   var undefined, key, $, classList, emptyArray = [], concat = emptyArray.concat, filter = emptyArray.filter, slice = emptyArray.slice,
     document = window.document,
@@ -2173,9 +2173,11 @@ window.$ === undefined && (window.$ = Zepto)
             (touch.y2 && Math.abs(touch.y1 - touch.y2) > 30))
 
           swipeTimeout = setTimeout(function() {
-            touch.el.trigger('swipe')
-            touch.el.trigger('swipe' + (swipeDirection(touch.x1, touch.x2, touch.y1, touch.y2)))
-            touch = {}
+            if (touch.el) {
+              touch.el.trigger('swipe')
+              touch.el.trigger('swipe' + (swipeDirection(touch.x1, touch.x2, touch.y1, touch.y2)))
+              touch = {}
+            }
           }, 0)
 
         // normal tap
@@ -2231,3 +2233,4 @@ window.$ === undefined && (window.$ = Zepto)
 })(Zepto);
 
 module.exports = Zepto;
+/* eslint-disable */
