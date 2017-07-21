@@ -3,7 +3,7 @@
     "msg": "succ",
     "data": {
         "total_amount": 4000,
-        "is_verified": 1,
+        "is_verified": 0,
         "city_name": "北京市",
         "alliance_id": "64828",
         "alliance_name": "鹏润酒店",

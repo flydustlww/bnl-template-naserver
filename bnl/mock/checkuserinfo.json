@@ -1,0 +1,11 @@
+{
+    "errno": 0, //2002未登录
+    "msg": "succ",  //错误会有文案
+    "data": {
+        "alliance_info": {
+            "alliance_name": ""
+        },
+        "is_new": 0, //是否是新成员
+        "new_num": 1   //第几位成员
+    }
+}

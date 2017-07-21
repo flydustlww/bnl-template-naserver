@@ -1,7 +1,3 @@
-<style lang="less" scoped>
-
-</style>
-
 <template>
     <div class="union-wrap">
         <section class="union-info-wrap">
@@ -15,16 +11,19 @@
                 <div class="user-message">
                     <p>Hi <span class="user-name">{{passport_username}}</span></p>
                     <p class="area">{{city_name}}{{alliance_name}}</p>
+                    <!--<p class="user-no-login">未登录</p>-->
                 </div>
             </div>
             <div class="union-number">
                 <ul class="commission">
                     <li class="today border-rt">
                         <div class="today-count">{{new_msg_count}}</div>
+                        <!--<div class="cost-no-login">---</div>-->
                         <p>今日预估佣金</p>
                     </li>
                     <li class="total">
                         <div class="total-count">{{total_amount}}</div>
+                        <!--<div class="cost-no-login">---</div>-->
                         <p>累计佣金</p>
                     </li>
                 </ul>
@@ -67,7 +66,7 @@ export default {
         this.getData();
         // this.firstUniondialog();
         // this.addVertifydialog();
-        this.addUniondialog()
+        // this.addUniondialog()
     },
 	methods: {
         getData: function() {

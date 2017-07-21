@@ -1,0 +1,63 @@
+.rem(@name, @px){
+    @{name}: @px / 750 * 1rem;
+}
+
+body {
+    background: #F5F5F5;
+    .user-wrap{
+        background: #fff;
+        .user-list {
+            .rem(padding-left, 30);
+            li {
+                .rem(height, 88);
+                .rem(line-height, 88);
+                .rem(font-size, 28);
+                overflow: hidden;
+                color: #666;
+                span {
+                    color: #333;
+                    display: inline-block;
+                    .rem(margin-left, 68);
+                }
+                .user-is_verified {
+                    display: block;
+                    float: right;
+                    .rem(margin-right, 30);
+                    .rem(margin-left, 6);
+                    .rem(font-size, 26);
+                    color: #FA3250;
+                }
+                strong {
+                    display: block;
+                    float: right;
+                    .rem(height, 28);
+                    .rem(width, 28);
+                    .rem(margin-top, 30);
+                    background-image: url(./img/error.png);
+                    background-size: 100% 100%;
+                    background-repeat: no-repeat;
+                }
+                .user-ok {
+                    background-image: url(./img/ok.png);
+                }
+                .user-error {
+                    background-image: url(./img/error.png);
+                }
+            }
+        }
+    }
+    .user-login {
+        .rem(width, 690);
+        .rem(height, 80);
+        .rem(margin-top, 32);
+        .rem(margin-left, 30);
+        .rem(margin-right, 30);
+        .rem(line-height, 80);
+        .rem(font-size, 32);
+        text-align: center;
+        background: #fff;
+        color: #6069E6;
+        border: 2px solid #6069E6;
+        border-radius: 4px;
+    }
+}

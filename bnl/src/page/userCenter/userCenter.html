@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <title>个人中心</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+</head>
+<body>
+    <div id="app" class="user-wrap">
+        <ul class="user-list">
+            <li class="user-item border-bt">百度账号<span>{{passport_username}}<span></li>
+            <li class="user-item border-bt" v-if="is_verified">姓名
+                <span>{{real_name}}</span>
+                <span class="user-is_verified">已认证</span>
+                <strong class="user-ok"></strong>
+            </li>
+            <li class="user-item border-bt" v-else="user-is_verified">姓名
+                <span>{{real_name}}</span>
+                <span class="user-is_verified">未认证，去认证</span>
+                <strong class="user-error"></strong>
+            </li>
+            <li class="user-item border-bt">手机号<span>{{mobile}}</span></li>
+            <li class="user-item border-bt">证件号<span>{{certificate_no}}</span></li>
+            <li class="user-item border-bt">推广区域<span>{{city_name}}</span></li>
+            <li class="user-item border-bt">推广联盟<span>空</span></li>
+        </ul>
+    </div>
+    <button type="button" class="user-login">退出登录</button>
+    <script>
+    // 设置rem单位为屏幕宽度,适配神器
+    (function () {
+        function rem() {
+            document.documentElement.style.fontSize
+            = (document.documentElement.clientWidth
+            || document.body.clientWidth) + 'px';
+            // 设置body字体大小，不影响body内字体大小
+            document.body.style.fontSize = '16px';
+        }
+        rem();
+        window.addEventListener('resize', rem, false);
+    })();
+    </script>
+</body>
+</html>

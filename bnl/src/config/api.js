@@ -9,6 +9,8 @@
  * 
  * getnewmsginfo 接口地址
  * http://band.baidu.com/naserver/mymessage/getnewmsginfo?sid=112656384_201707&app_version=5.8.0&timestamp=1499930209857&location=1.0.0&sign=7AA9A0C38B3A02C26905CE0F0462712C
+ * 
+ * naserver/newapp/checkuserinfo
  */
 let item;
 let server;

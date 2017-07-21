@@ -62,18 +62,6 @@ input{
   border: none;
 }
 
-.border-tp:before,
-.border-bt:after {
-    background: #E0E0E0;
-}
-.border-rt:after,
-.border-lt:before {
-    background: #E0E0E0;
-}
-.border-1px:after {
-    background: #E0E0E0;
-}
-
 .rem(@name, @px){
     @{name}: @px / 750 * 1rem;
 }
@@ -130,6 +118,9 @@ body {
                         &.area {
                             .rem(font-size, 24);
                             color: rgba(255, 255, 255, 0.7);
+                        }
+                        &.user-no-login {
+                            .rem(margin-top, 36);
                         }
                     }
                 }

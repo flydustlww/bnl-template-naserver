@@ -1,0 +1,32 @@
+.rem(@name, @px){
+    @{name}: @px / 750 * 1rem;
+}
+
+body {
+    background: #F5F5F5;
+    .help-wrap{
+        background: #fff;
+        .help-list {
+            .rem(padding-left, 30);
+            li {
+                .rem(height, 88);
+                .rem(line-height, 88);
+                .rem(font-size, 28);
+                a {
+                    color: #333;
+                    span {
+                        display: block;
+                        float: right;
+                        .rem(height, 23);
+                        .rem(width, 13);
+                        .rem(margin-right, 30);
+                        .rem(margin-top, 32);
+                        background-image: url(./img/arrow.png);
+                        background-repeat: no-repeat;
+                        background-size: 100% 100%;
+                    }
+                }
+            }
+        }
+    }
+}
