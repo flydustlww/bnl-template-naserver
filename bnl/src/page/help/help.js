@@ -5,13 +5,11 @@
 import Vue from 'vue';
 import 'DeferredBNJS';
 
-require('dep/reset/reset.less');
 require('widget/global/global.less');
 require('./help.less');
 let api = require('../../config/api');
 let utilBNJS = require('widget/util/bnjs/util-bnjs');
 let $ = require('dep/zepto');
-require('dep/swipe/swiper-3.4.2.jquery.min.js');
 
 let init = {
     initAll() {
@@ -19,7 +17,7 @@ let init = {
     },
     initEvent() {
     }
-}
+};
 
 init.initAll();
 

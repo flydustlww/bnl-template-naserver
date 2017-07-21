@@ -12,15 +12,15 @@
 <body>
     <div id="app" class="user-wrap">
         <ul class="user-list">
-            <li class="user-item border-bt">百度账号<span>{{passport_username}}<span></li>
+            <li class="user-item border-bt">百度账号<span>{{passport_username}}</span></li>
             <li class="user-item border-bt" v-if="is_verified">姓名
                 <span>{{real_name}}</span>
-                <span class="user-is_verified">已认证</span>
+                <span class="user-verified">已认证</span>
                 <strong class="user-ok"></strong>
             </li>
             <li class="user-item border-bt" v-else="user-is_verified">姓名
                 <span>{{real_name}}</span>
-                <span class="user-is_verified">未认证，去认证</span>
+                <span class="user-verified">未认证，去认证</span>
                 <strong class="user-error"></strong>
             </li>
             <li class="user-item border-bt">手机号<span>{{mobile}}</span></li>

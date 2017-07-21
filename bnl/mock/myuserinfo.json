@@ -1,0 +1,22 @@
+{
+    "errno": 0,
+    "msg": "succ",
+    "data": {
+        "total_amount": 0,
+        "is_verified": 0,
+        "city_name": "",
+        "alliance_id": "51199",
+        "alliance_name": "雕刻时光咖啡馆(乐购店)",
+        "alliance_avatar": "http://img1.imgtn.bdimg.com/it/u=3251946061,3461157316&fm=21&gp=0.jpg",
+        "passport_username": "150*****498",
+        "mobile": "15011287498",
+        "promote_count": "0",
+        "first_dimention_time": "0",
+        "avatar": "http://himg.bdimg.com/sys/portrait/item/6f923135302a2a2a2a2a343938674e.jpg?1500604926",
+        "real_name": "",
+        "certificate_no": "",
+        "total_commission": 0,
+        "today_commission": 0,
+        "merchant_name": ""
+    }
+}
