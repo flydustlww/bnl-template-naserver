@@ -12,7 +12,7 @@
  * 
  * naserver/newapp/checkuserinfo
  * 
- * 
+ * /naserver/newapp/gettoken
  * naserver/newapp/myuserinfo
  */
 let item;
@@ -30,6 +30,9 @@ let tasklist;
 let tasknotify;
 let myaccount;
 let getnewmsginfo;
+let checkuserinfo;
+let myuserinfo;
+let gettoken
 console.log('__DEV__================' + __DEV__);
 // RD开发环境
 if (__DEV__) {
@@ -59,6 +62,9 @@ tasklist = server + 'tasklist';
 tasknotify = server + 'tasknotify';
 myaccount = server + 'myaccount';
 getnewmsginfo = server + 'getnewmsginfo';
+checkuserinfo = server + 'checkuserinfo';
+myuserinfo = server + 'myuserinfo';
+gettoken = server + 'gettoken';
 
 if (__DEV__ || __QA__) {
     if (/(\:8399|\/mock\/)/.test(server)) {
@@ -75,6 +81,9 @@ if (__DEV__ || __QA__) {
         tasknotify += '.json';
         myaccount += '.json';
         getnewmsginfo += '.json';
+        checkuserinfo += '.json';
+        myuserinfo += '.json';
+        gettoken += '.json';
     }
 }
 
@@ -92,5 +101,8 @@ module.exports = {
     tasknotify: tasknotify,
     myaccount: myaccount,
     getnewmsginfo: getnewmsginfo,
+    checkuserinfo: checkuserinfo,
+    myuserinfo: myuserinfo,
+    gettoken: gettoken
 };
 /* eslint-disable */
