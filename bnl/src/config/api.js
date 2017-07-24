@@ -37,7 +37,9 @@ console.log('__DEV__================' + __DEV__);
 // RD开发环境
 if (__DEV__) {
     // server = 'http://cp01-tsm-baino02.cp01.baidu.com:8200';
+    // server = 'http://cp01-ocean-1115-offline.epc.baidu.com:8080/naserver/newapp/';
     server = location.origin + '/mock/';
+    // server = location.origin + '/api/';
 }
 // QA环境
 else if (__QA__) {
@@ -67,7 +69,7 @@ myuserinfo = server + 'myuserinfo';
 gettoken = server + 'gettoken';
 
 if (__DEV__ || __QA__) {
-    if (/(\:8399|\/mock\/)/.test(server)) {
+    if (/(\:8399\/mock\/)/.test(server)) {
         item += '.json';
         newbilllist += '.json';
         GetPromoteInfo += '.json';
