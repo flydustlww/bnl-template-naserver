@@ -9,41 +9,72 @@ require('./login.less');
 var $ = require('dep/zepto');
 var smsLogin = require('./smsLogin.js');
 var urlParam = require('static/js/urlParam');
-import 'DeferredBNJS';
-// 获取query值
-// function urlQuery(key) {
-//     var half = decodeURIComponent(location.search).split(key + '=')[1];
-//     return half != undefined ? decodeURIComponent(half.split('&')[0]) : null;
-// }
+var util = require('widget/util/util');
 
-smsLogin({
-    success: function (bdusign) {
-        // pass登录成功后cb
-        window.location.href = location.search.split('?u=')[1] + '&bdusign=' + bdusign;
+var login = function () {
+    // 登录提示页
+    this.pageOne = $('#first-page');
+    // 登录页
+    this.pageTwo = $('#second-page');
+    // 帮助页
+    this.help = '/help.html';
+    // BNJS操作
+    this.BnjsOperation();
+    // 绑定操作
+    this.bindEvents();
 
-    }
-}, urlParam.getUrlParam('qatest') == 1);
-BNJSReady(() => {
-    console.log('BNJSReady');
-    BNJS.ui.title.addActionButton({
-        tag: '1',
-        text: '帮助',
-        callback: function () {
-            alert('help!');
+};
+
+login.prototype.bindEvents = function () {
+    var me = this;
+    // 打开登录页
+    $('.right').on('touchend', function (e) {
+        // 登录提示页隐藏
+        me.pageTwo.show();
+        // 登录页展示
+        me.pageOne.hide();
+        // 登录成功回调
+        me.smsLogin();
+
+    })
+};
+
+login.prototype.BnjsOperation = function () {
+    var me = this;
+
+    util.ready(function (argument) {
+        console.log('BNJSReady');
+        //
+        BNJS.ui.title.addActionButton({
+            tag: '1',
+            text: '帮助',
+            callback: function () {
+                window.location.href = me.help;
+            }
+
+        });
+
+        // 注册广播接收器
+        BNJS.page.registerReceiver('com.nuomi.merchant.broadcast.LOGIN', function (res) {
+            var str = '';
+            for (var i in res.data) {
+                str = str + i + ':' + res.data[i] + ';';
+            }
+            alert('str');
+            BNJS.ui.toast.show('PAGE_REFRESH接收器注册成功！');
+        });
+    })
+};
+
+login.prototype.smsLogin = function () {
+    smsLogin({
+        success: function (bdusign) {
+            // pass登录成功后cb
+            //window.location.href = location.origin + 'page/unionCenter.html';
         }
+    }, urlParam.getUrlParam('qatest') == 1);
+}
 
-    });
-
-    /* 注册广播接收器 */
-    BNJS.page.registerReceiver('com.nuomi.merchant.broadcast.LOGIN', function (res) {
-        var str = '';
-        for (var i in res.data) {
-            str = str + i + ':' + res.data[i] + ';';
-        }
-        alert('str');
-        BNJS.ui.toast.show('PAGE_REFRESH接收器注册成功！');
-    });
-
-});
+new login();
 
 /* eslint-disable */

@@ -10,8 +10,8 @@ input {
     outline: none;
     background-color: white;
 
-    -webkit-appearance: none;
-            appearance: none;
+    // -webkit-appearance: none;
+    //         appearance: none;
     -webkit-tap-highlight-color: rgba(255,0,0,0);
 }
 
@@ -84,6 +84,53 @@ header {
         background-color: #ccc;
     }
 }
+.login-tips{
+    position: relative;
+    height: 1334/750rem;
+    .bg-img{
+        background: url(img/bg.png) no-repeat;
+        width: 100%;
+        height: 772/750rem;
+        background-size: 100% 772/750rem;
+    }
+    .button{
+        position: absolute;
+        width: 100%;
+        display: flex;
+        bottom: 102/750rem;
+        text-decoration: none;
+        .left{
+            text-align: center;
+            display: inline-block;
+            font-size: 24/750rem;
+            line-height: 80/750rem;
+            margin-left: 30/750rem;
+            height: 80/750rem;
+            flex: 1;
+            color: #fff;
+            background-color: #6069e6;
+            border: 1px solid #6069e6;
+            border-radius: 4px;
+            text-decoration: none
+        }
+        .right{
+            text-align: center;
+            display: inline-block;
+            font-size: 24/750rem;
+            line-height: 80/750rem;
+            margin-left: 26/750rem;
+            margin-right: 30/750rem;
+            height: 80/750rem;
+            flex: 1;
+            color: #6069e6;
+            background-color: #fff;
+            border: 1px solid #6069e6;
+            border-radius: 4px;
+            text-decoration: none
+        }
+    }
+}
+
 #PASSP__1__mobilenum {
     width: 350/640rem;
     height: 96/750rem;
@@ -126,6 +173,7 @@ div.phone {
     // border-left:1px solid rgb(216,216,216);
     border-radius: 0;
 }
+// 发送动态验证码
 #PASSP__1__smsCodeSend {
     position: absolute;
     top: 0;
@@ -136,16 +184,40 @@ div.phone {
     color: #fff;
     background-color: #6069e6;
 }
+#PASSP__1__smsCodeSend.button-inactive{
+   position: absolute;
+   top: 0;
+   right: 0;
+   height: 96/750rem;
+   padding: 0 20/640rem;
+   font-size: 28/750rem;
+   color: #565ECC;
+   border: 1px solid #565ECC;
+   background-color: #EBECFE;
+}
 .pass-tip-smsCodeSend {
     display: none;
 }
+// 立即登录
 #PASSP__1__submit {
     width: 100%;
     height: 72/640rem;
     border: 0;
     border: 2px solid #6069e6;
     font-size: 28/640rem;
-    color: #6069e6;
+    color: #fff;
+    border-radius: 4px;
+    background-image: linear-gradient(45deg, #6C4CD4 0%, #6069E6 100%);
+}
+#PASSP__1__submit.button-inactive{
+    width: 100%;
+    height: 72/640rem;
+    border: 0;
+    border: 2px solid #6069e6;
+    font-size: 28/640rem;
+    color: #6069E6;
+    background: #FFFFFF;
+    border: 2px solid #6069E6;
     border-radius: 4px;
 }
 div.key {
@@ -170,7 +242,7 @@ div.key {
         height: 24/750rem;
         border: 1px solid #6069e6;
         border-radius: 4px;
-        -webkit-appearance: none;
+        // -webkit-appearance: none;
     }
 }
 #PASSP__1__msgWrapper {

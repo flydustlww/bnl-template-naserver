@@ -1,25 +1,8 @@
-// //////////////////////////////////////////////////////////////////
-//                            _ooOoo_                             //
-//                           o8888888o                            //
-//                           88" . "88                            //
-//                           (| ^_^ |)                            //
-//                           O\  =  /O                            //
-//                        ____/`---'\____                         //
-//                      .'  \\|     |//  `.                       //
-//                     /  \\|||  :  |||//  \                      //
-//                    /  _||||| -:- |||||-  \                     //
-//                    |   | \\\  -  /// |   |                     //
-//                    | \_|  ''\---/''  |   |                     //
-//                    \  .-\__  `-`  ___/-. /                     //
-//                  ___`. .'  /--.--\  `. . ___                   //
-//                ."" '<  `.___\_<|>_/___.'  >'"".                //
-//              | | :  `- \`.;`\ _ /`;.`/ - ` : | |               //
-//              \  \ `-.   \_ __\ /__ _/   .-` /  /               //
-//        ========`-.____`-.___\_____/___.-`____.-'========       //
-//                             `=---='                            //
-//        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^      //
-//         佛祖保佑       永无BUG        永不修改                 //
-// //////////////////////////////////////////////////////////////////
+/**
+ * @file smsLogin.js
+ * @author liuboying (liuboying@baidu.com)
+ * @description http://dev.passport.baidu.com/docs/agg/view?path=pcapi.text&doc=pc/jsapi/gettingstarted.text
+ */
 var loginButton = require('./loginButton/loginButton.js');
 
 /**
@@ -206,7 +189,7 @@ function smsLoginInit(option, debug) {
         api = 'http://wappass.qatest.baidu.com/static/touch/js/api/wrapper.js';
     }
     else {
-        api = 'https://wappass.baidu.com/static/touch/js/api/wrapper.js';
+        api = 'http://wappass.baidu.com/static/touch/js/api/wrapper.js';
     }
     $.getScript(api + '?cdnversion=' + new Date().getTime(), function (m) {
         var smsLogin;
@@ -216,24 +199,24 @@ function smsLoginInit(option, debug) {
             library: false,
             defaultCss: false
         }, function (magic) {
-            var jumpPage = window.location.protocol + '//' + window.location.host;
             var opt = {
                 product: 'nuomi',
                 jumpBindCheck: 1,
-                memberPass: true,
-                staticPage: window.location.protocol + '//' + window.location.host + '//v3Jump.html' // __uri('./v3jump.html')
+                memberPass: true,// 记住登录状态
+                staticPage: location.origin + '/page/v3Jump.html',// jump地址，注意大小写
+                u: location.origin + '/page/unionCenter.html'// 登录成功跳转地址
             };
             smsLogin = new magic.passport.smsLogin(opt);
             smsLogin.on('render', function (rsp) {
                 rsp.returnValue = false;
-                var encodeurl = encodeURIComponent(location.search.split('?u=')[1]);
+                var encodeurl = encodeURIComponent(location.origin + 'page/unionCenter.html');
                 var wappassurl = 'http://wappass.baidu.com?tpl=nuomi&u=' + encodeurl;
-                // console.log("wappassurl====="+wappassurl);
                 $('#PASSP__1__mobilenumLabel').hide(); // 手机号label隐藏
                 $('#PASSP__1__mobilenum').attr('placeholder', '请输入手机号');
                 $('#PASSP__1__password').attr('placeholder', '请输入动态密码');
-                $('#PASSP__1__submitWrapper').after('<p class="word"><input type="checkbox" > 我已阅读并同意<a href=' + wappassurl + ' class="passurl">百度糯米商户联盟服务协议</a></p>');
+                $('#PASSP__1__submitWrapper').after('<p class="word"><input type="checkbox" > 我已阅读并同意<a href="http://band.baidu.com/rules/members.html" class="passurl">百度糯米商户联盟服务协议</a></p>');
                 $('#PASSP__1__submit').val('立即加入联盟');
+                $('#PASSP__1__submit').addClass('button-inactive');
                 $('#PASSP__1__msgWrapper').remove();
                 $('#PASSP__1__submitWrapper').before('<p id="PASSP__1__msgWrapper" class="pass-msg-generalMsgWrapper" ></p>');
                 $('.pass-form-agreement').hide();
