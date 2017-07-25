@@ -17,7 +17,7 @@ module.exports.init = function () {
     // 重新发送
     var $btnResend = $('.btn-resend');
     // checkbox
-    var $checkbox = $('.word input')
+    var $checkbox = $('.word input');
 
     // 绑定手机号输入事件
     $inputPhone.on('input', function () {
@@ -41,8 +41,9 @@ module.exports.init = function () {
         }
     });
     if ($checkbox.attr('checked') === true) {
-        
+        $btnConfirm.removeClass('button-inactive');
     }
+    
      /**
      * 验证手机号是否合法
      *
