@@ -10,7 +10,7 @@
                 </div>
                 <div class="user-message" v-if="isLogin">
                     <p>Hi <span class="user-name">{{passport_username}}</span></p>
-                    <p class="area">{{alliance_name}}</p>
+                    <p class="area">{{merchant_name}}</p>
                 </div>
                 <div class="user-message" v-else>
                     <p class="user-no-login">未登录</p>
@@ -50,21 +50,19 @@ export default {
 	name: 'union-center',
 	data: function(){
 		return{
-            isLogin: false,
             token: '',
+            isLogin: false,
             is_alliance: true,
             isInfo: false,
-            total_amount: '',
+            is_new: 0,
             is_verified: '',
-            city_name: '',
-            alliance_id: '',
-            alliance_name: '',
+            new_num: 1,
+            total_amount: '',
+            merchant_name: '',
             passport_username: '',
             promote_count: '',
             today_commission: "---",
             total_commission: "---",
-            is_new: 0,
-            new_num: 1,
             alliance_name: ""
 		}
 	},
@@ -149,16 +147,26 @@ export default {
                     console.log(resp);
                     let datas = resp.data;
                     that.isLogin = true;
+
+                    // 添加点击跳转个人中心事件
+                    $('.union-user').on('tap', function() {
+                        window.location.href = "userCenter.html";
+                    })
+
                     // 加入联盟
                     if (that.is_alliance) {
-                        that.total_amount = datas.total_amount;
                         that.is_verified = datas.is_verified;
-                        that.city_name = datas.city_name;
                         that.alliance_name = datas.alliance_name;
-                        that.promote_count = datas.promote_count;
+                        that.merchant_name = datas.merchant_name;
                         that.passport_username = datas.passport_username;
                         that.today_commission = datas.today_commission;
                         that.total_commission = datas.total_commission;
+                        $('.today').on('tap', function() {
+                            window.location.href = "dailyBilling.html";
+                        });
+                        $('.total').on('tap', function() {
+                            window.location.href = "totalReward.html";
+                        });
                     }
 
                     // 判断是否认证

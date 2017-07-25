@@ -41,9 +41,7 @@ login: 登录页
 
 mendianSearch: 门店查询
 
-messageCenter: 消息中心
-
-myMaterial: 我的物料
+myMaterial: 我的物料s
 
 promoteDetail :
 

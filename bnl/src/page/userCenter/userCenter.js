@@ -4,11 +4,10 @@
  */
 /* eslint-disable */
 import Vue from 'vue';
-// import 'DeferredBNJS'
-import DeferredBNJS from 'DeferredBNJS';
 let $ = require('dep/zepto');
+require('dep/zeptoLib/touch.js');
 let api = require('../../config/api');
-// let utilBNJS = require('common/util/bnjs/util-bnjs');
+let utilBNJS = require('widget/util/bnjs/util-bnjs.js');
 let util = require('widget/util/util');
 
 // 为了兼容该死的华为荣誉6
@@ -21,12 +20,14 @@ require('./userCenter.less');
 let vm = new Vue({
     el: '#app',
     data: {
+        token: "",
         passport_username: "",
         real_name: "",
         mobile: "",
         certificate_no: "",
         city_name: "",
-        is_verified: 0
+        is_verified: 0,
+        alliance_name: ""
     },
     created: function () {
         this.getData();
@@ -36,41 +37,85 @@ let vm = new Vue({
     methods: {
         getData: function () {
             let that = this;
-            $.ajax({
-                url: api.myaccount,
-                type: 'GET',
-                dataType: 'json',
-                data: '',
-                success: function(res){
-                    if (res.errno == 0) {
-                        that.passport_username = res.data.passport_username;
-                        that.real_name = res.data.real_name;
-                        that.mobile = res.data.mobile;
-                        that.certificate_no = res.data.certificate_no;
-                        that.city_name = res.data.city_name;
-                        that.is_verified = res.data.is_verified;
-                        console.log(that.data);
+            // let uid = BNJS.account.uid || "";
+            let uid = "12345"
+            let pN = new Promise(function (resolve, reject) {
+                $.ajax({
+                    url: api.gettoken,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function (res) {
+                        that.token = res.data;
+                        resolve();
+                    },
+                    error: function (res) {
+                        console.log(res);
+                        reject(res);
                     }
-                },
-                error: function(res){
-                    $.dialog({
-                        showTitle : false,
-                        contentHtml : res.msg||'出错了!',
-                        buttonClass : {
-                            ok : 'dialog-font-color-blue'
-                        }
-                    });                    
+                });
+            }).then(resp => httpAjax(api.myuserinfo, {
+                access_token: that.token,
+                b_uid: uid
+            })).catch(function(res) {
+                $.dialog({
+                    showTitle : false,
+                    contentHtml : res.msg||'出错了!',
+                    buttonClass : {
+                        ok : ''
+                    }
+                }); 
+            }).then(res => {
+                if (res.errno === 0) {
+                    that.passport_username = res.data.passport_username;
+                    that.real_name = res.data.real_name;
+                    that.mobile = res.data.mobile;
+                    that.certificate_no = res.data.certificate_no;
+                    that.city_name = res.data.city_name;
+                    that.alliance_name = res.data.alliance_name;
+                    that.is_verified = res.data.is_verified;
+                    if (that.is_verified === 0) {
+                        $('.user-verified').on('tap', function () {
+                            window.location.href = "https://m.baifubao.com/wap/0/wallet/0/cardlist/0";        
+                        })        
+                    }
+                }
+                if (res.errno === 2002) {
+                    window.location.href = "login.html";
                 }
             })
-        }         
+
+            function httpAjax(url, data) {
+                var p = new Promise(function (resolve, reject) {
+                    $.ajax({
+                        url: url,
+                        type: 'GET',
+                        dataType: "json",
+                        data: {
+                            b_uid: data.b_uid,
+                            access_token: data.access_token
+                        },
+                        success: function (resp) {
+                            resolve(resp);
+                        },
+                        error: function (resp) {
+                            reject(resp);
+                        }
+                    });
+                });
+                return p;
+            }
+        },
+        loginClick: function() {
+            window.location.href = "login.html";
+        }      
     },
     components: {
     },
     ready() {}
 });
 
-BNJSReady(() => {
+util.ready(function(BNJS) {
     BNJS.ui.hideLoadingPage();
-    BNJS.ui.title.setTitle('我的物料');
-});
+    BNJS.ui.title.setTitle('个人中心');
+})
 /* eslint-disable */
