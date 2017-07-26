@@ -33,21 +33,13 @@ module.exports = {
                   '^/mock': '/mock'
                 }
               }*/
-<<<<<<< HEAD
                '/api': {
-=======
-             '/api': {
->>>>>>> 86df7083d7d09f5274c4b2ac62e82906fe6b270d
                 target: 'http://cp01-ocean-1115-offline.epc.baidu.com:8080/naserver/newapp',
                 changeOrigin: true,
                 pathRewrite: {
                   '^/api': '/'
                 }
-<<<<<<< HEAD
             }    
-=======
-            }  
->>>>>>> 86df7083d7d09f5274c4b2ac62e82906fe6b270d
         }
     },
     needLogin: [
