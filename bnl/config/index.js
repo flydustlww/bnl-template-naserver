@@ -26,20 +26,20 @@ module.exports = {
         env: require('./dev.env'),
         port: 8399,
         proxyTable: {
-           /* '/mock': {
-                target: 'http://172.22.149.65',
-                changeOrigin: true,
-                pathRewrite: {
-                  '^/mock': '/mock'
-                }
-              }*/
-               '/api': {
+            /* '/mock': {
+                 target: 'http://172.22.149.65',
+                 changeOrigin: true,
+                 pathRewrite: {
+                   '^/mock': '/mock'
+                 }
+               }*/
+            '/api': {
                 target: 'http://cp01-ocean-1115-offline.epc.baidu.com:8080/naserver/newapp',
                 changeOrigin: true,
                 pathRewrite: {
-                  '^/api': '/'
+                    '^/api': '/'
                 }
-            }    
+            }
         }
     },
     needLogin: [

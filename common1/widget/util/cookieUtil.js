@@ -1,3 +1,4 @@
+/* eslint-disable */
 var doc = window.document;
 
 var cookieUtil = {
@@ -108,3 +109,5 @@ var cookieUtil = {
 };
 
 module.exports = cookieUtil;
+
+/* eslint-disable */
