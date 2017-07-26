@@ -214,7 +214,7 @@ function smsLoginInit(option, debug) {
                 $('#PASSP__1__mobilenumLabel').hide(); // 手机号label隐藏
                 $('#PASSP__1__mobilenum').attr('placeholder', '请输入手机号');
                 $('#PASSP__1__password').attr('placeholder', '请输入动态密码');
-                $('#PASSP__1__submitWrapper').after('<p class="word"><a href="guide.html" class="passurl">尚未加入百度糯米商户联盟,去加入</a></p>');
+                $('#PASSP__1__submitWrapper').after('<p class="word"><input type="checkbox" > 我已阅读并同意<a href="http://band.baidu.com/rules/members.html" class="passurl">百度糯米商户联盟服务协议</a></p>');
                 $('#PASSP__1__submit').val('立即加入联盟');
                 $('#PASSP__1__submit').addClass('button-inactive');
                 $('#PASSP__1__msgWrapper').remove();

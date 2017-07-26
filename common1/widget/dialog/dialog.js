@@ -246,7 +246,7 @@ require('./dialog.css');(function (win, $) {
                         fn(e);
                     }
 
-                    e.preventDefault();
+                    // e.preventDefault();
                 });
             }
             else {
