@@ -120,89 +120,98 @@
     };
     var getBill = function (bill_id, page, count, user_type) {
         var html;
-        var postdata = {
-            bill_id: bill_id,
-            page: page,
-            count: count || 10,
-            user_type: user_type
-        };
         if (!isAjaxLocked) {
             isAjaxLocked = true;
             $.ajax({
-                url: api.billing, // "/naserver/user/billing",
-                type: 'get',
+                url: api.gettoken,
+                type: 'GET',
                 dataType: 'json',
-                data: postdata,
-                success: function (data) {
-                    if (data.errno == 0) {
-                        if (data.data && data.data.detail.length > 0) {
-                            $('#reward-title-html').show();
-                            $('#reward-content-list').show();
-                            $('#reward-content-none').hide();
-                            $('#reward-list').removeClass('table-noborder');
-                            data.totalamount = '￥' + formatMoney(data.data.total_commission);
-                            data.curday = getUrlParam('time');
-                            html = template('reward-title-tpl', data); // 顶部总计
-                            $('#reward-title-html').html(html);
-                            add.removeDiv();
-                            $.each(data.data.detail, function (index, item) {
-                                if (item.commission) {
-                                    item.formatcommission = formatMoney(item.commission);
-                                }
+                data: {},
+                success: function(res) {
+                    $.ajax({
+                        url: api.billing, // "/naserver/user/billing",
+                        type: 'get',
+                        dataType: 'json',
+                        data: {
+                            bill_id: bill_id,
+                            page: page,
+                            count: count || 10,
+                            user_type: user_type,
+                            access_token: res.data
+                        },
+                        success: function (data) {
+                            if (data.errno == 0) {
+                                if (data.data && data.data.detail.length > 0) {
+                                    $('#reward-title-html').show();
+                                    $('#reward-content-list').show();
+                                    $('#reward-content-none').hide();
+                                    $('#reward-list').removeClass('table-noborder');
+                                    data.totalamount = '￥' + formatMoney(data.data.total_commission);
+                                    data.curday = getUrlParam('time');
+                                    html = template('reward-title-tpl', data); // 顶部总计
+                                    $('#reward-title-html').html(html);
+                                    add.removeDiv();
+                                    $.each(data.data.detail, function (index, item) {
+                                        if (item.commission) {
+                                            item.formatcommission = formatMoney(item.commission);
+                                        }
 
-                            });
-                            html = template('reward-list-tpl', data);
-                            $(html).appendTo($('#reward-content-list'));
-                        }
-                        else {
-                            if (isInit) {
-                                $('#reward-title-html').hide();
-                                $('#reward-content-list').hide();
-                                $('#reward-content-none').show();
-                                $('#reward-list').addClass('table-noborder');
-                                add.removeDiv();
-                                if (curUserType == 0) {
-                                    $('.reward-list').find('.none-text').html('当日无推广活动！');
+                                    });
+                                    html = template('reward-list-tpl', data);
+                                    $(html).appendTo($('#reward-content-list'));
                                 }
                                 else {
+                                    if (isInit) {
+                                        $('#reward-title-html').hide();
+                                        $('#reward-content-list').hide();
+                                        $('#reward-content-none').show();
+                                        $('#reward-list').addClass('table-noborder');
+                                        add.removeDiv();
+                                        if (curUserType == 0) {
+                                            $('.reward-list').find('.none-text').html('当日无推广活动！');
+                                        }
+                                        else {
+                                            $('.reward-list').find('.none-text').html('不存在该种类型的推广记录！');
+                                        }
+                                    }
+                                    else {
+                                        add.noMoreDiv();
+                                    }
+                                }
+
+                            /*if((data.data.total == 0)&&isTabChange ){
+                                $('#reward-title-html').hide();
+                                $('#reward-list').addClass('table-noborder');
+                            }else{
+                                $('#reward-title-html').show();
+                                $('#reward-list').removeClass('table-noborder');
+                            }
+                            if(isTabChange){
+                                var html = template('reward-list-tpl', data);
+                            }else{
+                                var html = $("#reward-list").html() + template('reward-list-tpl', data);
+                            }
+                            $("#reward-list").html(html);
+                            if(data.data.total == 0){
+                                if(curUserType == 0){
+                                    $('.reward-list').find('.none-text').html('当日无推广活动！');
+                                }else{
                                     $('.reward-list').find('.none-text').html('不存在该种类型的推广记录！');
                                 }
+                            }*/
                             }
                             else {
-                                add.noMoreDiv();
+                                alert(data.msg);
+                                return;
                             }
+                            curPageNum = curPageNum + 1;
+                            isAjaxLocked = false;
+                            $(window).trigger('enableLoad');
                         }
-
-                    /*if((data.data.total == 0)&&isTabChange ){
-                        $('#reward-title-html').hide();
-                        $('#reward-list').addClass('table-noborder');
-                    }else{
-                        $('#reward-title-html').show();
-                        $('#reward-list').removeClass('table-noborder');
-                    }
-                    if(isTabChange){
-                        var html = template('reward-list-tpl', data);
-                    }else{
-                        var html = $("#reward-list").html() + template('reward-list-tpl', data);
-                    }
-                    $("#reward-list").html(html);
-                    if(data.data.total == 0){
-                        if(curUserType == 0){
-                            $('.reward-list').find('.none-text').html('当日无推广活动！');
-                        }else{
-                            $('.reward-list').find('.none-text').html('不存在该种类型的推广记录！');
-                        }
-                    }*/
-                    }
-                    else {
-                        alert(data.msg);
-                        return;
-                    }
-                    curPageNum = curPageNum + 1;
-                    isAjaxLocked = false;
-                    $(window).trigger('enableLoad');
+                    });
                 }
-            });
+            })
+
         }
 
     };

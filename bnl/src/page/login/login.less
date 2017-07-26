@@ -10,126 +10,15 @@ input {
     outline: none;
     background-color: white;
 
-    // -webkit-appearance: none;
-    //         appearance: none;
+    -webkit-appearance: none;
+            appearance: none;
     -webkit-tap-highlight-color: rgba(255,0,0,0);
 }
 
 body {
     margin: 0;
 }
-header {
-    padding: 50/750rem 30/750rem 79/750rem 30/750rem;
-    .nav {
-        display: flex;
-        padding: 0 70/750rem 0 70/750rem;
-    }
-    .circle-1-border {
-        display: inline-block;
-        width: 30/750rem;
-        height: 30/750rem;
-        border: 1px solid #6069e6;
-        border-radius: 50%;
-    }
-    .circle-1-dot {
-        width: 13/750rem;
-        height: 13/750rem;
-        margin: 8/750rem auto;
-        border-radius: 50%;
-        background-color: #6069e6;
-    }
-    .text {
-        display: flex;
-        margin-top: 48/750rem;
-        text-align: center;
-    }
-    .text-1 {
-        display: inline-block;
-        font-size: 28/750rem;
-        line-height: 28/750rem;
-        color: #6069e6;
 
-        flex: 1;
-    }
-    .line {
-        display: inline-block;
-        width: 236/750rem;
-        height: 1px;
-        border: none;
-        border-top: 1px solid #6069e6;
-
-        flex: 1;
-    }
-    .line-disabled {
-        display: inline-block;
-        width: 236/750rem;
-        height: 1px;
-        border: none;
-        border-top: 1px solid #ccc;
-
-        flex: 1;
-    }
-    .circle-1-border-disabled {
-        display: inline-block;
-        width: 30/750rem;
-        height: 30/750rem;
-        border: 1px solid #ccc;
-        border-radius: 50%;
-    }
-    .circle-1-dot-disabled {
-        width: 13/750rem;
-        height: 13/750rem;
-        margin: 8/750rem auto;
-        border-radius: 50%;
-        background-color: #ccc;
-    }
-}
-.login-tips{
-    position: relative;
-    height: 1334/750rem;
-    .bg-img{
-        background: url(img/bg.png) no-repeat;
-        width: 100%;
-        height: 772/750rem;
-        background-size: 100% 772/750rem;
-    }
-    .button{
-        position: absolute;
-        width: 100%;
-        display: flex;
-        bottom: 102/750rem;
-        text-decoration: none;
-        .left{
-            text-align: center;
-            display: inline-block;
-            font-size: 24/750rem;
-            line-height: 80/750rem;
-            margin-left: 30/750rem;
-            height: 80/750rem;
-            flex: 1;
-            color: #fff;
-            background-color: #6069e6;
-            border: 1px solid #6069e6;
-            border-radius: 4px;
-            text-decoration: none
-        }
-        .right{
-            text-align: center;
-            display: inline-block;
-            font-size: 24/750rem;
-            line-height: 80/750rem;
-            margin-left: 26/750rem;
-            margin-right: 30/750rem;
-            height: 80/750rem;
-            flex: 1;
-            color: #6069e6;
-            background-color: #fff;
-            border: 1px solid #6069e6;
-            border-radius: 4px;
-            text-decoration: none
-        }
-    }
-}
 
 #PASSP__1__mobilenum {
     width: 350/640rem;
@@ -143,14 +32,14 @@ header {
     // }
 }
 #smsLogin {
-    margin: 0 20/640rem;
+    margin: 51/750rem 30/750rem;
 }
 
 div.phone {
     float: left;
     width: 61/640rem;
     height: 72/640rem;
-    background: url(img/phone.png) no-repeat;
+    // background: url(img/phone.png) no-repeat;
     background-position: center;
     background-size: cover;
 }
@@ -224,7 +113,7 @@ div.key {
     float: left;
     width: 61/640rem;
     height: 72/640rem;
-    background: url(img/key.png) no-repeat;
+    // background: url(img/key.png) no-repeat;
     background-position: center;
     background-size: 100%;
     background-size: cover;
@@ -237,6 +126,7 @@ div.key {
 .word {
     font-size: 28/750rem;
     color: #666;
+    float: right;
     input {
         width: 24/750rem;
         height: 24/750rem;
@@ -244,6 +134,14 @@ div.key {
         border-radius: 4px;
         // -webkit-appearance: none;
     }
+}
+.footer{
+    position: fixed;
+    bottom: 50/750rem;
+    text-align: center;
+    width: 100%;
+    font-size: 28/750rem;
+    color: #666666;
 }
 #PASSP__1__msgWrapper {
     font-size: 24/750rem;

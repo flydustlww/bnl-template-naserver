@@ -8,7 +8,7 @@ require('./css/reward.css');
 
 var urlParam = require('static/js/urlParam');
 var formatMoney = require('static/js/formatMoney');
-
+var api = require('../../config/api');
 // mock数据
 var api = require('../../config/api');
 
@@ -73,69 +73,78 @@ addMore.prototype.addDiv = function () {
 };
 
 var getBillList = function (sid, xid, app_version, act) {
-    var postdata = {
-        sid: sid,
-        xid: xid ? xid : 0,
-        app_version: app_version,
-        act: act
-    };
     if (!isAjaxLocked) {
         isAjaxLocked = true;
         $.ajax({
-            url: api.newbilllist, // "/naserver/user/newbilllist",
+            url: api.gettoken,
             type: 'GET',
             dataType: 'json',
-            data: postdata,
-            success: function (data) {
+            data: {},
+            success: function(res) {
+                $.ajax({
+                    url: api.newbilllist, // "/naserver/user/newbilllist",
+                    type: 'GET',
+                    dataType: 'json',
+                    data: {
+                        sid: sid,
+                        xid: xid ? xid : 0,
+                        app_version: app_version,
+                        act: act,
+                        access_token: res.data
+                    },
+                    success: function (data) {
 
-                if (data.errno != 0) {
-                    alert(data.msg);
-                    return;
-                }
+                        if (data.errno != 0) {
+                            alert(data.msg);
+                            return;
+                        }
 
-                if (data.data.bill_list.length != 0) {
-                    add.removeDiv();
-                    $('.content-title').show();
-                    var totalAmount = '￥' + formatMoney.formatMoney(data.data.total_commission);
-                    $('.total-amount').html(totalAmount);
-                    $.each(data.data.bill_list, function (i, item) {
-                        var date = new Date(item.date);
-                        if (item.bill_cycle == 1 || item.bill_cycle == 2) { // yue，月账单  提测
-                            if (item.bill_cycle == 1) {
-                                item.href = '/page/promoteDetail.html?bill_id=' + item.bill_id + '&time=' + item.date
-                                + '&bill_id=' + item.bill_id + '&commission=' + item.commission + '&date=' + item.date + '&status=' + item.status + '&status_str=' + item.status_str;
-                            }
+                        if (data.data.bill_list.length != 0) {
+                            add.removeDiv();
+                            $('.content-title').show();
+                            var totalAmount = '￥' + formatMoney.formatMoney(data.data.total_commission);
+                            $('.total-amount').html(totalAmount);
+                            $.each(data.data.bill_list, function (i, item) {
+                                var date = new Date(item.date);
+                                if (item.bill_cycle == 1 || item.bill_cycle == 2) { // yue，月账单  提测
+                                    if (item.bill_cycle == 1) {
+                                        item.href = '/page/promoteDetail.html?bill_id=' + item.bill_id + '&time=' + item.date
+                                        + '&bill_id=' + item.bill_id + '&commission=' + item.commission + '&date=' + item.date + '&status=' + item.status + '&status_str=' + item.status_str;
+                                    }
 
-                            if (item.bill_cycle == 2) {
-                                item.href = '/page/promoteDetail.html?bill_id=' + item.bill_id + '&time=' + item.date
-                                + '&bill_id=' + item.bill_id + '&commission=' + item.commission + '&date=' + (item.date).split('-')[0] + '&status=' + item.status + '&status_str=' + item.status_str;
-                            }
+                                    if (item.bill_cycle == 2) {
+                                        item.href = '/page/promoteDetail.html?bill_id=' + item.bill_id + '&time=' + item.date
+                                        + '&bill_id=' + item.bill_id + '&commission=' + item.commission + '&date=' + (item.date).split('-')[0] + '&status=' + item.status + '&status_str=' + item.status_str;
+                                    }
+                                }
+                                else {
+                                    item.href = '/page/promoteDetail.html?bill_id=' + item.bill_id + '&time=' + item.date;
+                                }
+                                item.formatmoney = formatMoney.formatMoney(item.commission);
+                                item.classname = classMap[item.status + ''];
+                            });
+                            var html = $('#bill-list').html() + template('bill-list-tpl', data);
+                            $('#bill-list').html(html);
                         }
                         else {
-                            item.href = '/page/promoteDetail.html?bill_id=' + item.bill_id + '&time=' + item.date;
+                            if (isInit) {
+                                add.removeDiv();
+                                $('.content-title').hide();
+                                var html = template('none-list-tpl', {});
+                                $('#bill-list').html(html);
+                            }
+                            else {
+                                add.noMoreDiv();
+                            }
                         }
-                        item.formatmoney = formatMoney.formatMoney(item.commission);
-                        item.classname = classMap[item.status + ''];
-                    });
-                    var html = $('#bill-list').html() + template('bill-list-tpl', data);
-                    $('#bill-list').html(html);
-                }
-                else {
-                    if (isInit) {
-                        add.removeDiv();
-                        $('.content-title').hide();
-                        var html = template('none-list-tpl', {});
-                        $('#bill-list').html(html);
+                        isAjaxLocked = false;
+                        isInit = false;
+                        $(window).trigger('enableLoad');
                     }
-                    else {
-                        add.noMoreDiv();
-                    }
-                }
-                isAjaxLocked = false;
-                isInit = false;
-                $(window).trigger('enableLoad');
+                });
             }
-        });
+        })
+
     }
 
 };

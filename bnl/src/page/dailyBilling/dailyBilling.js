@@ -1,14 +1,18 @@
-
+/**
+ * @file 今日佣金
+ * @author songjin <songjin@baidu.com>
+ * @date 2016-08-30
+ */
 require('dep/zepto');
 require('dep/artTemplate');
-
 require('./css/scroll.css');
 require('widget/ratchet/ratchet');
 require('./css/reward.css');
 require('./dailyBilling.less');
+var util = require('widget/util/util');
 var urlParam = require('static/js/urlParam');
 var formatMoney = require('static/js/formatMoney');
-
+var api = require('../../config/api');
 var cutString = require('static/js/cutString');
 var promoteList;
 var isInit;
@@ -106,108 +110,118 @@ var formatTime = function (time) {
     return formattime;
 };
 var getPromoteList = function (page, count, user_type, search_date) {
-    var postdata = {
-        page: page,
-        count: count,
-        user_type: user_type,
-        search_date: search_date
-    };
+
     var total_commission;
     var html;
     if (!isAjaxLocked) {
         isAjaxLocked = true;
         $.ajax({
-            url: '/naserver/user/mycustomer2',
+            url: api.gettoken,
             type: 'GET',
             dataType: 'json',
-            data: postdata,
-            success: function (data) {
-                if (data.errno == 0) {
-                    if (data.data.detail && data.data.detail.length != 0) {
-                        $('.content-title').show();
-                        $('#promote-title').show();
-                        $('#promote-content').show();
-                        $('#promote-none').hide();
-                        if (data.data.total_commission) {
-                            total_commission = '￥' + formatMoney.formatMoney(data.data.total_commission);
-                        }
-                        else {
-                            total_commission = '￥0.00';
-                        }
-                        $('.total-amount').html(total_commission);
-                        add.removeDiv();
-                        $.each(data.data.detail, function (i, item) {
-                            item.formatcommission = formatMoney.formatMoney(item.commission);
-                            if (item.pay_time == 0) { // 购买时间
-                                item.formatpay_time = '--';
-                            }
-                            else {
-                                item.formatpay_time = formatTime(item.pay_time).year + '-' + formatTime(item.pay_time).month + '-' +
-                                formatTime(item.pay_time).date + '' + ' ' + formatTime(item.pay_time).hour + ':' +
-                                formatTime(item.pay_time).minute + ':' + formatTime(item.pay_time).second;
-                            }
-                            if (item.consumption_time == 0) { // 消费时间
-                                item.formatconsumption_time = '--';
-                            }
-                            else {
-                                item.formatconsumption_time = formatTime(item.consumption_time).year + '-' + formatTime(item.consumption_time).month + '-' +
-                                formatTime(item.consumption_time).date + '' + ' ' + formatTime(item.consumption_time).hour + ':' +
-                                formatTime(item.consumption_time).minute + ':' + formatTime(item.consumption_time).second;
-                            }
-                            item.formatorder_price = '￥' + formatMoney.formatMoney(item.order_price); // 订单金额
-                            if (item.rule_name == '') { // 推广策略
-                                item.formatrule_name = '--';
-                            }
-                            else {
-                                item.formatrule_name = cutString.cutString(item.rule_name, 18);
-                            }
-                            if (item.deal_name == '') { // 团单名称
-                                item.formatdeal_name = '--';
-                            }
-                            else {
-                                item.formatdeal_name = cutString.cutString(item.deal_name, 18);
-                            }
-                            if (item.product_type == '') { // 推广类型
-                                item.product_type = '--';
-                            }
+            data: {},
+            success: function(res) {
+                $.ajax({
+                    url: api.mycustomer2,
+                    type: 'GET',
+                    dataType: 'json',
+                    data: {
+                        page: page,
+                        count: count,
+                        user_type: user_type,
+                        search_date: search_date,
+                        access_token: res.data
+                        },
+                    success: function (data) {
+                        if (data.errno == 0) {
+                            if (data.data.detail && data.data.detail.length != 0) {
+                                $('.content-title').show();
+                                $('#promote-title').show();
+                                $('#promote-content').show();
+                                $('#promote-none').hide();
+                                if (data.data.total_commission) {
+                                    total_commission = '￥' + formatMoney.formatMoney(data.data.total_commission);
+                                }
+                                else {
+                                    total_commission = '￥0.00';
+                                }
+                                $('.total-amount').html(total_commission);
+                                add.removeDiv();
+                                $.each(data.data.detail, function (i, item) {
+                                    item.formatcommission = formatMoney.formatMoney(item.commission);
+                                    if (item.pay_time == 0) { // 购买时间
+                                        item.formatpay_time = '--';
+                                    }
+                                    else {
+                                        item.formatpay_time = formatTime(item.pay_time).year + '-' + formatTime(item.pay_time).month + '-' +
+                                        formatTime(item.pay_time).date + '' + ' ' + formatTime(item.pay_time).hour + ':' +
+                                        formatTime(item.pay_time).minute + ':' + formatTime(item.pay_time).second;
+                                    }
+                                    if (item.consumption_time == 0) { // 消费时间
+                                        item.formatconsumption_time = '--';
+                                    }
+                                    else {
+                                        item.formatconsumption_time = formatTime(item.consumption_time).year + '-' + formatTime(item.consumption_time).month + '-' +
+                                        formatTime(item.consumption_time).date + '' + ' ' + formatTime(item.consumption_time).hour + ':' +
+                                        formatTime(item.consumption_time).minute + ':' + formatTime(item.consumption_time).second;
+                                    }
+                                    item.formatorder_price = '￥' + formatMoney.formatMoney(item.order_price); // 订单金额
+                                    if (item.rule_name == '') { // 推广策略
+                                        item.formatrule_name = '--';
+                                    }
+                                    else {
+                                        item.formatrule_name = cutString.cutString(item.rule_name, 18);
+                                    }
+                                    if (item.deal_name == '') { // 团单名称
+                                        item.formatdeal_name = '--';
+                                    }
+                                    else {
+                                        item.formatdeal_name = cutString.cutString(item.deal_name, 18);
+                                    }
+                                    if (item.product_type == '') { // 推广类型
+                                        item.product_type = '--';
+                                    }
 
-                        });
-                        html = template('promote-list-tpl', data);
-                        $(html).appendTo($('#promote-content'));
-                        $('.timeselect').on('change', function (evt) {
-                            var inputval = $(this).val();
-                            window.location.href = '/naserver/user/mycustomer2tpl?time=' + inputval;
-                        });
-                    }
-                    else {
-                        if (isInit) {
-                            $('.content-title').hide();
-                            $('#promote-title').hide();
-                            $('#promote-content').hide();
-                            $('#promote-none').show();
-                            add.removeDiv();
-                            $('.content-title').hide();
-                            if (curUserType == 0) {
-                                promoteList.find('.none-text').html('当日无推广活动！');
+                                });
+                                html = template('promote-list-tpl', data);
+                                $(html).appendTo($('#promote-content'));
+                                $('.timeselect').on('change', function (evt) {
+                                    var inputval = $(this).val();
+                                    window.location.href = '/naserver/user/mycustomer2tpl?time=' + inputval;
+                                });
                             }
                             else {
-                                promoteList.find('.none-text').html('不存在该种类型的推广记录！');
+                                if (isInit) {
+                                    $('.content-title').hide();
+                                    $('#promote-title').hide();
+                                    $('#promote-content').hide();
+                                    $('#promote-none').show();
+                                    add.removeDiv();
+                                    $('.content-title').hide();
+                                    if (curUserType == 0) {
+                                        promoteList.find('.none-text').html('当日无推广活动！');
+                                    }
+                                    else {
+                                        promoteList.find('.none-text').html('不存在该种类型的推广记录！');
+                                    }
+                                }
+                                else {
+                                    add.noMoreDiv();
+                                }
                             }
                         }
                         else {
-                            add.noMoreDiv();
+                            alert(data.msg);
+                            return;
                         }
+                        curPageNum = curPageNum + 1;
+                        isAjaxLocked = false;
+                        $(window).trigger('enableLoad');
                     }
-                }
-                else {
-                    alert(data.msg);
-                    return;
-                }
-                curPageNum = curPageNum + 1;
-                isAjaxLocked = false;
-                $(window).trigger('enableLoad');
+                });
             }
-        });
+        })
+
     }
 
 };
@@ -232,6 +246,17 @@ var bind = function () {
         var user_type = target.attr('user_type');
         curUserType = user_type;
         getPromoteList(curPageNum, curCount, curUserType, formatDate);
+        /*util.ready(function () {
+            BNJS.ui.title.addActionButton({
+                tag: 2,
+                text: '日期',
+                callback: function() {
+
+                }
+
+
+            });
+        });*/
     });
     // 展开收起
     promoteList.on('click', function (evt) {
