@@ -19,9 +19,9 @@ let Promise = require('widget/util/es6-promise.js').Promise;
 let dialog = require('widget/dialog/dialog.js');
 
 // uid和sid从server取 app_version和location没有用了
-let curUid = urlParam.getUrlParam('uid');
-let curSid = urlParam.getUrlParam('sid');
-
+// let curUid = urlParam.getUrlParam('uid');
+// let curSid = urlParam.getUrlParam('sid');
+let accessParam = {};
 // 物料认领按钮`
 let material_button = $('.claim-button');
 
@@ -29,18 +29,6 @@ let material_button = $('.claim-button');
 let dialogTpl = require('./view/dialog.tpl');
 // 加载list模板
 var tpl = require('./view/materialItems.tpl');
-
-// 初始化页面级的Vue实例
-let vm = new Vue({
-    el: 'body',
-    data: {
-        bannerList: [],
-        dealList: []
-    },
-    components: {
-    },
-    ready() {}
-});
 
 /**
  * 获取物料信息，渲染物料列表
@@ -55,39 +43,53 @@ let materialItemView = {
     load: function () {
         let me = this;
         var params = {
-            uid: curUid,
-            sid: curSid
+            access_token: ""
         };
-        $.ajax({
-            url: api.codelist,
-            type: 'GET',
-            dataType: 'json',
-            data: params,
-            success: function (data) {
-                // 如果返回错误弹窗
-                if (data.errno != 0) {
-                    $.dialog({
-                        showTitle: false,
-                        contentHtml: data.msg,
-                        buttonClass: {
-                            ok: 'dialog-font-color-pink'
-                        }
-                    });
+        let pN = new Promise(function (resolve, reject) {
+            $.ajax({
+                url: api.gettoken,
+                type: 'GET',
+                dataType: 'json',
+                success: function (res) {
+                    params.access_token = res.data;
+                    resolve();
+                },
+                error: function (res) {
+                    reject(res);
                 }
-                else {
-                    me.render(data.data.list);
+            });
+        }).then(resp =>{
+            $.ajax({
+                url: api.codelist,
+                type: 'GET',
+                dataType: 'json',
+                data: params,
+                success: function (data) {
+                    // 如果返回错误弹窗
+                    if (data.errno != 0) {
+                        $.dialog({
+                            showTitle: false,
+                            contentHtml: data.msg,
+                            buttonClass: {
+                                ok: 'dialog-font-color-pink'
+                            }
+                        });
+                    }
+                    else {
+                        me.render(data.data.list);
+                    }
+                },
+                error: function () {
                 }
-            },
-            error: function () {
-                // this.fail();
-            }
+            });
         });
+
     },
     render: function (list) {
         // url待与rd传参对
         var HTML = Baidu.template(tpl, {
             item: list,
-            url: 'band://web?type=material_claim&url=' + window.location.protocol + '//' + window.location.host + '/naserver/user/cardlisttpl' + '?uid=' + curUid + '&sid=' + curSid
+            url: 'band://web?type=material_claim&url=' + window.location.protocol + '//' + window.location.host + '/naserver/user/cardlisttpl'
         });
         $('section').html(HTML);
     }
@@ -104,7 +106,7 @@ let bindDialogHtml = function (resolve, reject) {
         url: api.memberMerchant,
         type: 'GET',
         data: {
-            passport_uid: curUid
+            access_token: accessParam.access_token
         },
         dataType: 'json',
         success: function (res) {
@@ -128,7 +130,21 @@ let bindDialogHtml = function (resolve, reject) {
 let bindButton = {
     init: function () {
         material_button.on('tap', function (ev) {
-            new Promise(bindDialogHtml).then(function (res) {
+            let pN = new Promise(function (resolve, reject) {
+                $.ajax({
+                    url: api.gettoken,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function (res) {
+                        accessParam.access_token = res.data;
+                        resolve();
+                    },
+                    error: function (res) {
+                        reject(res);
+                    }
+                });
+            }).then(resp => {
+                let p2 = new Promise(bindDialogHtml).then(function (res) {
                 // 弹窗HTML
                 var html = Baidu.template(dialogTpl, {
                     title: '是否绑定此门店?',
@@ -153,12 +169,15 @@ let bindButton = {
                         window.location.href = 'band://web?type=materials_binding&deal_id=' + this.res.merchant_id + '&deal_name=' + this.res.alliance_name + '&deal_statu=在线&merchant_id=' + this.res.merchant_id + '&product=5';
                     },
                     onClickCancel: function () {
-                        window.location.href = 'band://web?type=query_store&url=' + window.location.protocol + '//' + window.location.host + '/naserver/user/mendiansearch?uid=' + curUid;
+                        window.location.href = 'band://web?type=query_store&url=' + window.location.protocol + '//' + window.location.host + '/naserver/user/mendiansearch?uid=';
                     }
                 });
-            }, function () {
-                window.location.href = '/naserver/user/mendiansearch?uid=' + curUid;
-            });
+
+                }, function () {
+                    window.location.href = '/naserver/user/mendiansearch?uid=' + curUid;
+                });
+
+            })
         });
     }
 };

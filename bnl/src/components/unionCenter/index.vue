@@ -88,7 +88,6 @@ export default {
                         resolve();
                     },
                     error: function (res) {
-                        console.log(res);
                         reject(res);
                     }
                 });
