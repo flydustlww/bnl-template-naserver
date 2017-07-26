@@ -6,7 +6,7 @@
 import Vue from 'vue';
 import DeferredBNJS from 'DeferredBNJS';
 import unionCenter from 'components/unionCenter';
-
+let util = require('widget/util/util');
 // sign    string  8280C3B14E95B2563687631DFABB31BA    签名
 
 let vm = new Vue({
@@ -16,8 +16,16 @@ let vm = new Vue({
     }
 });
 /* eslint-disable */
-BNJSReady(() => {
+util.ready(function(BNJS) {
     BNJS.ui.hideLoadingPage();
+    BNJS.ui.title.setTitle('百度糯米商户联盟');
+    BNJS.ui.title.addActionButton({
+        tag: '1',
+        text: '帮助',
+        callback: function () {
+            window.location.href = "help.html";
+        }
+    });
     /* 注册广播接收器 */
     BNJS.page.registerReceiver('com.nuomi.merchant.broadcast.PERSONALPROFILE', function (res) {
         BNJS.ui.toast.show('个人信息页');

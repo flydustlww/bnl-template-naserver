@@ -32,14 +32,15 @@ let myaccount;
 let getnewmsginfo;
 let checkuserinfo;
 let myuserinfo;
-let gettoken
+let gettoken;
+let bindcode;
 console.log('__DEV__================' + __DEV__);
 // RD开发环境
 if (__DEV__) {
     // server = 'http://cp01-tsm-baino02.cp01.baidu.com:8200';
     // server = 'http://cp01-ocean-1115-offline.epc.baidu.com:8080/naserver/newapp/';
-    server = location.origin + '/mock/';
-    // server = location.origin + '/api/';
+    // server = location.origin + '/mock/';
+    server = location.origin + '/api/';
 }
 // QA环境
 else if (__QA__) {
@@ -67,6 +68,7 @@ getnewmsginfo = server + 'getnewmsginfo';
 checkuserinfo = server + 'checkuserinfo';
 myuserinfo = server + 'myuserinfo';
 gettoken = server + 'gettoken';
+bindcode = server + 'bindcode';
 
 if (__DEV__ || __QA__) {
     if (/(\:8399\/mock\/)/.test(server)) {
@@ -86,6 +88,7 @@ if (__DEV__ || __QA__) {
         checkuserinfo += '.json';
         myuserinfo += '.json';
         gettoken += '.json';
+        bindcode += '.json';
     }
 }
 
@@ -105,6 +108,7 @@ module.exports = {
     getnewmsginfo: getnewmsginfo,
     checkuserinfo: checkuserinfo,
     myuserinfo: myuserinfo,
-    gettoken: gettoken
+    gettoken: gettoken,
+    bindcode: bindcode
 };
 /* eslint-disable */

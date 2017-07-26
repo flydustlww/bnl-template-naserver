@@ -7,7 +7,6 @@ require('widget/global/global.less');
 require('dep/swipe/swiper-3.4.2.min.css');
 require('./firstGuide.less');
 let $ = require('dep/zepto');
-let api = require('../../config/api');
 let util = require('widget/util/util.js');
 let utilBNJS = require('widget/util/bnjs/util-bnjs.js');
 require('dep/zeptoLib/touch.js');
@@ -32,10 +31,9 @@ let init = {
     },
     store() {
         let flag = 1;
-        debugger;
         let storeFlag = utilBNJS.storage.getItem("flag");
         if (storeFlag) {
-            window.location.href = 'guide.html';
+            window.location.href = 'login.html';
         } else {
             utilBNJS.storage.setItem("flag", flag);
         }
@@ -46,8 +44,8 @@ let init = {
 
 /* eslint-disable */
 util.ready(function(BNJS) {
+    init.initAll();
     BNJS.ui.hideLoadingPage();
     BNJS.ui.title.setTitle('百度糯米商户联盟');
-    init.initAll();
 })
 /* eslint-disable */

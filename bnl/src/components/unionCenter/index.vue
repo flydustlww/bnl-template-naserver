@@ -10,7 +10,7 @@
                 </div>
                 <div class="user-message" v-if="isLogin">
                     <p>Hi <span class="user-name">{{passport_username}}</span></p>
-                    <p class="area">{{merchant_name}}</p>
+                    <p class="area">{{alliance_name}}</p>
                 </div>
                 <div class="user-message" v-else>
                     <p class="user-no-login">未登录</p>
@@ -46,13 +46,14 @@ let Baidu = require('dep/baiduTemplate');
 let Promise = require('widget/util/es6-promise.js').Promise;
 let dialog = require('widget/dialog/dialog.js');
 let util = require('widget/util/util');
+let cookieUtil = require('widget/util/cookieUtil.js');
 export default {
 	name: 'union-center',
 	data: function(){
 		return{
             token: '',
             isLogin: false,
-            is_alliance: true,
+            is_alliance: false,
             isInfo: false,
             is_new: 0,
             is_verified: '',
@@ -67,16 +68,16 @@ export default {
 		}
 	},
     created: function(){
-        // util.ready(function(){
-            this.getData();
-        // })
+        var _this = this;
+        util.ready(function(BNJS){
+            _this.getData(BNJS);
+        })
     },
 	methods: {
         getData: function() {
             let that = this;
-            // let uid = BNJS.account.uid || "";
-            let uid = "12345";
-            console.log(api.gettoken);
+            let uid = BNJS.account.uid || "";
+            // 请求access-token,请求checkuserinfo,请求myuserinfo
             let pN = new Promise(function (resolve, reject) {
                 $.ajax({
                     url: api.gettoken,
@@ -91,17 +92,13 @@ export default {
                         reject(res);
                     }
                 });
-            }).then(resp => httpAjax(api.checkuserinfo, {
-                access_token: that.token,
-                b_uid: uid
-            })).catch(function(res) {
-                $.dialog({
-                    showTitle : false,
-                    contentHtml : res.msg||'出错了!',
-                    buttonClass : {
-                        ok : ''
-                    }
-                }); 
+            }).then(
+                resp => httpAjax(api.checkuserinfo, {
+                    access_token: that.token,
+                    b_uid: uid
+                })
+            ).catch(function (res) {
+                BNJS.ui.showErrorPage("拼命加载中");
             }).then(
                 resp => {
                     // 拿到登录的数据
@@ -114,6 +111,9 @@ export default {
                             that.is_new = 1;
                             that.firstUniondialog(resp.data);
                         }
+                        if (resp.data.alliance_info.alliance_name) {
+                            that.is_alliance = true;
+                        }
                         return httpAjax(api.myuserinfo, {
                             access_token: that.token,
                             b_uid: uid
@@ -124,70 +124,83 @@ export default {
                         that.forceLogin();
                     } else if (resp.errno === 70150) {
                         // 未加入联盟
-                        that.addUniondialog();
+                        if (cookieUtil.getItem('allianceFlag') === undefined) {
+                            that.addUniondialog();
+                            cookieUtil.setItem({
+                                key: "allianceFlag",
+                                value: "ok",
+                                maxAge: 10
+                            })
+                        }
                         that.is_alliance = false;
                         that.isInfo = true;
                         that.changeInfo({
                             info: "您尚未填写角色，故无法加入联盟",
                             linkInfo: "去填写角色",
                             url: "BaiduNuomiMerchant://bindingphone?channel=alliance&notificationName=com.nuomi.merchant.broadcast.PERSONALPROFILE&bottomText=填写完成,去退出重新登录"
-                        })
+                        });
+                        return httpAjax(api.myuserinfo, {
+                            access_token: that.token,
+                            b_uid: uid
+                        });
+                    } else if (resp.errno === 1004) {
+                        window.location.reload();
+                    } else {
+                        BNJS.ui.showErrorPage("拼命加载中");
                     }
-                }).catch(function (res) {
-                    $.dialog({
-                        showTitle : false,
-                        contentHtml : res.msg||'出错了!',
-                        buttonClass : {
-                            ok : ''
-                        }
-                    });                    
-                }).then(resp => {
+                }
+            ).catch(function (res) {
+                BNJS.ui.showErrorPage("拼命加载中");
+            }).then(
+                resp => {
                     // 拿到用户的数据
                     console.log("用户的数据")
                     console.log(resp);
                     let datas = resp.data;
-                    that.isLogin = true;
-
-                    // 添加点击跳转个人中心事件
-                    $('.union-user').on('tap', function() {
-                        window.location.href = "userCenter.html";
-                    })
-
-                    // 加入联盟
-                    if (that.is_alliance) {
-                        that.is_verified = datas.is_verified;
-                        that.alliance_name = datas.alliance_name;
-                        that.merchant_name = datas.merchant_name;
-                        that.passport_username = datas.passport_username;
-                        that.today_commission = datas.today_commission;
-                        that.total_commission = datas.total_commission;
-                        $('.today').on('tap', function() {
-                            window.location.href = "dailyBilling.html";
-                        });
-                        $('.total').on('tap', function() {
-                            window.location.href = "totalReward.html";
-                        });
-                    }
-
-                    // 判断是否认证
-                    if (that.is_verified === 0) {
-                        that.isInfo = true;
-                        that.changeInfo({
-                            info: "您尚未实名认证，将无法进行佣金结算",
-                            linkInfo: "立即认证",
-                            url: "https://m.baifubao.com/wap/0/wallet/0/cardlist/0"
+                    if (resp.errno === 0) {
+                        that.isLogin = true;
+                        // 添加点击跳转个人中心事件
+                        $('.union-user').on('tap', function () {
+                            window.location.href = "userCenter.html";
                         })
-                        that.addVertifydialog();
-                    }
-                }).catch(function() {
-                    $.dialog({
-                        showTitle : false,
-                        contentHtml : res.msg||'出错了!',
-                        buttonClass : {
-                            ok : ''
+
+                        // 加入联盟
+                        if (that.is_alliance) {
+                            that.is_verified = datas.is_verified;
+                            that.alliance_name = datas.alliance_name;
+                            that.merchant_name = datas.merchant_name;
+                            that.passport_username = datas.passport_username;
+                            that.today_commission = datas.today_commission;
+                            that.total_commission = datas.total_commission;
+                            $('.today').on('tap', function () {
+                                window.location.href = "dailyBilling.html";
+                            });
+                            $('.total').on('tap', function () {
+                                window.location.href = "totalReward.html";
+                            });
                         }
-                    }); 
-                });
+
+                        // 判断是否认证
+                        if (that.is_verified === 0) {
+                            that.isInfo = true;
+                            that.changeInfo({
+                                info: "您尚未实名认证，将无法进行佣金结算",
+                                linkInfo: "立即认证",
+                                url: "https://m.baifubao.com/wap/0/wallet/0/cardlist/0"
+                            })
+                            // 认证弹窗暂时不需要了
+                            // that.addVertifydialog();
+                        }
+                    } else if (resp.errno === 2002) {
+                        that.isLogin = false;
+                        that.forceLogin();
+                    } else {
+                        BNJS.ui.showErrorPage("拼命加载中");
+                    }
+                }
+            ).catch(function () {
+                BNJS.ui.showErrorPage("拼命加载中");
+            });
 
             function httpAjax(url, data) {
                 var p = new Promise(function (resolve, reject) {
@@ -209,11 +222,9 @@ export default {
                 });
                 return p;
             }
-
         },
         forceLogin: function() {
             $('.union-top').on('tap', function() {
-                console.log(111);
                 window.location.href = "login.html";
             })
             $('.union-list').on('tap', function() {
@@ -227,12 +238,10 @@ export default {
             $('.union-info').html(info);
             $('.union-info-link').html(linkInfo+"&nbsp;>");
             $('.union-info-wrap').on('tap', function(ev) {
-                console.log(url);
                 window.location.href = url;
             })
         },
         materialClick: function() {
-            console.log("11111");
             if (this.is_alliance) {
                 window.location.href = "myMaterial.html";
             }
@@ -314,6 +323,7 @@ export default {
                 }
             });             
         }
-	}
+
+    }
 }
 </script>

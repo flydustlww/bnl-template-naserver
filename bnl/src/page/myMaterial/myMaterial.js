@@ -8,7 +8,7 @@ import Vue from 'vue';
 // import 'DeferredBNJS'
 let $ = require('dep/zepto');
 let api = require('../../config/api');
-// let utilBNJS = require('common/util/bnjs/util-bnjs');
+let utilBNJS = require('widget/util/bnjs/util-bnjs');
 
 let util = require('widget/util/util');
 let urlParam = require('static/js/urlParam');
@@ -50,18 +50,7 @@ let materialItemView = {
     pageData: {},
     init: function () {
         let me = this;
-        // 设置页面标题
-        BNJSReady(() => {
-            BNJS.ui.title.setTitle('我的物料');
-            // DeferredBNJS.ui.title.setTitle('test');
-        });
-
-        // util.ready(function () {
-
-        // });
-        // BNJS.ui.title.setTitle('我的物料');
         me.load();
-
     },
     load: function () {
         let me = this;
@@ -181,8 +170,8 @@ let init = function () {
 
 init();
 
-BNJSReady(() => {
+util.ready(function(BNJS) {
     BNJS.ui.hideLoadingPage();
     BNJS.ui.title.setTitle('我的物料');
-});
+})
 /* eslint-disable */

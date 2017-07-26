@@ -59,3 +59,6 @@ unionCenter: 联盟中心
 
 userCenter: 个人中心
 
+测试：
+baidunuomimerchant://component?url=http://test.baidu.com:8399/page/mendianSearch.html
+

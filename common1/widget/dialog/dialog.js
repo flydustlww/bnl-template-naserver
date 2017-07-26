@@ -110,7 +110,8 @@ require('./dialog.css');(function (win, $) {
         touchEvent.tap($(okBtn), function () {
             settings.onClickOk();
             $.dialog.close();
-            return false;
+            //return false;
+            // alert('')
         });
 
         touchEvent.tap($(cancelBtn), function () {

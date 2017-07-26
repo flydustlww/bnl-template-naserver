@@ -154,7 +154,7 @@
 	<div>
 	<div class="select-wrap" id="select-wrap">
 	    <input type="text" id="input" placeholder="请输入门店名称/门店ID" class="mendian-id-text" v-model="mendianInfo" />
-	    <div class="clearlayer" @click = clear v-show='mendianInfo'>
+	    <div class="clearlayer" @click="clear" v-show='mendianInfo'>
 	    	<span class="clear"><span class="clear-close"></span></span>
 	    </div>
 	    
@@ -174,14 +174,15 @@
 	</div>
 </template>
 <script>
-let api = require('../../config/api');
 import $ from 'dep/zepto';
+let api = require('../../config/api');
 let Baidu = require('dep/baiduTemplate');
 // 为了兼容该死的华为荣誉6
 let Promise = require('widget/util/es6-promise.js').Promise;
 let dialog = require('widget/dialog/dialog.js');
 let urlParam = require('static/js/urlParam');
 let curUid = urlParam.getUrlParam('uid');
+let util = require('widget/util/util'); 
 export default {
 	name: 'mendian-search',
 	data: function(){
@@ -192,7 +193,8 @@ export default {
 			isShowNote: true,
 			isShowTps: false,
 			isPink: false,
-			lastItem: true
+			lastItem: true,
+            token: ""
 		}
 
 	  },
@@ -232,27 +234,40 @@ export default {
 	            // 输入
 	            that.isShowLists = true;
 	            that.isShowNote = false;
-	            new Promise(this.getSearchData).then(function(res){
-	                if (res.length === 0){
-	                    that.isShowLists=false;
-	                    that.isShowTps = true;
-	                    that.items = res;
-	                }else{
-	                    that.isShowTps = false;
-	                    that.isShowLists = true;      
-	                    that.items = res.slice(0,20);
-	                }
-	                
-	            },function(res){
-	                $.dialog({
-	                    showTitle : false,
-	                    contentHtml : res.msg||'出错了!',
-	                    buttonClass : {
-	                        ok : 'dialog-font-color-pink'
-	                    }
-	                });
-	            })
-	            that.isPink = true;
+                $.ajax({
+                    url: api.gettoken,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function (res) {
+                        that.token = res.data;
+                        new Promise(that.getSearchData).then(function(res){
+                                if (res.length === 0){
+                                    that.isShowLists=false;
+                                    that.isShowTps = true;
+                                    that.items = res;
+                                }else{
+                                    that.isShowTps = false;
+                                    that.isShowLists = true;      
+                                    that.items = res.slice(0,20);
+                                }
+                                
+                            },function(res){
+                                $.dialog({
+                                    showTitle : false,
+                                    contentHtml : res.msg||'出错了!',
+                                    buttonClass : {
+                                        ok : 'dialog-font-color-pink'
+                                    }
+                                });
+                            }).catch(function (res) {
+                            BNJS.ui.showErrorPage("拼命加载中");
+                        });
+
+                        that.isPink = true;                        
+                    },
+                    error: function (res) {
+                    }
+                });
 	        }      
 	    }
 	},
@@ -262,8 +277,88 @@ export default {
 	        this.items = [];
 	    },
 	    bindMaterial:function(name,merchart_id){
-	        window.location.href = 'band://web?type=materials_binding&deal_id='+'&deal_name='+name+'&deal_statu=在线&merchant_id='+merchart_id+'&product=5';
+	        // window.location.href = 'band://web?type=materials_binding&deal_id='+'&deal_name='+name+'&deal_statu=在线&merchant_id='+merchart_id+'&product=5';
+
+            /**
+            'access_token'  "",
+            'code_id'     "",  
+            'product'     5,  //产品类型
+            */
+            var _this = this;
+            util.ready(function(BNJS) {
+                BNJS.hardware.scanQRCode(function(res) {
+                    let url = res.data.content;
+                    let result = _this.parseQueryString(url);
+                    let code_id = result.id;
+                    let pN = new Promise(function (resolve, reject) {
+                        $.ajax({
+                            url: api.gettoken,
+                            type: 'GET',
+                            dataType: 'json',
+                            success: function (res) {
+                                _this.token = res.data;
+                                resolve();
+                            },
+                            error: function (res) {
+                                console.log(res);
+                                reject(res);
+                            }
+                        });
+                    }).then(res => httpAjax(api.bindcode, {
+                            access_token: _this.token,
+                            code_id: code_id,
+                            product: 5
+                        })).catch(function(){
+                        BNJS.ui.showErrorPage("拼命加载中");
+                    }).then(function(resp){
+                        $.dialog({
+                            showTitle : false,
+                            contentHtml : resp.msg,
+                            buttonClass : {
+                                ok : 'dialog-font-color-pink'
+                            },
+                            onClickOk: function() {
+                                //window.location.reload();
+                                console.log('q');
+                            }
+                        });    
+                    })
+
+                    function httpAjax(url, data) {
+                        let params = data;
+                        var p = new Promise(function (resolve, reject) {
+                            $.ajax({
+                                url: url,
+                                type: 'POST',
+                                dataType: "json",
+                                data: params,
+                                success: function (resp) {
+                                    resolve(resp);
+                                },
+                                error: function (resp) {
+                                    reject(resp);
+                                }
+                            });
+                        });
+                        return p;
+                    }                    
+                })
+            })
+
 	    },
+        parseQueryString: function (url) {
+             var reg_url = /^[^\?]+\?([\w\W]+)$/,
+                  reg_para = /([^&=]+)=([\w\W]*?)(&|$|#)/g,
+                  arr_url = reg_url.exec(url),
+                  ret = {};
+             if (arr_url && arr_url[1]) {
+                  var str_para = arr_url[1], result;
+                  while ((result = reg_para.exec(str_para)) != null) {
+                       ret[result[1]] = result[2];
+                  }
+             }
+             return ret;
+        },       
 	    // 获取检索数据
 	    getSearchData: function(resole,reject){
 	        let that = this;
@@ -278,6 +373,7 @@ export default {
 	                    name: that.mendianInfo
 	                }
 	            }
+                _params.access_token = that.token;
 	            return _params;
 	        };
 	        $.ajax({
