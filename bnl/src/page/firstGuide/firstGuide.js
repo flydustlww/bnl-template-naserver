@@ -26,14 +26,14 @@ let init = {
     },
     initEvent() {
         $enterLm.on('tap', function () {
-            window.location.href = 'guide.html';
+            BNJS.page.start("BaiduNuomiMerchant://component?compid=bnl&comppage=login", {}, 1);
         });
     },
     store() {
         let flag = 1;
         let storeFlag = utilBNJS.storage.getItem("flag");
         if (storeFlag) {
-            window.location.href = 'login.html';
+            BNJS.page.start("BaiduNuomiMerchant://component?compid=bnl&comppage=login", {}, 1);
         } else {
             utilBNJS.storage.setItem("flag", flag);
         }
@@ -43,7 +43,7 @@ let init = {
 
 
 /* eslint-disable */
-util.ready(function(BNJS) {
+util.ready(function() {
     init.initAll();
     BNJS.ui.hideLoadingPage();
     BNJS.ui.title.setTitle('百度糯米商户联盟');

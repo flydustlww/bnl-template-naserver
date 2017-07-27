@@ -31,8 +31,8 @@ let vm = new Vue({
     },
     created: function () {
         var _this = this;
-        util.ready(function(BNJS) {
-            _this.getData(BNJS);
+        util.ready(function() {
+            _this.getData();
         })
     },
     watch: function () {
@@ -40,7 +40,7 @@ let vm = new Vue({
     methods: {
         getData: function () {
             let that = this;
-            let uid = BNJS.account.uid || "";
+            let uid = BNJS.account.uid || 0;
             let pN = new Promise(function (resolve, reject) {
                 $.ajax({
                     url: api.gettoken,
@@ -51,7 +51,6 @@ let vm = new Vue({
                         resolve();
                     },
                     error: function (res) {
-                        console.log(res);
                         reject(res);
                     }
                 });
@@ -59,7 +58,7 @@ let vm = new Vue({
                 access_token: that.token,
                 b_uid: uid
             })).catch(function(res) {
-                BNJS.ui.showErrorPage("拼命加载中"); 
+                BNJS.ui.showErrorPage(); 
             }).then(res => {
                 if (res.errno === 0) {
                     that.passport_username = res.data.passport_username ? res.data.passport_username : "--";
@@ -75,12 +74,12 @@ let vm = new Vue({
                         })        
                     }
                 } else if (res.errno === 2002) {
-                    window.location.href = "login.html";
+                    BNJS.page.start("BaiduNuomiMerchant://component?compid=bnl&comppage=login", {});
                 } else {
-                    BNJS.ui.showErrorPage("拼命加载中");
+                    BNJS.ui.showErrorPage();
                 }
             }).catch(function() {
-                BNJS.ui.showErrorPage("拼命加载中");
+                BNJS.ui.showErrorPage();
             })
 
             function httpAjax(url, data) {
@@ -119,7 +118,7 @@ let vm = new Vue({
                     cancel: 'dialog-btn-cancel'
                 },
                 onClickOk: function () {
-                    window.location.href = "login.html";
+                    BNJS.page.start("BaiduNuomiMerchant://component?compid=bnl&comppage=login", {});
                 },
                 onClickCancel: function () {
                 }
@@ -130,8 +129,15 @@ let vm = new Vue({
     }
 });
 
-util.ready(function(BNJS) {
+util.ready(function() {
     BNJS.ui.hideLoadingPage();
     BNJS.ui.title.setTitle('个人中心');
+    BNJS.ui.title.addActionButton({
+        tag: '1',
+        text: '帮助',
+        callback: function () {
+            BNJS.page.start("BaiduNuomiMerchant://component?compid=bnl&comppage=help", {}, 1);
+        }
+    });
 })
 /* eslint-disable */

@@ -69,14 +69,15 @@ export default {
 	},
     created: function(){
         var _this = this;
-        util.ready(function(BNJS){
-            _this.getData(BNJS);
+        util.ready(function(){
+            _this.getData();
         })
     },
 	methods: {
         getData: function() {
             let that = this;
-            let uid = BNJS.account.uid || "";
+            // let uid = BNJS.account.uid || 0;
+            let uid = 1234;
             // 请求access-token,请求checkuserinfo,请求myuserinfo
             let pN = new Promise(function (resolve, reject) {
                 $.ajax({
@@ -158,13 +159,13 @@ export default {
                     let datas = resp.data;
                     if (resp.errno === 0) {
                         that.isLogin = true;
-                        // 添加点击跳转个人中心事件
-                        $('.union-user').on('tap', function () {
-                            window.location.href = "userCenter.html";
-                        })
-
                         // 加入联盟
                         if (that.is_alliance) {
+                        // 添加点击跳转个人中心事件
+                            $('.union-user').on('tap', function () {
+                                let url = "BaiduNuomiMerchant://component?compid=bnl&comppage=unionCenter";
+                                BNJS.page.start(url, {});
+                            })                            
                             that.is_verified = datas.is_verified;
                             that.alliance_name = datas.alliance_name;
                             that.merchant_name = datas.merchant_name;
@@ -172,10 +173,12 @@ export default {
                             that.today_commission = datas.today_commission;
                             that.total_commission = datas.total_commission;
                             $('.today').on('tap', function () {
-                                window.location.href = "dailyBilling.html";
+                                let url = "BaiduNuomiMerchant://component?compid=bnl&comppage=dailyBilling";
+                                BNJS.page.start(url, {});
                             });
                             $('.total').on('tap', function () {
-                                window.location.href = "totalReward.html";
+                                let url = "BaiduNuomiMerchant://component?compid=bnl&comppage=totalReward";
+                                BNJS.page.start(url, {});
                             });
                         }
 
@@ -187,7 +190,7 @@ export default {
                                 linkInfo: "立即认证",
                                 url: "https://m.baifubao.com/wap/0/wallet/0/cardlist/0"
                             })
-                            // 认证弹窗暂时不需要了
+                            // 认证弹窗暂时不需要了 未添加48小时弹窗
                             // that.addVertifydialog();
                         }
                     } else if (resp.errno === 2002) {
@@ -224,10 +227,10 @@ export default {
         },
         forceLogin: function() {
             $('.union-top').on('tap', function() {
-                window.location.href = "login.html";
+                BNJS.page.start("BaiduNuomiMerchant://component?compid=bnl&comppage=login", {}, 1);
             })
             $('.union-list').on('tap', function() {
-                window.location.href = "login.html";
+                BNJS.page.start("BaiduNuomiMerchant://component?compid=bnl&comppage=login", {}, 1);
             })
         },
         changeInfo: function(data) {
@@ -242,7 +245,7 @@ export default {
         },
         materialClick: function() {
             if (this.is_alliance) {
-                window.location.href = "myMaterial.html";
+                BNJS.page.start("BaiduNuomiMerchant://component?compid=bnl&comppage=myMaterial", {});
             }
         },
         baiduWalletclick: function() {
@@ -252,7 +255,7 @@ export default {
         },
         myMessageclick: function() {
             if (this.is_alliance) {
-                window.location.href = "BaiduNuomiMerchant://mymessagedetail?typeName=公告&typeId=1";
+                BNJS.page.start("BaiduNuomiMerchant://mymessagedetail?typeName=公告&typeId=1", {}, 1);
             }
         },
         firstUniondialog: function(data) {

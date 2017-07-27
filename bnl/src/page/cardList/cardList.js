@@ -144,7 +144,7 @@ let bindCode = function (app_version, location, uid, sid, id, deal_id, merchant_
         product: product
     };
     $.ajax({
-        url: '/naserver/common/bindcode',
+        url: api.bindcode,
         type: 'POST',
         dataType: 'json',
         data: param,

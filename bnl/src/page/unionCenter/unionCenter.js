@@ -23,13 +23,12 @@ util.ready(function(BNJS) {
         tag: '1',
         text: '帮助',
         callback: function () {
-            window.location.href = "help.html";
+            BNJS.page.start("BaiduNuomiMerchant://component?compid=bnl&comppage=help", {}, 1);
         }
     });
     /* 注册广播接收器 */
     BNJS.page.registerReceiver('com.nuomi.merchant.broadcast.PERSONALPROFILE', function (res) {
-        BNJS.ui.toast.show('个人信息页');
-        BNJS.page.start('baidunuomimerchant://component?url=compid=bnl&comppage=userMessage', {}, 1);
+        BNJS.page.start('baidunuomimerchant://component?url=compid=bnl&comppage=userCenter', {}, 1);
     });
 });
 /* eslint-disable */

@@ -9,7 +9,7 @@ let $ = require('dep/zepto');
 let util = require('widget/util/util.js');
 
 /* eslint-disable */
-util.ready(function(BNJS) {
+util.ready(function() {
     BNJS.ui.hideLoadingPage();
     BNJS.ui.title.setTitle('百度糯米商户联盟');
 })
