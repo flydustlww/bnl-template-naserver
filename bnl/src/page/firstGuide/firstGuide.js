@@ -2,6 +2,7 @@
  * @file firstGuide 引导页面
  * @author name<yuchangshuang@baidu.com>
  */
+/* eslint-disable */
 import Vue from 'vue';
 require('widget/global/global.less');
 require('dep/swipe/swiper-3.4.2.min.css');
@@ -42,7 +43,7 @@ let init = {
 
 
 
-/* eslint-disable */
+
 util.ready(function() {
     init.initAll();
     BNJS.ui.hideLoadingPage();
