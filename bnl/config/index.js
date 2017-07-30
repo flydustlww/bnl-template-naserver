@@ -17,7 +17,18 @@ module.exports = {
         // Before setting to `true`, make sure to:
         // npm install --save-dev compression-webpack-plugin
         productionGzip: false,
-        productionGzipExtensions: ['js', 'css']
+        productionGzipExtensions: ['js', 'css'],
+        // QA验收用,上线前要注释掉
+        port: 8399,
+        proxyTable: {
+            '/api': {
+                target: 'http://cp01-ocean-1115-offline.epc.baidu.com:8080/naserver/newapp',
+                changeOrigin: true,
+                pathRewrite: {
+                    '^/api': '/'
+                }
+            }
+        }
     },
     qa: {
         env: require('./qa.env')

@@ -16,24 +16,29 @@ let mScreen = require('widget/mscreen/mscreen');
 let $enterLm = $('#enterLm');
 
 let init = {
-    initAll() {
+    initAll(BNJS) {
         mScreen(750, 1205);
         // this.store();
-        this.initEvent();
+        this.initEvent(BNJS);
         let mySwiper = new Swiper('.swiper-container', {
             loop: true
         });
     },
-    initEvent() {
+    initEvent(BNJS) {
         $enterLm.on('tap', function () {
-            window.location.href = 'guide.html';
+            var url = 'BaiduNuomiMerchant://component?url=http://cp01-ocean-1115-offline.epc.baidu.com:8080/naserver/newapp/merchantloginguidetpl';
+            BNJS.page.start(url,{},1)
+            
+
         });
     },
-    store() {
+    store(BNJS) {
         let flag = 1;
         let storeFlag = utilBNJS.storage.getItem("flag");
         if (storeFlag) {
-            window.location.href = 'login.html';
+            var url = 'BaiduNuomiMerchant://component?url=http://cp01-ocean-1115-offline.epc.baidu.com:8080/naserver/newapp/merchantlogintpl';
+            BNJS.page.start(url,{},1);
+            // window.location.href = 'BaiduNuomiMerchant://component?url=http://cp01-ocean-1115-offline.epc.baidu.com:8080/naserver/newapp/merchantlogintpl';
         } else {
             utilBNJS.storage.setItem("flag", flag);
         }
@@ -44,7 +49,7 @@ let init = {
 
 /* eslint-disable */
 util.ready(function(BNJS) {
-    init.initAll();
+    init.initAll(BNJS);
     BNJS.ui.hideLoadingPage();
     BNJS.ui.title.setTitle('百度糯米商户联盟');
 })

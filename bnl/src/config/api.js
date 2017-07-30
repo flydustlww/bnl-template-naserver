@@ -34,6 +34,7 @@ let checkuserinfo;
 let myuserinfo;
 let gettoken;
 let bindcode;
+let mycustomer2;
 console.log('__DEV__================' + __DEV__);
 // RD开发环境
 if (__DEV__) {
@@ -48,7 +49,8 @@ else if (__QA__) {
 }
 // 线上环境
 else if (__PRO__) {
-    server = 'http://band.baidu.com';
+    // server = 'http://band.baidu.com';
+    server = 'http://cp01-ocean-1115-offline.epc.baidu.com:8080/naserver/newapp/';
     // item = 'http://172.22.149.65:8399/mock/item.js';//location.origin + '/mock/item.js';
 }
 
@@ -69,6 +71,7 @@ checkuserinfo = server + 'checkuserinfo';
 myuserinfo = server + 'myuserinfo';
 gettoken = server + 'gettoken';
 bindcode = server + 'bindcode';
+mycustomer2 = server +'mycustomer2';
 
 if (__DEV__ || __QA__) {
     if (/(\:8399\/mock\/)/.test(server)) {
@@ -109,6 +112,7 @@ module.exports = {
     checkuserinfo: checkuserinfo,
     myuserinfo: myuserinfo,
     gettoken: gettoken,
-    bindcode: bindcode
+    bindcode: bindcode,
+    mycustomer2: mycustomer2
 };
 /* eslint-disable */
