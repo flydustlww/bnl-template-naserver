@@ -44,13 +44,13 @@ module.exports = {
                    '^/mock': '/mock'
                  }
                }*/
-            '/api': {
+/*             '/api': {
                 target: 'http://cp01-ocean-1115-offline.epc.baidu.com:8080/naserver/newapp',
                 changeOrigin: true,
                 pathRewrite: {
                     '^/api': '/'
                 }
-            }
+            } */
         }
     },
     needLogin: [

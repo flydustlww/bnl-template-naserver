@@ -67,13 +67,26 @@ let materialItemView = {
                 success: function (data) {
                     // 如果返回错误弹窗
                     if (data.errno != 0) {
-                        $.dialog({
-                            showTitle: false,
-                            contentHtml: data.msg,
-                            buttonClass: {
-                                ok: 'dialog-font-color-pink'
-                            }
-                        });
+                        if (resp.errno === 2002) {
+                            $.dialog({
+                                showTitle : false,
+                                contentHtml : resp.msg,
+                                buttonClass : {
+                                    ok : 'dialog-font-color-pink'
+                                },
+                                onClickOk: function() {
+                                    BNJS.page.start("BaiduNuomiMerchant://component?compid=bnl&comppage=login", {});
+                                }
+                            });
+                        } else {
+                            $.dialog({
+                                showTitle: false,
+                                contentHtml: data.msg,
+                                buttonClass: {
+                                    ok: 'dialog-font-color-pink'
+                                }
+                            });
+                        }
                     }
                     else {
                         me.render(data.data.list);
@@ -89,7 +102,7 @@ let materialItemView = {
         // url待与rd传参对
         var HTML = Baidu.template(tpl, {
             item: list,
-            url: 'band://web?type=material_claim&url=' + window.location.protocol + '//' + window.location.host + '/naserver/user/cardlisttpl'
+            url: 'cardList.html?'
         });
         $('section').html(HTML);
     }
@@ -128,7 +141,9 @@ let bindDialogHtml = function (resolve, reject) {
  */
 
 let bindButton = {
+    
     init: function () {
+        let _this = this;
         material_button.on('tap', function (ev) {
             let pN = new Promise(function (resolve, reject) {
                 $.ajax({
@@ -166,19 +181,94 @@ let bindButton = {
                     },
                     res: res,
                     onClickOk: function () {
-                        window.location.href = 'band://web?type=materials_binding&deal_id=' + this.res.merchant_id + '&deal_name=' + this.res.alliance_name + '&deal_statu=在线&merchant_id=' + this.res.merchant_id + '&product=5';
+                        // window.location.href = 'band://web?type=materials_binding&deal_id=' + this.res.merchant_id + '&deal_name=' + this.res.alliance_name + '&deal_statu=在线&merchant_id=' + this.res.merchant_id + '&product=5';
+                        _this.bindMaterial();
                     },
                     onClickCancel: function () {
-                        window.location.href = 'band://web?type=query_store&url=' + window.location.protocol + '//' + window.location.host + '/naserver/user/mendiansearch?uid=';
+                        // window.location.href = 'band://web?type=query_store&url=' + window.location.protocol + '//' + window.location.host + '/naserver/user/mendiansearch?uid=';
+                        BNJS.page.start("BaiduNuomiMerchant://component?compid=bnl&comppage=mendianSearch", {}, 1);
                     }
                 });
 
                 }, function () {
-                    window.location.href = '/naserver/user/mendiansearch?uid=' + curUid;
+                    BNJS.page.start("BaiduNuomiMerchant://component?compid=bnl&comppage=mendianSearch", {}, 1);
                 });
 
             })
         });
+    },
+    bindMaterial:function(){
+        var _this = this;
+        util.ready(function(BNJS) {
+            BNJS.hardware.scanQRCode(function(res) {
+                let url = res.data.content;
+                let result = util.parseQueryString(url);
+                let code_id = result.id;
+                let pN = new Promise(function (resolve, reject) {
+                    $.ajax({
+                        url: api.gettoken,
+                        type: 'GET',
+                        dataType: 'json',
+                        success: function (res) {
+                            accessParam.access_token = res.data;
+                            resolve();
+                        },
+                        error: function (res) {
+                            reject(res);
+                        }
+                    });
+                }).then(res => httpAjax(api.bindcode, {
+                        access_token: accessParam.access_token,
+                        code_id: code_id,
+                        product: 5
+                })).catch(function(){
+                    BNJS.ui.showErrorPage("拼命加载中");
+                }).then(function(resp){
+                    if (resp.errno === 2002) {
+                        $.dialog({
+                            showTitle : false,
+                            contentHtml : resp.msg,
+                            buttonClass : {
+                                ok : 'dialog-font-color-pink'
+                            },
+                            onClickOk: function() {
+                                BNJS.page.start("BaiduNuomiMerchant://component?compid=bnl&comppage=login", {});
+                            }
+                        });
+                    } else {
+                        $.dialog({
+                            showTitle : false,
+                            contentHtml : resp.msg,
+                            buttonClass : {
+                                ok : 'dialog-font-color-pink'
+                            },
+                            onClickOk: function() {
+                            }
+                        });
+                    }    
+                })
+
+                function httpAjax(url, data) {
+                    let params = data;
+                    var p = new Promise(function (resolve, reject) {
+                        $.ajax({
+                            url: url,
+                            type: 'POST',
+                            dataType: "json",
+                            data: params,
+                            success: function (resp) {
+                                resolve(resp);
+                            },
+                            error: function (resp) {
+                                reject(resp);
+                            }
+                        });
+                    });
+                    return p;
+                }                    
+            })
+        })
+
     }
 };
 
@@ -187,10 +277,9 @@ let init = function () {
     bindButton.init();
 };
 
-init();
-
-util.ready(function(BNJS) {
+util.ready(function() {
     BNJS.ui.hideLoadingPage();
+    init();
     BNJS.ui.title.setTitle('我的物料');
 })
 /* eslint-disable */

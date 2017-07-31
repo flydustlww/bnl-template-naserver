@@ -2,6 +2,7 @@
  * @file firstGuide 引导页面
  * @author name<yuchangshuang@baidu.com>
  */
+/* eslint-disable */
 import Vue from 'vue';
 require('widget/global/global.less');
 require('dep/swipe/swiper-3.4.2.min.css');
@@ -27,29 +28,28 @@ let init = {
     initEvent(BNJS) {
         $enterLm.on('tap', function () {
             var url = 'BaiduNuomiMerchant://component?url=http://cp01-ocean-1115-offline.epc.baidu.com:8080/naserver/newapp/merchantloginguidetpl';
-            BNJS.page.start(url,{},1)
-            
-
+            BNJS.page.start(url,{},1)        
         });
     },
     store(BNJS) {
         let flag = 1;
-        let storeFlag = utilBNJS.storage.getItem("flag");
-        if (storeFlag) {
-            var url = 'BaiduNuomiMerchant://component?url=http://cp01-ocean-1115-offline.epc.baidu.com:8080/naserver/newapp/merchantlogintpl';
-            BNJS.page.start(url,{},1);
-            // window.location.href = 'BaiduNuomiMerchant://component?url=http://cp01-ocean-1115-offline.epc.baidu.com:8080/naserver/newapp/merchantlogintpl';
-        } else {
-            utilBNJS.storage.setItem("flag", flag);
-        }
+        let storeFlag;
+        utilBNJS.ready(function(){
+            utilBNJS.storage.getItem("flag").then(function(res){
+                storeFlag = res;
+                if (storeFlag) {
+                    var url = 'BaiduNuomiMerchant://component?url=http://cp01-ocean-1115-offline.epc.baidu.com:8080/naserver/newapp/merchantlogintpl';
+                    BNJS.page.start(url,{},1);
+                } else {
+                    utilBNJS.storage.setItem("flag", flag);
+                }            
+            });
+        })
     }
 }
-
-
-
-/* eslint-disable */
-util.ready(function(BNJS) {
-    init.initAll(BNJS);
+    
+util.ready(function() {
+    init.initAll();
     BNJS.ui.hideLoadingPage();
     BNJS.ui.title.setTitle('百度糯米商户联盟');
 })

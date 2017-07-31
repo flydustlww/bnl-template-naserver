@@ -197,28 +197,27 @@ export default {
             token: ""
 		}
 
-	  },
-	
-	  mounted: function(){
-	      let wrapper = document.getElementById('wrapper');
-	      let input = document.getElementById('input');
-	      let selectWrap = document.getElementById('select-wrap');
+	},
+	mounted: function(){
+        let wrapper = document.getElementById('wrapper');
+        let input = document.getElementById('input');
+        let selectWrap = document.getElementById('select-wrap');
 
-	      wrapper.addEventListener('touchmove', function(e) {
-	         input.blur();
-	     }, false);
-	      input.addEventListener('blur',function(e){
-	          selectWrap.style.position = 'fixed';
-	          selectWrap.style.top = '0px';
-	  
-	      },false)
-	      input.addEventListener('focus',function(e){
-	          selectWrap.style.position = 'absolute';
-	          selectWrap.style.top = '0px'
-	  
-	      },false)
+        wrapper.addEventListener('touchmove', function(e) {
+            input.blur();
+        }, false);
+        input.addEventListener('blur',function(e){
+            selectWrap.style.position = 'fixed';
+            selectWrap.style.top = '0px';
 
-	  },
+        },false)
+        input.addEventListener('focus',function(e){
+            selectWrap.style.position = 'absolute';
+            selectWrap.style.top = '0px'
+
+        },false)
+
+	},
 	watch:{
 	    mendianInfo:function(val,oldVal){
 	        let that = this;
@@ -234,40 +233,44 @@ export default {
 	            // 输入
 	            that.isShowLists = true;
 	            that.isShowNote = false;
-                $.ajax({
-                    url: api.gettoken,
-                    type: 'GET',
-                    dataType: 'json',
-                    success: function (res) {
-                        that.token = res.data;
-                        new Promise(that.getSearchData).then(function(res){
-                                if (res.length === 0){
-                                    that.isShowLists=false;
-                                    that.isShowTps = true;
-                                    that.items = res;
-                                }else{
-                                    that.isShowTps = false;
-                                    that.isShowLists = true;      
-                                    that.items = res.slice(0,20);
-                                }
-                                
-                            },function(res){
-                                $.dialog({
-                                    showTitle : false,
-                                    contentHtml : res.msg||'出错了!',
-                                    buttonClass : {
-                                        ok : 'dialog-font-color-pink'
+                util.ready(function(){
+                    $.ajax({
+                        url: api.gettoken,
+                        type: 'GET',
+                        dataType: 'json',
+                        success: function (res) {
+                            that.token = res.data;
+                            new Promise(that.getSearchData).then(function(res){
+                                    if (res.length === 0){
+                                        that.isShowLists=false;
+                                        that.isShowTps = true;
+                                        that.items = res;
+                                    }else{
+                                        that.isShowTps = false;
+                                        that.isShowLists = true;      
+                                        that.items = res.slice(0,20);
                                     }
-                                });
-                            }).catch(function (res) {
-                            BNJS.ui.showErrorPage("拼命加载中");
-                        });
+                                    if (errno === 2002) {
+                                        BNJS.page.start("BaiduNuomiMerchant://component?compid=bnl&comppage=login", {});
+                                    }
+                                    
+                                },function(res){
+                                    $.dialog({
+                                        showTitle : false,
+                                        contentHtml : res.msg||'出错了!',
+                                        buttonClass : {
+                                            ok : 'dialog-font-color-pink'
+                                        }
+                                    });
+                                })
 
-                        that.isPink = true;                        
-                    },
-                    error: function (res) {
-                    }
-                });
+                            that.isPink = true;                        
+                        },
+                        error: function (res) {
+                        }
+                    });
+                })
+
 	        }      
 	    }
 	},
@@ -285,11 +288,10 @@ export default {
             'product'     5,  //产品类型
             */
             var _this = this;
-            debugger;
-            util.ready(function(BNJS) {
+            util.ready(function() {
                 BNJS.hardware.scanQRCode(function(res) {
                     let url = res.data.content;
-                    let result = _this.parseQueryString(url);
+                    let result = util.parseQueryString(url);
                     let code_id = result.id;
                     let pN = new Promise(function (resolve, reject) {
                         $.ajax({
@@ -301,7 +303,6 @@ export default {
                                 resolve();
                             },
                             error: function (res) {
-                                console.log(res);
                                 reject(res);
                             }
                         });
@@ -312,15 +313,28 @@ export default {
                         })).catch(function(){
                         BNJS.ui.showErrorPage("拼命加载中");
                     }).then(function(resp){
-                        $.dialog({
-                            showTitle : false,
-                            contentHtml : resp.msg,
-                            buttonClass : {
-                                ok : 'dialog-font-color-pink'
-                            },
-                            onClickOk: function() {
-                            }
-                        });    
+                        if (resp.errno === 2002) {
+                            $.dialog({
+                                showTitle : false,
+                                contentHtml : resp.msg,
+                                buttonClass : {
+                                    ok : 'dialog-font-color-pink'
+                                },
+                                onClickOk: function() {
+                                    BNJS.page.start("BaiduNuomiMerchant://component?compid=bnl&comppage=login", {});
+                                }
+                            });
+                        } else {
+                            $.dialog({
+                                showTitle : false,
+                                contentHtml : resp.msg,
+                                buttonClass : {
+                                    ok : 'dialog-font-color-pink'
+                                },
+                                onClickOk: function() {
+                                }
+                            });
+                        }
                     })
 
                     function httpAjax(url, data) {
@@ -345,6 +359,7 @@ export default {
             })
 
 	    },
+        // 获取指定url后参数对
         parseQueryString: function (url) {
              var reg_url = /^[^\?]+\?([\w\W]+)$/,
                   reg_para = /([^&=]+)=([\w\W]*?)(&|$|#)/g,

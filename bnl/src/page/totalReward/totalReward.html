@@ -10,24 +10,7 @@
 </head>
 <body>
     <div class="content">
-        <div class="content-title" style="display:none">
-            累计佣金金额
-            <span class="total-amount item-status-pink"></span>
-        </div>
-        <ul class="table-view" id="bill-list">
-        </ul>
-        <script id="bill-list-tpl" type="text/html">
-            {{each data.bill_list as item i}}
-                <li class="table-view-cell">    
-                        <a class="navigate-right" xid="{{item.xid}}" href="{{item.href}}">
-                        <span class="item-time">{{item.date}}</span>
-                        <span class="item-amount item-status-pink">￥{{item.formatmoney}}</span>
-                        <span class="item-status {{item.classname}}">{{item.status_str}}</span>
-                    </a>
-                </li>
-            {{/each}}
-        </script>
-        <script id="none-list-tpl" type="text/html">
+        <div id="none-list-tpl" style='display:none;'>
             <li class="none-text-list">
                 <div>
                     <img src='img/none_bg.png'>
@@ -36,49 +19,7 @@
                     </p>
                 </div>
             </li>
-        </script>
-        <!-- <li class="table-view-cell">
-                <a class="navigate-right">
-                    2016.05.15
-                    <span class="item-status item-status-green">支付成功</span>
-                    <span class="item-amount item-status-pink">￥5.00</span>
-                </a>
-            </li>
-            <li class="table-view-cell">
-                <a class="navigate-right">
-                    2016.05.15
-                    <span class="item-status item-status-pink">支付中</span>
-                    <span class="item-amount item-status-pink">￥10.00</span>
-                </a>
-            </li>
-            <li class="table-view-cell">
-                <a class="navigate-right">
-                    2016.05.15
-                    <span class="item-status item-status-gray">待支付</span>
-                    <span class="item-amount item-status-pink">￥10.00</span>
-                </a>
-            </li>
-            <li class="table-view-cell">
-                <a class="navigate-right">
-                    2016.05.15
-                    <span class="item-status item-status-green">已支付</span>
-                    <span class="item-amount item-status-pink">￥10.00</span>
-                </a>
-            </li>
-            <li class="table-view-cell">
-                <a class="navigate-right">
-                    2016.05.15
-                    <span class="item-status item-status-green">支付成功</span>
-                    <span class="item-amount item-status-pink">￥10.00</span>
-                </a>
-            </li>
-            <li class="table-view-cell">
-                <a class="navigate-right">
-                    2016.05.15
-                    <span class="item-status item-status-pink">支付中</span>
-                    <span class="item-amount item-status-pink">￥10.00</span>
-                </a>
-            </li> -->
+        </div>
     </div>
 </body>
 </html>
