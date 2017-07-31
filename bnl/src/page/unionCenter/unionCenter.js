@@ -4,7 +4,6 @@
  */
 
 import Vue from 'vue';
-import DeferredBNJS from 'DeferredBNJS';
 import unionCenter from 'components/unionCenter';
 let util = require('widget/util/util');
 // sign    string  8280C3B14E95B2563687631DFABB31BA    签名
@@ -16,7 +15,7 @@ let vm = new Vue({
     }
 });
 /* eslint-disable */
-util.ready(function(BNJS) {
+util.ready(function() {
     BNJS.ui.hideLoadingPage();
     BNJS.ui.title.setTitle('百度糯米商户联盟');
     BNJS.ui.title.addActionButton({

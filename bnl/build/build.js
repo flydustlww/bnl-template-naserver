@@ -13,6 +13,7 @@ var ora = require('ora');
 var webpack = require('webpack');
 var webpackConfig;
 var zipFile;
+
 if (NODE_ENV === 'qa') {
     webpackConfig = require('./webpack.qa.conf');
     zipFile = pkg.name + '_qa.zip';

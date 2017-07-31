@@ -25,7 +25,7 @@ passport.rdtest.baidu.com先登陆  帐号 renlei8009   800800
 
 webpack-dev-server的使用 https://segmentfault.com/a/1190000006964335
 
-###页面
+### 页面
 
 登录引导页:   baidunuomimerchant://component?url=http://172.22.149.96:8399/page/guide.html  
 
@@ -53,7 +53,7 @@ unionCenter: 联盟中心
 
 userCenter: 个人中心
 
-###页面链接
+### 页面链接
 
 1、实名认证：https://m.baifubao.com/wap/0/wallet/0/cardlist/0
 
@@ -63,15 +63,15 @@ userCenter: 个人中心
 
 4、填写角色（加入联盟跳转）:BaiduNuomiMerchant://bindingphone?channel=alliance&notificationName=com.nuomi.merchant.broadcast.PERSONALPROFILE&bottomText=填写完成,去退出重新登录
 
-###测试：
+### 测试：
 BaiduNuomiMerchant://component?url=http://test.baidu.com:8399/page/mendianSearch.html
-
-###打包
+BaiduNuomiMerchant://component?url=http%3A%2F%2Ftest.baidu.com%3A8399%2Fpage%2FunionCenter.html
+### 打包
 在bnl目录下运行npm run build
 
 将release里产出的zip包上传到http://developer.nuomi.com/#/package/list?istest=1 里产品管理=>组件测试 => 发布组件
 
-###接口
+### 接口
 
 获取access_token
 http://cp01-ocean-1115-offline.epc.baidu.com:8080/naserver/newapp/gettoken

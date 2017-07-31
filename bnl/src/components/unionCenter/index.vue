@@ -46,7 +46,8 @@ let Baidu = require('dep/baiduTemplate');
 let Promise = require('widget/util/es6-promise.js').Promise;
 let dialog = require('widget/dialog/dialog.js');
 let util = require('widget/util/util');
-let cookieUtil = require('widget/util/cookieUtil.js');
+let utilBNJS = require('widget/util/bnjs/util-bnjs.js');
+
 export default {
 	name: 'union-center',
 	data: function(){
@@ -76,96 +77,118 @@ export default {
 	methods: {
         getData: function() {
             let that = this;
-            // let uid = BNJS.account.uid || 0;
-            let uid = 1234;
+            let uid = typeof(BNJS.account.uid) === "number" ? BNJS.account.uid : 0;
             // 请求access-token,请求checkuserinfo,请求myuserinfo
+            let curTimeDate = new Date();
+            let curTime = curTimeDate.getTime();            
             let pN = new Promise(function (resolve, reject) {
                 $.ajax({
                     url: api.gettoken,
                     type: 'GET',
-                    dataType: 'json',
+                    dataType: 'json', 
                     success: function (res) {
                         that.token = res.data;
-                        resolve();
+                        resolve(res);
                     },
                     error: function (res) {
                         reject(res);
                     }
                 });
-            }).then(
-                resp => httpAjax(api.checkuserinfo, {
+            })
+            .then(function(res) {
+                return that.httpAjax(api.checkuserinfo, {
                     access_token: that.token,
                     b_uid: uid
                 })
-            ).catch(function (res) {
+            })
+            .catch(function (res) {
                 BNJS.ui.showErrorPage("拼命加载中");
-            }).then(
-                resp => {
-                    // 拿到登录的数据
-                    console.log("登录的数据")
-                    console.log(resp);
-                    // 如果登录状态
-                    if (resp.errno === 0) {
-                        // 判断加入联盟弹窗
-                        if (resp.data.is_new === 1) {   // 首次加入联盟
-                            that.is_new = 1;
-                            that.firstUniondialog(resp.data);
+            })
+            .then(function(res) {
+                // 拿到登录的数据
+                console.log("登录的数据")
+                console.log(res);
+                // 如果登录状态
+                switch (res.errno) {
+                    // 已登录
+                    case 0:
+                        {
+                            // 判断加入联盟弹窗
+                            if (res.data.is_new === 1) {   // 首次加入联盟
+                                that.is_new = 1;
+                                that.firstUniondialog(res.data);
+                            }
+                            if (res.data.alliance_info.alliance_name) {
+                                that.is_alliance = true;
+                            }
+                            return that.httpAjax(api.myuserinfo, {
+                                access_token: that.token,
+                                b_uid: uid
+                            });
+                            break;
                         }
-                        if (resp.data.alliance_info.alliance_name) {
-                            that.is_alliance = true;
+                    // 未登录
+                    case 2002:
+                        {
+                            that.isLogin = false;
+                            that.forceLogin();
+                            break;
                         }
-                        return httpAjax(api.myuserinfo, {
-                            access_token: that.token,
-                            b_uid: uid
-                        });
-                    } else if (resp.errno === 2002) {
-                        // 未登录状态
-                        that.isLogin = false;
-                        that.forceLogin();
-                    } else if (resp.errno === 70150) {
-                        // 未加入联盟
-                        if (cookieUtil.getItem('allianceFlag') === undefined) {
-                            that.addUniondialog();
-                            cookieUtil.setItem({
-                                key: "allianceFlag",
-                                value: "ok",
-                                maxAge: 10
-                            })
+                    // 未加入联盟
+                    case 70150:
+                        {
+                            // 未加入联盟
+                            that.is_alliance = false;
+                            that.isInfo = true;
+                            // let storageData = that.getDatestorage('allianceFlag', 5000);
+                            // console.log(storageData);
+                            // if (storageData == undefined) {
+                            //     that.addUniondialog();
+                            //     utilBNJS.storage.setItem("allianceFlag", {
+                            //         "name": "ok",
+                            //         "time": curTime
+                            //     });
+                            // }    
+                            that.changeInfo({
+                                info: "您尚未填写角色，故无法加入联盟",
+                                linkInfo: "去填写角色",
+                                url: "BaiduNuomiMerchant://bindingphone?channel=alliance&notificationName=com.nuomi.merchant.broadcast.PERSONALPROFILE&bottomText=填写完成,去退出重新登录"
+                            });
+                            return that.httpAjax(api.myuserinfo, {
+                                access_token: that.token,
+                                b_uid: uid
+                            });
+                            break;                          
                         }
-                        that.is_alliance = false;
-                        that.isInfo = true;
-                        that.changeInfo({
-                            info: "您尚未填写角色，故无法加入联盟",
-                            linkInfo: "去填写角色",
-                            url: "BaiduNuomiMerchant://bindingphone?channel=alliance&notificationName=com.nuomi.merchant.broadcast.PERSONALPROFILE&bottomText=填写完成,去退出重新登录"
-                        });
-                        return httpAjax(api.myuserinfo, {
-                            access_token: that.token,
-                            b_uid: uid
-                        });
-                    } else if (resp.errno === 1004) {
-                        window.location.reload();
-                    } else {
-                        BNJS.ui.showErrorPage("拼命加载中");
-                    }
+                    case 1004:
+                        {
+                            BNJS.page.start("BaiduNuomiMerchant://component?compid=bnl&comppage=unionCenter", {}, 1);
+                            break;
+                        }
+                    default: 
+                        BNJS.ui.showErrorPage(); 
                 }
-            ).catch(function (res) {
-                BNJS.ui.showErrorPage("拼命加载中");
-            }).then(
-                resp => {
-                    // 拿到用户的数据
-                    console.log("用户的数据")
-                    console.log(resp);
-                    let datas = resp.data;
-                    if (resp.errno === 0) {
+            })
+            .catch(function (res) {
+                BNJS.ui.showErrorPage();
+            })
+            .then(function (res) {
+                // 拿到用户的数据
+                console.log("用户的数据")
+                console.log(res);
+                switch (res.errno)
+                {
+                    case 0: 
+                    {
                         that.isLogin = true;
                         // 加入联盟
                         if (that.is_alliance) {
                         // 添加点击跳转个人中心事件
                             $('.union-user').on('tap', function () {
-                                let url = "BaiduNuomiMerchant://component?compid=bnl&comppage=unionCenter";
+                                let url = "BaiduNuomiMerchant://component?compid=bnl&comppage=userCenter";
                                 BNJS.page.start(url, {});
-                            })                            
+                            })
+                            let datas = res.data;                           
                             that.is_verified = datas.is_verified;
                             that.alliance_name = datas.alliance_name;
                             that.merchant_name = datas.merchant_name;
@@ -180,6 +203,8 @@ export default {
                                 let url = "BaiduNuomiMerchant://component?compid=bnl&comppage=totalReward";
                                 BNJS.page.start(url, {});
                             });
+                        } else {
+                            $('.user-no-login').html(datas.passport_username);
                         }
 
                         // 判断是否认证
@@ -193,37 +218,59 @@ export default {
                             // 认证弹窗暂时不需要了 未添加48小时弹窗
                             // that.addVertifydialog();
                         }
-                    } else if (resp.errno === 2002) {
+                        break;                      
+                    }
+                    case 2002: 
+                    {
                         that.isLogin = false;
                         that.forceLogin();
-                    } else {
-                        BNJS.ui.showErrorPage("拼命加载中");
+                        break;
                     }
+                    default:
+                    BNJS.ui.showErrorPage();
                 }
-            ).catch(function () {
-                BNJS.ui.showErrorPage("拼命加载中");
+            })
+            .catch(function (res) {
+                BNJS.ui.showErrorPage();
             });
+        },
 
-            function httpAjax(url, data) {
-                var p = new Promise(function (resolve, reject) {
-                    $.ajax({
-                        url: url,
-                        type: 'GET',
-                        dataType: "json",
-                        data: {
-                            b_uid: data.b_uid,
-                            access_token: data.access_token
-                        },
-                        success: function (resp) {
-                            resolve(resp);
-                        },
-                        error: function (resp) {
-                            reject(resp);
-                        }
-                    });
+        /**
+         *  封装的httpAjax方法，可以promise回调,默认get方法
+        */
+        httpAjax: function(url, data) {
+            var p = new Promise(function (resolve, reject) {
+                $.ajax({
+                    url: url,
+                    type: 'GET',
+                    dataType: "json",
+                    data: data,
+                    success: function (resp) {
+                        resolve(resp);
+                    },
+                    error: function (resp) {
+                        reject(resp);
+                    }
                 });
-                return p;
-            }
+            });
+            return p;
+        },
+        /**
+         *   获取storage并添加过期控制
+         *   key: string
+         *   exp: number 过期时间 1000 1秒
+        */
+        getDatestorage: function(key, exp) {
+            utilBNJS.storage.getItem(key).then(function(res) {
+                console.log("拿到storage");
+                console.log(res);
+                if (new Date().getTime() - res.time>exp) {
+                    return "已过期"
+                }else{
+                    var dataObjDatatoJson = JSON.parse(res);
+                    return dataObjDatatoJson;
+                }
+            });
         },
         forceLogin: function() {
             $('.union-top').on('tap', function() {
@@ -325,7 +372,6 @@ export default {
                 }
             });             
         }
-
     }
 }
 </script>

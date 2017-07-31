@@ -32,18 +32,24 @@ let init = {
     },
     store() {
         let flag = 1;
-        let storeFlag = utilBNJS.storage.getItem("flag");
-        if (storeFlag) {
-            BNJS.page.start("BaiduNuomiMerchant://component?compid=bnl&comppage=login", {}, 1);
-        } else {
-            utilBNJS.storage.setItem("flag", flag);
-        }
+        let storeFlag;
+        utilBNJS.ready(function(){
+            utilBNJS.storage.getItem("flag").then(function(res){
+                storeFlag = res;
+                if (storeFlag) {
+                    BNJS.page.start("BaiduNuomiMerchant://component?compid=bnl&comppage=login", {}, 1);
+                } else {
+                    utilBNJS.storage.setItem("flag", flag);
+                }            
+            });
+        })
+
     }
 }
 
 
 
-
+    
 util.ready(function() {
     init.initAll();
     BNJS.ui.hideLoadingPage();

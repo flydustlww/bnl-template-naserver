@@ -39,8 +39,8 @@ console.log('__DEV__================' + __DEV__);
 if (__DEV__) {
     // server = 'http://cp01-tsm-baino02.cp01.baidu.com:8200';
     // server = 'http://cp01-ocean-1115-offline.epc.baidu.com:8080/naserver/newapp/';
-    // server = location.origin + '/mock/';
-    server = location.origin + '/api/';
+    server = location.origin + '/mock/';
+    // server = location.origin + '/api/';
 }
 // QA环境
 else if (__QA__) {
