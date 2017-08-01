@@ -1,0 +1,114 @@
+.rem(@name, @px){
+    @{name}: @px / 750 * 1rem;
+}
+
+body {
+    background: #F5F5F5;
+    .user-wrap{
+        background: #fff;
+        .user-list {
+            .rem(padding-left, 30);
+            li {
+                .rem(height, 88);
+                .rem(line-height, 88);
+                .rem(font-size, 28);
+                overflow: hidden;
+                color: #666;
+                strong {
+                    display: inline-block;
+                    font-weight: normal;
+                    .rem(width, 114);
+                    .rem(height, 88);
+                }
+                span {
+                    color: #333;
+                    display: inline-block;
+                    .rem(margin-left, 68);
+                }
+                .user-verified {
+                    display: block;
+                    float: right;
+                    .rem(margin-right, 30);
+                    .rem(margin-left, 6);
+                    .rem(font-size, 26);
+                    color: #FA3250;
+                }
+                em {
+                    display: block;
+                    float: right;
+                    .rem(height, 28);
+                    .rem(width, 28);
+                    .rem(margin-top, 30);
+                    background-image: url(./img/error.png);
+                    background-size: 100% 100%;
+                    background-repeat: no-repeat;
+                }
+                .user-ok {
+                    background-image: url(./img/ok.png);
+                }
+                .user-error {
+                    background-image: url(./img/error.png);
+                }
+            }
+        }
+    }
+    .user-login-wrap {
+        .rem(width, 690);
+        .rem(height, 80);
+        .rem(margin-top, 30);
+        .rem(margin-left, 30);
+        .rem(margin-right, 30);
+        .rem(line-height, 80);
+        text-align: center;
+        background: #fff;
+        border-radius: 4px;
+        .user-login{
+            .rem(width, 690);
+            .rem(height, 80);
+            border-radius: 4px;            
+            &:after, &:before {
+                background: #6069E6;
+                border-radius: 4px;
+            }          
+        }
+        button {
+            .rem(width, 690);
+            .rem(height, 80);
+            .rem(font-size, 32);
+            background: #fff;
+            border-radius: 4px;
+            color: #6069E6;
+        }
+        &:after, &:before {
+            background: #6069E6;
+            border-radius: 4px;
+        }
+    }
+    // .border-1px:after {
+    //     height: 2px;
+    //     background: #6069E6;
+    // }
+
+    .dialog-content-bd{
+        text-align: center;
+        .rem(font-size, 32);
+        .rem(line-height, 132);
+        color: #333;
+        margin-top: 0;
+    }
+    .dialog-content-ft {
+        margin-top: 0;
+        .dialog-font-color-blue {
+            color: #6069E6; 
+        }
+    }
+    .addUnion {
+        .dialog-content-bd {
+            p {
+                .rem(font-size, 32);
+                .rem(line-height, 55);
+                font-weight: bold;
+            }
+        }
+    }
+}

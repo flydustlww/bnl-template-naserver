@@ -1,0 +1,11 @@
+{
+    "errno": 70150,
+    "msg": "succ",
+    "data": {
+        "alliance_info": {
+            "alliance_name": "海底捞上地店商户联盟"
+        },
+        "is_new": 0,
+        "new_num": 0
+    }
+}

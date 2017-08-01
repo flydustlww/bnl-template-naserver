@@ -1,0 +1,242 @@
+.rem(@name, @px){
+    @{name}: @px / 750 * 1rem;
+}
+
+@font-face
+{
+    font-family: 'PingFangSC-Regular';
+}
+body,html{
+    font-family:'PingFangSC-Regular','Microsoft YaHei';
+    background-color: rgb(242,244,243);
+}
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+body {
+    line-height: 1;
+}
+ol, ul {
+    list-style: none;
+}
+blockquote, q {
+    quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content: '';
+    content: none;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+input{
+  border: none;
+}
+
+.rem(@name, @px){
+    @{name}: @px / 750 * 1rem;
+}
+
+body {
+    .union-wrap {
+        .union-info-wrap {
+            .rem(height, 78);
+            background: #FFF8EF;
+            p {
+                .rem(font-size, 26);
+                .rem(height, 78);
+                .rem(line-height, 78);
+                .rem(padding-left, 30);
+                .rem(padding-right, 30);
+                color: #FF9900;
+                overflow: hidden;
+                .union-info {
+                    float: left;
+                }
+                .union-info-link {
+                    float: right;
+                } 
+            }
+        }
+        .union-top {
+            .rem(height, 342);
+            background: url('./img/bg.jpg');
+            .union-user {
+                overflow: hidden;
+                .user-img {
+                    float: left;
+                    .rem(height, 56);
+                    .rem(width, 56);
+                    .rem(margin-top, 30);
+                    .rem(margin-left, 30);
+                    .rem(margin-right, 20);
+                    img {
+                        .rem(height, 56);
+                        .rem(width, 56);                    
+                    }
+                }
+                .user-message {
+                    float: left;
+                    p {
+                        .rem(font-size, 28);
+                        color: #fff;
+                        &:nth-child(1) {
+                            .rem(line-height, 56);
+                            .rem(margin-top, 16);
+                        }
+                        .user-name {
+                        }
+                        &.area {
+                            .rem(font-size, 24);
+                            color: rgba(255, 255, 255, 0.7);
+                        }
+                        &.user-no-login {
+                            .rem(margin-top, 36);
+                        }
+                    }
+                }
+            }
+            .union-number {
+                .rem(margin-top, 76);
+                ul {
+                    overflow: hidden;
+                    li {
+                        float: left;
+                        color: #fff;
+                        text-align: center;
+                        .rem(height, 100);
+                        .rem(width, 374);
+                        div {
+                            .rem(font-size, 60);
+                        }
+                        p {
+                            .rem(line-height, 56);
+                            .rem(font-size, 24);
+                        }
+                    }
+                    .border-rt:after, .border-lt:before {
+                        background: rgba(224,224,224, 0.5);
+                    }
+                }
+            }
+        }
+        .union-list {
+            li {
+                position: relative;
+                .rem(height, 105);
+                .rem(line-height, 105);
+                .rem(padding-left, 100);
+                p {
+                    .rem(height, 105);
+                    color: #333;
+                    .rem(font-size, 32);
+                }
+                .icon {
+                    .rem(width, 35);
+                    .rem(height, 35);
+                    display: block;
+                    position: absolute;
+                    .rem(left, 30);
+                    .rem(top, 38);
+                    background-size: 35/750rem 35/750rem;
+                    background-repeat: no-repeat;
+                    background-position: center center;
+                }            
+                .icon-material {
+                    background-image: url('./img/material.png');
+                }
+                .icon-baiduwallet {
+                    background-image: url('./img/baiduwallet.png');
+                    .rem(width, 30);
+                    .rem(height, 35);
+                    background-size: 30/750rem 35/750rem;
+                }
+                .icon-message {
+                    background-image: url('./img/message.png');
+                }            
+            }
+        }
+    }
+    
+    .dialog-content-bd{
+        text-align: center;
+        .rem(font-size, 28);
+        .rem(line-height, 48);
+        color: #333;
+    }
+    .dialog-content-ft {
+        .dialog-font-color-blue {
+            color: #6069E6; 
+        }
+    }
+    .firstUnion{
+        .dialog-content {
+            .rem(width, 540);
+        }        
+        .dialog-content-bd {
+            span {
+                color: #565ECC;
+            }
+        }
+        .dialog-content-ft {
+            .rem(padding-left, 55); 
+            .rem(padding-right, 55);
+            .rem(padding-bottom, 50);
+            border: none;
+            a {
+                background: linear-gradient( to left top, #6C4CD4, #6069E6);
+                background: -webkit-linear-gradient( to left top, #6C4CD4, #6069E6);
+                &:last-child {
+                    border-top-right-radius: 5px;
+                }
+                &:first-child {
+                    border-top-left-radius: 5px;
+                }
+            }
+            .dialog-font-color-white {
+                color: #fff;
+            }
+            &:after{
+                border: none;
+            }
+        }
+    }
+    .addUnion {
+        .dialog-content-bd {
+            p {
+                .rem(font-size, 32);
+                .rem(line-height, 55);
+                font-weight: bold;
+            }
+        }
+    }
+}

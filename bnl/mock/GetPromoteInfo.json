@@ -1,0 +1,18 @@
+{
+	"errno": 0,
+	"msg": "success",
+	"data": {
+		"billing_user": "184826556",
+		"rule_name": "\u4e2a\u4eba\u8054\u76df2\u8ba1\u5212",
+		"order_id": "1951530229",
+		"finance_type": "1",
+		"passport_uid": "112656384",
+		"promote_uid": "112656384",
+		"pay_time": "1495786727",
+		"consumption_time": "1495786728",
+		"deal_info": "\u65b0\u8239\u5458\u5230\u5e97\u4ed8",
+		"order_price": "100",
+		"product_type": "3",
+		"user_type": "2"
+	}
+}

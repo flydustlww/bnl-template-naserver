@@ -1,10 +1,12 @@
 /**
+ * @file Describe the file
  * 跳转支付页面收拢组件
  * @author zhangyijun02@baidu.com
  * @use require('common/util/bnjs/startPay')
  */
-var util = require('common/util/util');
-var utilBNJS = require('common/util/bnjs/util-bnjs');
+/* eslint-disable */
+var util = require('widget/util/util');
+var utilBNJS = require('widget/util/bnjs/util-bnjs');
 var $ = require('dep/zepto');
 var api = require('widget/config/api');
 
@@ -34,14 +36,17 @@ var jumpPay = function (options, callbacks) {
     if (options.orderId) { // 有orderId，走继续支付流程
         staticParams.logpage = 'OrderPay';
         targetUrl = api.pay;
-    } else if (options.arrivalDate && options.money) { // 创建订单流程，走新支付流程
+    }
+    else if (options.arrivalDate && options.money) { // 创建订单流程，走新支付流程
         staticParams.logpage = 'OrderSubmit';
         targetUrl = api.ordercreate;
     }
+
     if (staticParams.logpage) {
         if (__DEV__) {
             console.log($.extend(options, staticParams));
         }
+
         utilBNJS.postNA({
             url: targetUrl,
             params: $.extend(options, staticParams),
@@ -51,6 +56,7 @@ var jumpPay = function (options, callbacks) {
             if (callbacks.onOrderSuccess) {
                 callbacks.onOrderSuccess();
             }
+
             // data = {
             //     customerId : 170,
             //     deviceType : 1,
@@ -92,6 +98,7 @@ var jumpPay = function (options, callbacks) {
                     if (callbacks.onPaySuccess) {
                         callbacks.onPaySuccess();
                     }
+
                     BNJS.page.start('bainuo://component?compid=pinecone_reserve&comppage=pay_success', {
                         orderId: data.orderId
                     }, 1);
@@ -100,6 +107,7 @@ var jumpPay = function (options, callbacks) {
                     if (callbacks.onPayFail) {
                         return callbacks.onPayFail();
                     }
+
                     // BNJS.ui.toast.show('支付失败~');
                 }
             }));
@@ -107,6 +115,7 @@ var jumpPay = function (options, callbacks) {
             if (__DEV__) {
                 console.log('err:', err);
             }
+
             if (callbacks.onOrderFail) {
                 return callbacks.onOrderFail(err);
             }
@@ -114,8 +123,10 @@ var jumpPay = function (options, callbacks) {
             BNJS.ui.toast.show(err.errmsg);
         });
     }
+
 };
 
 module.exports = {
     jumpPay: jumpPay
 };
+/* eslint-disable */

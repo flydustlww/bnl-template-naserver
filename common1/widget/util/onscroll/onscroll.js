@@ -56,6 +56,7 @@ define(function (require, exports, module) {
             // clear scroll event
             scrolled = null;
         }
+
     };
 
     // start listening event 'scroll'
@@ -102,6 +103,7 @@ define(function (require, exports, module) {
             if (item !== handler) {
                 arr.push(item);
             }
+
         });
 
         listeners = arr;
@@ -110,6 +112,7 @@ define(function (require, exports, module) {
         if (!listeners.length) {
             stopListening();
         }
+
     };
 
     module.exports = {

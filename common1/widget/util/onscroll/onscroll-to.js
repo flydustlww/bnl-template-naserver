@@ -33,12 +33,14 @@ define(function (require, exports, module) {
                     if (offset < 0) {
                         handler(e);
                     }
+
                     break;
 
                 case 'down':
                     if (offset >= 0) {
                         handler(e);
                     }
+
                     break;
 
                 default:
@@ -56,6 +58,7 @@ define(function (require, exports, module) {
         if (listener) {
             onScroll.remove(listener);
         }
+
     };
 
     module.exports = {
@@ -63,4 +66,3 @@ define(function (require, exports, module) {
         remove: removeListener
     };
 });
-
