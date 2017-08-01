@@ -1,7 +1,7 @@
 /**
  * @file Describe bnjsHTTP请求封装
  * yuchanghuang@baidu.com
- */ 
+*/ 
 /* eslint-disable */
 var util = require('../util/util.js');
 var Promise = require('dep/promise/promise.js');
