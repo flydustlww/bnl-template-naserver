@@ -497,7 +497,10 @@ module.exports = {
     filter: filter,
     clone: clone,
     extend: extend,
+<<<<<<< HEAD
     cloneObj: cloneObj,
+=======
+>>>>>>> 3a78bf8373a9deaa8606588f6d3b6cc19263afc1
     inherits: inherits,
     center: center,
     isBrowser: isBrowser,
