@@ -38,7 +38,7 @@ let materialItemView = {
         let me = this;
         utilBNJS.storage.getItem('bnl_bduss').then(function(res) {
             // let bdussStroage = res;
-            let bdussStroage = "WhPcjJCZmU4eUV1Z05DQ3VSOTdPVlpjSmpHSkotbHJVaEYyNWEzWkNnQUQ3YWRaSVFBQUFBJCQAAAAAAAAAAAEAAAAoqTMGcmVubGVpODAwOQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANggFkDYIBZV";  
+            let bdussStroage = "2ZmaENuUlFXa1hIOFhMQmxMV0Z1cXdMWjl5U1hyelU4ZEl0ZkhpM3ZiTEQ0S2haSVFBQUFBJCQAAAAAAAAAAAEAAAAoqTMGcmVubGVpODAwOQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMNTgVnDU4FZT";  
             accessParam.bduss = bdussStroage;  
             httpBnjs.get({
                 url: api.codelist,
