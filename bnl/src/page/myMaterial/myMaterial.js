@@ -169,7 +169,7 @@ let bindButton = {
                                 ok : 'dialog-font-color-pink'
                             },
                             onClickOk: function() {
-                                BNJS.page.start("BaiduNuomiMerchant://component?compid=bnl&comppage=login", {});
+                                BNJS.page.start("BaiduNuomiMerchant://component?url=http://cp01-ocean-1115-offline.epc.baidu.com:8080/naserver/newapp/merchantlogintpl", {});
                             }
                         });
                     } else {

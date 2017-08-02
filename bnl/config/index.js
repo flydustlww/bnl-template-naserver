@@ -35,7 +35,7 @@ module.exports = {
     },
     dev: {
         env: require('./dev.env'),
-        port: 8390,
+        port: 8399,
         proxyTable: {
             /* '/mock': {
                  target: 'http://172.22.149.65',

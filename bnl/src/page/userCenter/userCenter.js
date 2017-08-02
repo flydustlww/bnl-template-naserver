@@ -43,7 +43,6 @@ let vm = new Vue({
             let uid = BNJS.account.uid || 0;
 
             utilBNJS.storage.getItem('bnl_bduss').then(function(res) {
-                alert(res);
                 // let bdussStroage = res;
                 let bdussStroage = "2ZmaENuUlFXa1hIOFhMQmxMV0Z1cXdMWjl5U1hyelU4ZEl0ZkhpM3ZiTEQ0S2haSVFBQUFBJCQAAAAAAAAAAAEAAAAoqTMGcmVubGVpODAwOQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMNTgVnDU4FZT";
                 httpBnjs.get({
@@ -80,7 +79,7 @@ let vm = new Vue({
                     break;                   
                 }
                 case 2002:
-                    // BNJS.page.start("BaiduNuomiMerchant://component?compid=bnl&comppage=login", {});
+                    BNJS.page.start("BaiduNuomiMerchant://component?url=http://cp01-ocean-1115-offline.epc.baidu.com:8080/naserver/newapp/merchantlogintpl", {});
                     break;
                 default:
                     BNJS.ui.showErrorPage();
@@ -101,7 +100,7 @@ let vm = new Vue({
                     cancel: 'dialog-btn-cancel'
                 },
                 onClickOk: function () {
-                    BNJS.page.start("BaiduNuomiMerchant://component?compid=bnl&comppage=login", {});
+                    BNJS.page.start("BaiduNuomiMerchant://component?url=http://cp01-ocean-1115-offline.epc.baidu.com:8080/naserver/newapp/merchantlogintpl", {});
                 },
                 onClickCancel: function () {
                 }

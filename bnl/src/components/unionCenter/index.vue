@@ -52,7 +52,6 @@ export default {
 	name: 'union-center',
 	data: function(){
 		return{
-            token: '',
             isLogin: false,
             is_alliance: false,
             isInfo: false,
@@ -78,11 +77,10 @@ export default {
         getData: function() {
             let that = this;
             let uid = typeof(BNJS.account.uid) === "number" ? BNJS.account.uid : 0;
-            // 请求access-token,请求checkuserinfo,请求myuserinfo
+            // 请求checkuserinfo,请求myuserinfo
             let curTimeDate = new Date();
             let curTime = curTimeDate.getTime();
             utilBNJS.storage.getItem('bnl_bduss').then(function(res) {
-                alert(res);
                 // let bdussStroage = res;
                 let bdussStroage = "2ZmaENuUlFXa1hIOFhMQmxMV0Z1cXdMWjl5U1hyelU4ZEl0ZkhpM3ZiTEQ0S2haSVFBQUFBJCQAAAAAAAAAAAEAAAAoqTMGcmVubGVpODAwOQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMNTgVnDU4FZT";
                 httpBnjs.get({
@@ -95,7 +93,7 @@ export default {
                 .then(function(res) {
                     that.checkuserInfoOk(res);
                 }, function(res) {
-                    BNJS.page.start("BaiduNuomiMerchant://component?compid=bnl&comppage=login", {}, 1);
+                    BNJS.page.start("BaiduNuomiMerchant://component?url=http://cp01-ocean-1115-offline.epc.baidu.com:8080/naserver/newapp/merchantlogintpl", {}, 1);
                 })
                 .then(function(res) {
                     that.myuserInfoOk(res);
@@ -105,7 +103,7 @@ export default {
 
             }).catch(function(res) {
                 // 跳转登录
-                BNJS.page.start("BaiduNuomiMerchant://component?compid=bnl&comppage=login", {}, 1);
+                BNJS.page.start("BaiduNuomiMerchant://component?url=http://cp01-ocean-1115-offline.epc.baidu.com:8080/naserver/newapp/merchantlogintpl", {}, 1);
             })
 
         },
@@ -189,7 +187,7 @@ export default {
                     }
                 case 1004:
                     {
-                        BNJS.page.start("BaiduNuomiMerchant://component?compid=bnl&comppage=login", {}, 1);
+                        BNJS.page.start("BaiduNuomiMerchant://component?url=http://cp01-ocean-1115-offline.epc.baidu.com:8080/naserver/newapp/merchantlogintpl", {}, 1);
                         return false;
                         break;
                     }
@@ -264,10 +262,10 @@ export default {
         },   
         forceLogin: function() {
             $('.union-top').on('tap', function() {
-                BNJS.page.start("BaiduNuomiMerchant://component?compid=bnl&comppage=login", {}, 1);
+                BNJS.page.start("BaiduNuomiMerchant://component?url=http://cp01-ocean-1115-offline.epc.baidu.com:8080/naserver/newapp/merchantlogintpl", {}, 1);
             })
             $('.union-list').on('tap', function() {
-                BNJS.page.start("BaiduNuomiMerchant://component?compid=bnl&comppage=login", {}, 1);
+                BNJS.page.start("BaiduNuomiMerchant://component?url=http://cp01-ocean-1115-offline.epc.baidu.com:8080/naserver/newapp/merchantlogintpl", {}, 1);
             })
         },
         changeInfo: function(data) {
