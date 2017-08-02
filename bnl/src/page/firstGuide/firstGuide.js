@@ -45,6 +45,7 @@ let init = {
                 }            
             });
         })
+        // BNJS.localStorage.removeItem("flag");
     }
 }
     
