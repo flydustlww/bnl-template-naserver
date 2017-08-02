@@ -8,13 +8,13 @@ let $ = require('dep/zepto');
 require('dep/zeptoLib/touch.js');
 let api = require('../../config/api');
 let util = require('widget/util/util');
-
-// 为了兼容该死的华为荣誉6
+let utilBNJS = require('widget/util/bnjs/util-bnjs.js');
 let Promise = require('widget/util/es6-promise.js').Promise;
 let dialog = require('widget/dialog/dialog.js');
+let httpBnjs = require('widget/http/httpBnjs');
 require('widget/global/global.less');
 require('./userCenter.less');
-
+require('widget/retina/1px.less');
 // 初始化页面级的Vue实例
 let vm = new Vue({
     el: '#app',
@@ -41,26 +41,30 @@ let vm = new Vue({
         getData: function () {
             let that = this;
             let uid = BNJS.account.uid || 0;
-            let pN = new Promise(function (resolve, reject) {
-                $.ajax({
-                    url: api.gettoken,
-                    type: 'GET',
-                    dataType: 'json',
-                    success: function (res) {
-                        that.token = res.data;
-                        resolve();
-                    },
-                    error: function (res) {
-                        reject(res);
+
+            utilBNJS.storage.getItem('bnl_bduss').then(function(res) {
+                alert(res);
+                // let bdussStroage = res;
+                let bdussStroage = "WhPcjJCZmU4eUV1Z05DQ3VSOTdPVlpjSmpHSkotbHJVaEYyNWEzWkNnQUQ3YWRaSVFBQUFBJCQAAAAAAAAAAAEAAAAoqTMGcmVubGVpODAwOQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANggFkDYIBZV";
+                httpBnjs.get({
+                    url: api.myuserinfo,
+                    params: {
+                        b_uid: uid,
+                        bduss: bdussStroage                        
                     }
-                });
-            }).then(resp => httpAjax(api.myuserinfo, {
-                access_token: that.token,
-                b_uid: uid
-            })).catch(function(res) {
-                BNJS.ui.showErrorPage(); 
-            }).then(res => {
-                if (res.errno === 0) {
+                })
+                .then(function(res) {
+                    that.userInfoOk(res);
+                }, function(res) {
+                    BNJS.ui.showErrorPage();
+                })                
+            });
+        },
+        userInfoOk: function(res) {
+            switch (res.errno) 
+            {
+                case 0:
+                {
                     that.passport_username = res.data.passport_username ? res.data.passport_username : "--";
                     that.real_name = res.data.real_name ? res.data.real_name : "--";
                     that.mobile = res.data.mobile ? res.data.mobile : "--";
@@ -73,34 +77,13 @@ let vm = new Vue({
                             window.location.href = "https://m.baifubao.com/wap/0/wallet/0/cardlist/0";        
                         })        
                     }
-                } else if (res.errno === 2002) {
-                    BNJS.page.start("BaiduNuomiMerchant://component?compid=bnl&comppage=login", {});
-                } else {
-                    BNJS.ui.showErrorPage();
+                    break;                   
                 }
-            }).catch(function() {
-                BNJS.ui.showErrorPage();
-            })
-
-            function httpAjax(url, data) {
-                var p = new Promise(function (resolve, reject) {
-                    $.ajax({
-                        url: url,
-                        type: 'GET',
-                        dataType: "json",
-                        data: {
-                            b_uid: data.b_uid,
-                            access_token: data.access_token
-                        },
-                        success: function (resp) {
-                            resolve(resp);
-                        },
-                        error: function (resp) {
-                            reject(resp);
-                        }
-                    });
-                });
-                return p;
+                case 2002:
+                    // BNJS.page.start("BaiduNuomiMerchant://component?compid=bnl&comppage=login", {});
+                    break;
+                default:
+                    BNJS.ui.showErrorPage();
             }
         },
         loginClick: function() {

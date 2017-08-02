@@ -10,9 +10,7 @@
             <li class="user-item border-bt"><strong>推广联盟</strong><span>{{alliance_name}}</span></li>
         </ul>
     </div>
-    <div class="user-login-wrap border-tp border-rt">
-        <div class="user-login border-bt border-lt">
-            <button type="button" class="" v-on:tap="loginClick">退出登录</button>
-        </div>
+    <div class="user-login bd-radius ratina-bd">
+        <button type="button" class="" v-on:tap="loginClick">退出登录</button>
     </div>
 </div>

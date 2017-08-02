@@ -12,6 +12,7 @@ body {
                 .rem(height, 88);
                 .rem(line-height, 88);
                 .rem(font-size, 28);
+                vertical-align: top;
                 overflow: hidden;
                 color: #666;
                 strong {
@@ -38,7 +39,7 @@ body {
                     float: right;
                     .rem(height, 28);
                     .rem(width, 28);
-                    .rem(margin-top, 30);
+                    .rem(margin-top, 20);
                     background-image: url(./img/error.png);
                     background-size: 100% 100%;
                     background-repeat: no-repeat;
@@ -50,9 +51,16 @@ body {
                     background-image: url(./img/error.png);
                 }
             }
+
+            li:last-child {
+                &:after {
+                    display: none;
+                }
+            }
         }
     }
-    .user-login-wrap {
+
+    .user-login{
         .rem(width, 690);
         .rem(height, 80);
         .rem(margin-top, 30);
@@ -61,33 +69,16 @@ body {
         .rem(line-height, 80);
         text-align: center;
         background: #fff;
-        border-radius: 4px;
-        .user-login{
-            .rem(width, 690);
-            .rem(height, 80);
-            border-radius: 4px;            
-            &:after, &:before {
-                background: #6069E6;
-                border-radius: 4px;
-            }          
-        }
-        button {
-            .rem(width, 690);
-            .rem(height, 80);
-            .rem(font-size, 32);
-            background: #fff;
-            border-radius: 4px;
-            color: #6069E6;
-        }
-        &:after, &:before {
-            background: #6069E6;
-            border-radius: 4px;
-        }
+        border-radius: 4px; 
     }
-    // .border-1px:after {
-    //     height: 2px;
-    //     background: #6069E6;
-    // }
+    button {
+        .rem(width, 690);
+        .rem(height, 80);
+        .rem(font-size, 32);
+        background: #fff;
+        border-radius: 4px;
+        color: #6069E6;
+    }
 
     .dialog-content-bd{
         text-align: center;
