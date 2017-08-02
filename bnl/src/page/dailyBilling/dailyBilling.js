@@ -1,7 +1,7 @@
 /**
  * @file 今日佣金
  * @author songjin <songjin@baidu.com>
- * @date 2016-08-30
+ * @date 
  */
 require('dep/zepto');
 require('dep/artTemplate');
@@ -14,6 +14,9 @@ var urlParam = require('static/js/urlParam');
 var formatMoney = require('static/js/formatMoney');
 var api = require('../../config/api');
 var cutString = require('static/js/cutString');
+var iosDatePicker = require('widget/iosDatePicker/iosDatePicker');
+//new iosDatePicker();
+
 var promoteList;
 var isInit;
 var curPageNum;
@@ -64,9 +67,6 @@ addMore.prototype.noMoreDiv = function () {
         //  this.removeDiv(); 
         $('.loadingmore').html('没有更多了');
     }
-
-    // $(".loadingmore").prev().find(".collapse").remove();
-    // $(".loadingmore").remove();
 };
 addMore.prototype.removeDiv = function () {
     $('.loadingmore').remove();
