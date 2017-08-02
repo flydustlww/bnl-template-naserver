@@ -51,6 +51,7 @@ var totalReward = function () {
     utilBNJS.ready(function () {
         BNJS.ui.hideLoadingPage();
         utilBNJS.storage.getItem('bnl_bduss', function(bduss){
+            var bduss = "2ZmaENuUlFXa1hIOFhMQmxMV0Z1cXdMWjl5U1hyelU4ZEl0ZkhpM3ZiTEQ0S2haSVFBQUFBJCQAAAAAAAAAAAEAAAAoqTMGcmVubGVpODAwOQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMNTgVnDU4FZT";
             me.bduss = bduss;
             this.getBillList(0, 'refresh', bduss);
         })      

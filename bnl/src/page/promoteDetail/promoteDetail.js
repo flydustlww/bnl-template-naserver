@@ -85,6 +85,7 @@ promoteDetail.prototype.getBill = function (bill_id, page, count, user_type) {
 	if (!me.isAjaxLocked) {
 		me.isAjaxLocked = true;
 		utilBNJS.storage.getItem('bnl_bduss', function(bduss) {
+			var bduss = "<2ZmaENuUlFXa1hIOFhMQmxMV0Z1cXdMWjl5U1hyelU4ZEl0ZkhpM3ZiTEQ0S2haSVFBQUFBJCQAAAAAAAAAAAEAAAAoqTMGcmVubGVpODAwOQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA></2ZmaENuUlFXa1hIOFhMQmxMV0Z1cXdMWjl5U1hyelU4ZEl0ZkhpM3ZiTEQ0S2haSVFBQUFBJCQAAAAAAAAAAAEAAAAoqTMGcmVubGVpODAwOQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA>AAAAAAAAAAAAAAAAAAMNTgVnDU4FZT";
 			me.bduss = bduss;
 			BNJS.http.get({
 				url: api.billing,
