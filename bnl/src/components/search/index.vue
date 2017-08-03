@@ -225,67 +225,65 @@ export default {
             util.ready(function(){
                 let that = this;
                 let uid = typeof(BNJS.account.uid) === "number" ? BNJS.account.uid : 0;
-                utilBNJS.storage.getItem('bnl_bduss').then(function(res) {
-                    let bdussStroage = res;
-                    let params = function(){
-                        let _params = {}
-                        if(/^[0-9]*$/.test(that.mendianInfo)){
-                            _params = {
-                                merchant_id: that.mendianInfo,
-                                bduss: bdussStroage,
-                                b_uid: uid
-                            }
-                        }else{
-                            _params = {
-                                name: that.mendianInfo,
-                                bduss: bdussStroage,
-                                b_uid: uid
-                            }
+                let bdussStroage = res;
+                let params = function(){
+                    let _params = {}
+                    if(/^[0-9]*$/.test(that.mendianInfo)){
+                        _params = {
+                            merchant_id: that.mendianInfo,
+                            bduss: bdussStroage,
+                            b_uid: uid
                         }
-                        return _params;
-                    };
-                    // 删除或不填
-                    if(val === '') {
-                        that.isShowNote = true;
-                        that.isShowTps = false;
-                        that.isPink = false;
-                        that.isShowLists = false;
-                        that.items = [];
-                        return;
-                    } else {
-                        // 输入
-                        that.isShowLists = true;
-                        that.isShowNote = false;
-                        httpBnjs.get({
-                            url: api.searchmerchant,
-                            params: params()                   
-                        })
-                        .then(function(res){
-                            if (res.length === 0){
-                                that.isShowLists=false;
-                                that.isShowTps = true;
-                                that.items = res;
-                            }else{
-                                that.isShowTps = false;
-                                that.isShowLists = true;      
-                                that.items = res.slice(0,20);
-                            }
-                            if (errno === 2002) {
-                                BNJS.page.start("BaiduNuomiMerchant://component?compid=bnl&comppage=login", {});
-                            }
-                            
-                        },function(res){
-                            $.dialog({
-                                showTitle : false,
-                                contentHtml : res.msg||'出错了!',
-                                buttonClass : {
-                                    ok : 'dialog-font-color-pink'
-                                }
-                            });
-                        })
-                        that.isPink = true;               
+                    }else{
+                        _params = {
+                            name: that.mendianInfo,
+                            bduss: bdussStroage,
+                            b_uid: uid
+                        }
                     }
-                });
+                    return _params;
+                };
+                // 删除或不填
+                if(val === '') {
+                    that.isShowNote = true;
+                    that.isShowTps = false;
+                    that.isPink = false;
+                    that.isShowLists = false;
+                    that.items = [];
+                    return;
+                } else {
+                    // 输入
+                    that.isShowLists = true;
+                    that.isShowNote = false;
+                    httpBnjs.get({
+                        url: api.searchmerchant,
+                        params: params()                   
+                    })
+                    .then(function(res){
+                        if (res.length === 0){
+                            that.isShowLists=false;
+                            that.isShowTps = true;
+                            that.items = res;
+                        }else{
+                            that.isShowTps = false;
+                            that.isShowLists = true;      
+                            that.items = res.slice(0,20);
+                        }
+                        if (errno === 2002) {
+                            BNJS.page.start("BaiduNuomiMerchant://component?compid=bnl&comppage=login", {});
+                        }
+                        
+                    },function(res){
+                        $.dialog({
+                            showTitle : false,
+                            contentHtml : res.msg||'出错了!',
+                            buttonClass : {
+                                ok : 'dialog-font-color-pink'
+                            }
+                        });
+                    })
+                    that.isPink = true;               
+                }
             })
 	    }
 	},
@@ -298,51 +296,45 @@ export default {
             var _this = this;
             util.ready(function() {
                 BNJS.hardware.scanQRCode(function(res) {
-                    utilBNJS.storage.getItem('bnl_bduss').then(function(res) {
-                        let bdussStroage = res; 
-                        let url = res.data.content;
-                        let result = util.parseQueryString(url);
-                        let code_id = result.id;
-                        httpBnjs.get({
-                            url: api.bindcode,
-                            params: {
-                                code_id: code_id,
-                                product: 5
-                            }                  
-                        })                    
-                        .then(function(resp) {
-                            if (resp.errno === 2002) {
-                                $.dialog({
-                                    showTitle : false,
-                                    contentHtml : resp.msg,
-                                    buttonClass : {
-                                        ok : 'dialog-font-color-pink'
-                                    },
-                                    onClickOk: function() {
-                                        BNJS.page.start("BaiduNuomiMerchant://component?compid=bnl&comppage=login", {});
-                                    }
-                                });
-                            } else {
-                                $.dialog({
-                                    showTitle : false,
-                                    contentHtml : resp.msg,
-                                    buttonClass : {
-                                        ok : 'dialog-font-color-pink'
-                                    },
-                                    onClickOk: function() {
-                                    }
-                                });
-                            }
-                        }, function(res) {
-                            BNJS.ui.showErrorPage();
-                        })
-                    });                 
+                    let url = res.data.content;
+                    let result = util.parseQueryString(url);
+                    let code_id = result.id;
+                    httpBnjs.get({
+                        url: api.bindcode,
+                        params: {
+                            code_id: code_id,
+                            product: 5
+                        }                  
+                    })                    
+                    .then(function(resp) {
+                        if (resp.errno === 2002) {
+                            $.dialog({
+                                showTitle : false,
+                                contentHtml : resp.msg,
+                                buttonClass : {
+                                    ok : 'dialog-font-color-pink'
+                                },
+                                onClickOk: function() {
+                                    BNJS.page.start("BaiduNuomiMerchant://component?compid=bnl&comppage=login", {});
+                                }
+                            });
+                        } else {
+                            $.dialog({
+                                showTitle : false,
+                                contentHtml : resp.msg,
+                                buttonClass : {
+                                    ok : 'dialog-font-color-pink'
+                                },
+                                onClickOk: function() {
+                                }
+                            });
+                        }
+                    }, function(res) {
+                        BNJS.ui.showErrorPage();
+                    })                
                 });
             });
 
-	    },      
-	    // 获取检索数据
-	    getSearchData: function(resole,reject){
 	    }
 	}
 }

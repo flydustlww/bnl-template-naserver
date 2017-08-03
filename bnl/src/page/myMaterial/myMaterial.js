@@ -74,7 +74,7 @@ let materialItemView = {
             }                
         }, function(res) {
             BNJS.ui.showErrorPage();
-        })            
+        });   
     },
     render: function (list) {
         // url待与rd传参对
@@ -91,7 +91,6 @@ let materialItemView = {
  */
 
 let bindButton = {
-    
     init: function () {
         let _this = this;
         material_button.on('tap', function (ev) {
