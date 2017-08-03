@@ -110,6 +110,7 @@ var selectDate = function () {
 	    '<div class="ios-select-loading"></div>',
 	    '</div>'
 	].join('\r\n');
+
 	var iosSelect = new IosSelect(3, [yearData, monthData, dateData],
 	    {
 	        title: '',
@@ -120,17 +121,19 @@ var selectDate = function () {
 	        threeLevelId: threeLevelId,
 	        showLoading: true,
 	        callback: function (selectOneObj, selectTwoObj, selectThreeObj) {
-	            showDateDom.attr('data-year', selectOneObj.id);
-	            showDateDom.attr('data-month', selectTwoObj.id);
-	            showDateDom.attr('data-date', selectThreeObj.id);
-	            showDateDom.html(selectOneObj.id + '.' + selectTwoObj.id + '.' + selectThreeObj.id + '<span id=\'triangle-down\'></span> <div class=\'seporator\'></div>');
+	            // showDateDom.attr('data-year', selectOneObj.id);
+	            // showDateDom.attr('data-month', selectTwoObj.id);
+	            // showDateDom.attr('data-date', selectThreeObj.id);
+	            // showDateDom.html(selectOneObj.id + '.' + selectTwoObj.id + '.' + selectThreeObj.id + '<span id=\'triangle-down\'></span> <div class=\'seporator\'></div>');
 	            var str = selectOneObj.id + '/' + selectTwoObj.id + '/' + selectThreeObj.id;
 	            _this.params.start_time = (new Date(str)).getTime() / 1000;
 	            _this.params.page = 1;
 	            _this.params.end_time = _this.params.start_time + 24 * 60 * 60;
-	            _this.getTasklist(_this.params);
+	            console.log('更新页面');
+	           // _this.getTasklist(_this.params);
 	        }
 	    }, tpl);
+
 	window.addEventListener("popstate", function(e) {
 	    if (!!$('.three-level-box')) {
 	        $('.three-level-box').remove();
