@@ -41,23 +41,18 @@ let vm = new Vue({
         getData: function () {
             let that = this;
             let uid = BNJS.account.uid || 0;
-
-            utilBNJS.storage.getItem('bnl_bduss').then(function(res) {
-                // let bdussStroage = res;
-                let bdussStroage = "2ZmaENuUlFXa1hIOFhMQmxMV0Z1cXdMWjl5U1hyelU4ZEl0ZkhpM3ZiTEQ0S2haSVFBQUFBJCQAAAAAAAAAAAEAAAAoqTMGcmVubGVpODAwOQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMNTgVnDU4FZT";
-                httpBnjs.get({
-                    url: api.myuserinfo,
-                    params: {
-                        b_uid: uid,
-                        bduss: bdussStroage                        
-                    }
-                })
-                .then(function(res) {
-                    that.userInfoOk(res);
-                }, function(res) {
-                    BNJS.ui.showErrorPage();
-                })                
-            });
+            httpBnjs.get({
+                url: api.myuserinfo,
+                params: {
+                    b_uid: uid,
+                    bduss: bdussStroage                        
+                }
+            })
+            .then(function(res) {
+                that.userInfoOk(res);
+            }, function(res) {
+                BNJS.ui.showErrorPage();
+            });                
         },
         userInfoOk: function(res) {
             switch (res.errno) 

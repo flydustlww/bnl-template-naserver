@@ -179,10 +179,12 @@ let api = require('../../config/api');
 let Baidu = require('dep/baiduTemplate');
 // 为了兼容该死的华为荣誉6
 let Promise = require('widget/util/es6-promise.js').Promise;
+let httpBnjs = require('widget/http/httpBnjs');
 let dialog = require('widget/dialog/dialog.js');
 let urlParam = require('static/js/urlParam');
 let curUid = urlParam.getUrlParam('uid');
-let util = require('widget/util/util'); 
+let util = require('widget/util/util');
+let utilBNJS = require('widget/util/bnjs/util-bnjs'); 
 export default {
 	name: 'mendian-search',
 	data: function(){
@@ -220,58 +222,69 @@ export default {
 	},
 	watch:{
 	    mendianInfo:function(val,oldVal){
-	        let that = this;
-	            // 删除或不填
-	        if(val === '') {
-	            that.isShowNote = true;
-	            that.isShowTps = false;
-	            that.isPink = false;
-	            that.isShowLists = false;
-	            that.items = [];
-	            return;
-	        }else{
-	            // 输入
-	            that.isShowLists = true;
-	            that.isShowNote = false;
-                util.ready(function(){
-                    $.ajax({
-                        url: api.gettoken,
-                        type: 'GET',
-                        dataType: 'json',
-                        success: function (res) {
-                            that.token = res.data;
-                            new Promise(that.getSearchData).then(function(res){
-                                    if (res.length === 0){
-                                        that.isShowLists=false;
-                                        that.isShowTps = true;
-                                        that.items = res;
-                                    }else{
-                                        that.isShowTps = false;
-                                        that.isShowLists = true;      
-                                        that.items = res.slice(0,20);
-                                    }
-                                    if (errno === 2002) {
-                                        BNJS.page.start("BaiduNuomiMerchant://component?compid=bnl&comppage=login", {});
-                                    }
-                                    
-                                },function(res){
-                                    $.dialog({
-                                        showTitle : false,
-                                        contentHtml : res.msg||'出错了!',
-                                        buttonClass : {
-                                            ok : 'dialog-font-color-pink'
-                                        }
-                                    });
-                                })
-
-                            that.isPink = true;                        
-                        },
-                        error: function (res) {
+            util.ready(function(){
+                let that = this;
+                let uid = typeof(BNJS.account.uid) === "number" ? BNJS.account.uid : 0;
+                let bdussStroage = res;
+                let params = function(){
+                    let _params = {}
+                    if(/^[0-9]*$/.test(that.mendianInfo)){
+                        _params = {
+                            merchant_id: that.mendianInfo,
+                            bduss: bdussStroage,
+                            b_uid: uid
                         }
-                    });
-                })
-
-	        }      
+                    }else{
+                        _params = {
+                            name: that.mendianInfo,
+                            bduss: bdussStroage,
+                            b_uid: uid
+                        }
+                    }
+                    return _params;
+                };
+                // 删除或不填
+                if(val === '') {
+                    that.isShowNote = true;
+                    that.isShowTps = false;
+                    that.isPink = false;
+                    that.isShowLists = false;
+                    that.items = [];
+                    return;
+                } else {
+                    // 输入
+                    that.isShowLists = true;
+                    that.isShowNote = false;
+                    httpBnjs.get({
+                        url: api.searchmerchant,
+                        params: params()                   
+                    })
+                    .then(function(res){
+                        if (res.length === 0){
+                            that.isShowLists=false;
+                            that.isShowTps = true;
+                            that.items = res;
+                        }else{
+                            that.isShowTps = false;
+                            that.isShowLists = true;      
+                            that.items = res.slice(0,20);
+                        }
+                        if (errno === 2002) {
+                            BNJS.page.start("BaiduNuomiMerchant://component?compid=bnl&comppage=login", {});
+                        }
+                        
+                    },function(res){
+                        $.dialog({
+                            showTitle : false,
+                            contentHtml : res.msg||'出错了!',
+                            buttonClass : {
+                                ok : 'dialog-font-color-pink'
+                            }
+                        });
+                    })
+                    that.isPink = true;               
+                }
+            })
 	    }
 	},
 	methods:{
@@ -280,39 +293,20 @@ export default {
 	        this.items = [];
 	    },
 	    bindMaterial:function(name,merchart_id){
-	        // window.location.href = 'band://web?type=materials_binding&deal_id='+'&deal_name='+name+'&deal_statu=在线&merchant_id='+merchart_id+'&product=5';
-
-            /**
-            'access_token'  "",
-            'code_id'     "",  
-            'product'     5,  //产品类型
-            */
             var _this = this;
             util.ready(function() {
                 BNJS.hardware.scanQRCode(function(res) {
                     let url = res.data.content;
                     let result = util.parseQueryString(url);
                     let code_id = result.id;
-                    let pN = new Promise(function (resolve, reject) {
-                        $.ajax({
-                            url: api.gettoken,
-                            type: 'GET',
-                            dataType: 'json',
-                            success: function (res) {
-                                _this.token = res.data;
-                                resolve();
-                            },
-                            error: function (res) {
-                                reject(res);
-                            }
-                        });
-                    }).then(res => httpAjax(api.bindcode, {
-                            access_token: _this.token,
+                    httpBnjs.get({
+                        url: api.bindcode,
+                        params: {
                             code_id: code_id,
                             product: 5
-                        })).catch(function(){
-                        BNJS.ui.showErrorPage("拼命加载中");
-                    }).then(function(resp){
+                        }                  
+                    })                    
+                    .then(function(resp) {
                         if (resp.errno === 2002) {
                             $.dialog({
                                 showTitle : false,
@@ -335,74 +329,12 @@ export default {
                                 }
                             });
                         }
-                    })
+                    }, function(res) {
+                        BNJS.ui.showErrorPage();
+                    })                
+                });
+            });
 
-                    function httpAjax(url, data) {
-                        let params = data;
-                        var p = new Promise(function (resolve, reject) {
-                            $.ajax({
-                                url: url,
-                                type: 'POST',
-                                dataType: "json",
-                                data: params,
-                                success: function (resp) {
-                                    resolve(resp);
-                                },
-                                error: function (resp) {
-                                    reject(resp);
-                                }
-                            });
-                        });
-                        return p;
-                    }                    
-                })
-            })
-
-	    },
-        // 获取指定url后参数对
-        parseQueryString: function (url) {
-             var reg_url = /^[^\?]+\?([\w\W]+)$/,
-                  reg_para = /([^&=]+)=([\w\W]*?)(&|$|#)/g,
-                  arr_url = reg_url.exec(url),
-                  ret = {};
-             if (arr_url && arr_url[1]) {
-                  var str_para = arr_url[1], result;
-                  while ((result = reg_para.exec(str_para)) != null) {
-                       ret[result[1]] = result[2];
-                  }
-             }
-             return ret;
-        },       
-	    // 获取检索数据
-	    getSearchData: function(resole,reject){
-	        let that = this;
-	        let params = function(){
-	            let _params = {}
-	            if(/^[0-9]*$/.test(that.mendianInfo)){
-	                _params = {
-	                    merchant_id: that.mendianInfo
-	                }
-	            }else{
-	                _params = {
-	                    name: that.mendianInfo
-	                }
-	            }
-                _params.access_token = that.token;
-	            return _params;
-	        };
-	        $.ajax({
-	            url: api.searchmerchant,
-	            type: 'GET',
-	            dataType: 'json',
-	            data: params(),
-	            success: function(res){
-	                resole(res.data)
-	            },
-	            error: function(res){
-	                reject(res)
-	            }
-	        })    
-	        
 	    }
 	}
 }

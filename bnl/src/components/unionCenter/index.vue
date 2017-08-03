@@ -80,32 +80,22 @@ export default {
             // 请求checkuserinfo,请求myuserinfo
             let curTimeDate = new Date();
             let curTime = curTimeDate.getTime();
-            utilBNJS.storage.getItem('bnl_bduss').then(function(res) {
-                // let bdussStroage = res;
-                let bdussStroage = "2ZmaENuUlFXa1hIOFhMQmxMV0Z1cXdMWjl5U1hyelU4ZEl0ZkhpM3ZiTEQ0S2haSVFBQUFBJCQAAAAAAAAAAAEAAAAoqTMGcmVubGVpODAwOQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMNTgVnDU4FZT";
-                httpBnjs.get({
-                    url: api.checkuserinfo,
-                    params: {
-                        b_uid: uid,
-                        bduss: bdussStroage                        
-                    }
-                })
-                .then(function(res) {
-                    that.checkuserInfoOk(res);
-                }, function(res) {
-                    BNJS.page.start("BaiduNuomiMerchant://component?url=http://cp01-ocean-1115-offline.epc.baidu.com:8080/naserver/newapp/merchantlogintpl", {}, 1);
-                })
-                .then(function(res) {
-                    that.myuserInfoOk(res);
-                }, function(res) {
-                    BNJS.ui.showErrorPage();
-                });
-
-            }).catch(function(res) {
-                // 跳转登录
+            httpBnjs.get({
+                url: api.checkuserinfo,
+                params: {
+                    b_uid: uid,                
+                }
+            })
+            .then(function(res) {
+                that.checkuserInfoOk(res);
+            }, function(res) {
                 BNJS.page.start("BaiduNuomiMerchant://component?url=http://cp01-ocean-1115-offline.epc.baidu.com:8080/naserver/newapp/merchantlogintpl", {}, 1);
             })
-
+            .then(function(res) {
+                that.myuserInfoOk(res);
+            }, function(res) {
+                BNJS.ui.showErrorPage();
+            });
         },
         checkuserInfoOk: function(res) {
             // 拿到登录的数据
@@ -190,6 +180,12 @@ export default {
                         BNJS.page.start("BaiduNuomiMerchant://component?url=http://cp01-ocean-1115-offline.epc.baidu.com:8080/naserver/newapp/merchantlogintpl", {}, 1);
                         return false;
                         break;
+                    }
+                case 2001: 
+                    {
+                        BNJS.page.start("BaiduNuomiMerchant://component?url=http://cp01-ocean-1115-offline.epc.baidu.com:8080/naserver/newapp/merchantlogintpl", {}, 1);
+                        return false;
+                        break;                       
                     }
                 default:
                     {

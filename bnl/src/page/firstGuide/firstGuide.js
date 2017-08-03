@@ -32,19 +32,14 @@ let init = {
         });
     },
     store() {
-        let flag = 1;
-        let storeFlag;
-        utilBNJS.ready(function(){
-            utilBNJS.storage.getItem("flag").then(function(res){
-                storeFlag = res;
-                if (storeFlag) {
-                    var url = 'BaiduNuomiMerchant://component?url=http://cp01-ocean-1115-offline.epc.baidu.com:8080/naserver/newapp/merchantlogintpl';
-                    BNJS.page.start(url,{},1);
-                } else {
-                    utilBNJS.storage.setItem("flag", flag);
-                }            
-            });
-        })
+        let bnl_flag = 1;
+        BNJS.localStorage.getItem('bnl_flag', function(res){
+            var url = 'BaiduNuomiMerchant://component?url=http://cp01-ocean-1115-offline.epc.baidu.com:8080/naserver/newapp/merchantlogintpl';
+            BNJS.page.start(url,{},1);          
+        }, function(){
+            BNJS.localStorage.setItem('bnl_flag', bnl_flag, function(){
+            }, function(){});
+        }, '2.7');
         // BNJS.localStorage.removeItem("flag");
     }
 }
