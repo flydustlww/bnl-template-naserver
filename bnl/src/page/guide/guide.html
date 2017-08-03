@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <title>百度糯米商户联盟</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+</head>
+<body>
+    <div class="login-tips" id="first-page">
+        <header>
+            <div class="nav">
+                <div class="circle-1-border">
+                    <div class="circle-1-dot"></div>
+                </div>
+                <hr class="line-disabled">
+                <div class="circle-1-border-disabled">
+                    <div class="circle-1-dot-disabled"></div>
+                </div>
+                <hr class="line-disabled">
+                <div class="circle-1-border-disabled">
+                    <div class="circle-1-dot-disabled"></div>
+                </div>
+            </div>
+            <div class="text">
+                <div class="text-1">
+                    填写角色信息
+                </div>
+                <div class="text-2-disabled">
+                    验证手机号
+                </div>
+                <div class="text-3-disabled">
+                    加入联盟
+                </div>
+            </div>
+        </header>
+        <div class="bg-img"></div>
+        <div class="button">
+            <a class="left" href="BaiduNuomiMerchant://bindingphone?channel=alliance&notificationName=com.nuomi.merchant.broadcast.LOGIN&bottomText=填写完成,去验证手机号">去填写角色信息</a>
+            <a class="right">填好了,去验证</a>
+        </div>
+    </div>
+ <script>
+        //设置rem单位为屏幕宽度,适配神器
+            ! function() {
+                function rem() {
+                    document.documentElement.style.fontSize = (document.documentElement.clientWidth || document.documentElement.clientWidth) + 'px';
+                    //设置body字体大小，不影响body内字体大小
+                    document.body.style.fontSize = '16px';
+                }
+                rem();
+                window.addEventListener('resize', rem, false);
+            }();
+</script>
+</body>
+</html>

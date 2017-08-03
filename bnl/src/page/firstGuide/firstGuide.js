@@ -27,7 +27,7 @@ let init = {
     },
     initEvent() {
         $enterLm.on('tap', function () {
-            var url = 'BaiduNuomiMerchant://component?url=http://cp01-ocean-1115-offline.epc.baidu.com:8080/naserver/newapp/merchantloginguidetpl';
+            var url = 'BaiduNuomiMerchant://component?compid=bnl&comppage=guide';
             BNJS.page.start(url,{},1)        
         });
     },
