@@ -34,17 +34,15 @@ let init = {
     store() {
         let flag = 1;
         let storeFlag;
-        utilBNJS.ready(function(){
-            utilBNJS.storage.getItem("flag").then(function(res){
-                storeFlag = res;
-                if (storeFlag) {
-                    var url = 'BaiduNuomiMerchant://component?url=http://cp01-ocean-1115-offline.epc.baidu.com:8080/naserver/newapp/merchantlogintpl';
-                    BNJS.page.start(url,{},1);
-                } else {
-                    utilBNJS.storage.setItem("flag", flag);
-                }            
-            });
-        })
+        utilBNJS.storage.getItem("flag").then(function(res){
+            storeFlag = res;
+            if (storeFlag) {
+                var url = 'BaiduNuomiMerchant://component?url=http://cp01-ocean-1115-offline.epc.baidu.com:8080/naserver/newapp/merchantlogintpl';
+                BNJS.page.start(url,{},1);
+            } else {
+                utilBNJS.storage.setItem("flag", flag);
+            }            
+        });
         // BNJS.localStorage.removeItem("flag");
     }
 }
