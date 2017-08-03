@@ -3,15 +3,31 @@
  * @author name<liuboying@baidu.com>
  */
 require('./guide.less');
-var utilBNJS = require('widget/util/bnjs/util-bnjs.js');
+var $ = require('dep/zepto');
+// 确保组件页面能够正常使用BNJS方法，避免造成一些奇怪的错误发生
+var BNJSReady = function (readyCallback) {
+    if (readyCallback && typeof readyCallback =='function') {
+        if (window.BNJS && typeof window.BNJS =='object' && BNJS._isAllReady) {
+            readyCallback();
+
+        }else {
+            document.addEventListener('BNJSReady', function () {
+                readyCallback();
+            }, false);
+        }
+
+    }
+
+};
 
 var guide = function () {
+    var me = this;
 
-    utilBNJS.ready(function () {
-    	// 设置标题
-    	this.setTitle();
+    BNJSReady(function () {
+    	// 设置标题s
+    	me.setTitle();
     	// 绑定操作
-    	this.bindEvents();
+    	me.bindEvents();
     })
     
 

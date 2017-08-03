@@ -22,7 +22,8 @@ module.exports = {
         port: 8399,
         proxyTable: {
             '/api': {
-                target: 'http://cp01-ocean-1115-offline.epc.baidu.com:8080/naserver/newapp',
+                // target: 'http://cp01-ocean-1115-offline.epc.baidu.com:8080/naserver/newapp',
+                target: 'http://cp01-c-ugc-test00.epc.baidu.com:8999/naserver/newapp',
                 changeOrigin: true,
                 pathRewrite: {
                     '^/api': '/'
