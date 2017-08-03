@@ -36,49 +36,45 @@ let materialItemView = {
     },
     load: function () {
         let me = this;
-        utilBNJS.storage.getItem('bnl_bduss').then(function(res) {
-            // let bdussStroage = res;
-            let bdussStroage = "2ZmaENuUlFXa1hIOFhMQmxMV0Z1cXdMWjl5U1hyelU4ZEl0ZkhpM3ZiTEQ0S2haSVFBQUFBJCQAAAAAAAAAAAEAAAAoqTMGcmVubGVpODAwOQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMNTgVnDU4FZT";  
-            accessParam.bduss = bdussStroage;  
-            httpBnjs.get({
-                url: api.codelist,
-                params: {
-                    b_uid: uid,
-                    bduss: bdussStroage                        
-                }
-            })
-            .then(function(res) {
-                let data = res;
-                // 如果返回错误弹窗
-                if (data.errno != 0) {
-                    if (resp.errno === 2002) {
-                        $.dialog({
-                            showTitle : false,
-                            contentHtml : resp.msg,
-                            buttonClass : {
-                                ok : 'dialog-font-color-pink'
-                            },
-                            onClickOk: function() {
-                                BNJS.page.start('BaiduNuomiMerchant://component?url=http://cp01-ocean-1115-offline.epc.baidu.com:8080/naserver/newapp/merchantlogintpl', {});
-                            }
-                        });
-                    } else {
-                        $.dialog({
-                            showTitle: false,
-                            contentHtml: data.msg,
-                            buttonClass: {
-                                ok: 'dialog-font-color-pink'
-                            }
-                        });
-                    }
-                }
-                else {
-                    me.render(data.data.list);
-                }                
-            }, function(res) {
-                BNJS.ui.showErrorPage();
-            })            
+        accessParam.bduss = bdussStroage;  
+        httpBnjs.get({
+            url: api.codelist,
+            params: {
+                b_uid: uid,
+                bduss: bdussStroage                        
+            }
         })
+        .then(function(res) {
+            let data = res;
+            // 如果返回错误弹窗
+            if (data.errno != 0) {
+                if (resp.errno === 2002) {
+                    $.dialog({
+                        showTitle : false,
+                        contentHtml : resp.msg,
+                        buttonClass : {
+                            ok : 'dialog-font-color-pink'
+                        },
+                        onClickOk: function() {
+                            BNJS.page.start('BaiduNuomiMerchant://component?url=http://cp01-ocean-1115-offline.epc.baidu.com:8080/naserver/newapp/merchantlogintpl', {});
+                        }
+                    });
+                } else {
+                    $.dialog({
+                        showTitle: false,
+                        contentHtml: data.msg,
+                        buttonClass: {
+                            ok: 'dialog-font-color-pink'
+                        }
+                    });
+                }
+            }
+            else {
+                me.render(data.data.list);
+            }                
+        }, function(res) {
+            BNJS.ui.showErrorPage();
+        })            
     },
     render: function (list) {
         // url待与rd传参对
