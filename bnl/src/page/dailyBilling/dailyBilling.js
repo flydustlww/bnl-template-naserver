@@ -4,7 +4,7 @@
  * @description  有时间请重构
  * @date 
  */
-/* eslint disable */
+/* eslint-disable */
 require('dep/zepto');
 require('dep/artTemplate');
 require('./css/scroll.css');
@@ -298,4 +298,4 @@ util.ready(function() {
     BNJS.ui.title.setTitle('当日佣金');
     init();
 })
-/* eslint disable */
+/* eslint-disable */

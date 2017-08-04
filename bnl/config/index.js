@@ -1,6 +1,6 @@
 // see http://vuejs-templates.github.io/webpack for documentation.
 var path = require('path');
-/* eslint disable */
+/* eslint-disable */
 module.exports = {
     build: {
         env: require('./prod.env'),
@@ -51,4 +51,4 @@ module.exports = {
         'shoppicker'
     ]
 };
-/* eslint disable */
+/* eslint-disable */

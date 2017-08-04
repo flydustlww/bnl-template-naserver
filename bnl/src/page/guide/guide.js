@@ -2,7 +2,7 @@
  * @file guide 引导页面
  * @author name<liuboying@baidu.com>
  */
-/* eslint disable */
+/* eslint-disable */
 require('./guide.less');
 var $ = require('dep/zepto');
 var server = require('../../config/server').server;
@@ -53,4 +53,4 @@ guide.prototype.bindEvents = function() {
 
 
 new guide();
-/* eslint disable */
+/* eslint-disable */
