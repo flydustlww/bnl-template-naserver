@@ -15,7 +15,8 @@ require('dep/swipe/swiper-3.4.2.jquery.min.js');
 let mScreen = require('widget/mscreen/mscreen');
 
 let $enterLm = $('#enterLm');
-
+let server = require('../../config/server').server;
+let LOGIN_URL = encodeURIComponent(server + '/naserver/newapp/merchantlogintpl');
 let init = {
     initAll() {
         mScreen(750, 1205);
@@ -34,7 +35,7 @@ let init = {
     store() {
         let bnl_flag = 1;
         BNJS.localStorage.getItem('bnl_flag', function(res){
-            var url = 'BaiduNuomiMerchant://component?url=http://cp01-ocean-1115-offline.epc.baidu.com:8080/naserver/newapp/merchantlogintpl';
+            var url = 'BaiduNuomiMerchant://component?url=' + LOGIN_URL;
             BNJS.page.start(url,{},1);          
         }, function(){
             BNJS.localStorage.setItem('bnl_flag', bnl_flag, function(){

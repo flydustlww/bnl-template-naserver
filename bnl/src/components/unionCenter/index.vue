@@ -47,6 +47,8 @@ let util = require('widget/util/util');
 let utilBNJS = require('widget/util/bnjs/util-bnjs.js');
 let httpBnjs = require('widget/http/httpBnjs');
 let Promise = require('widget/util/es6-promise.js').Promise;
+let server = require('../../config/server').server;
+let merchantlogin = encodeURIComponent(server + '/naserver/newapp/merchantlogintpl');
 
 export default {
 	name: 'union-center',
@@ -89,7 +91,7 @@ export default {
             .then(function(res) {
                 that.checkuserInfoOk(res);
             }, function(res) {
-                BNJS.page.start("BaiduNuomiMerchant://component?url=http://cp01-ocean-1115-offline.epc.baidu.com:8080/naserver/newapp/merchantlogintpl", {}, 1);
+                BNJS.page.start("BaiduNuomiMerchant://component?url=" + merchantlogin, {}, 1);
             })
             .then(function(res) {
                 that.myuserInfoOk(res);
@@ -177,13 +179,13 @@ export default {
                     }
                 case 1004:
                     {
-                        BNJS.page.start("BaiduNuomiMerchant://component?url=http://cp01-ocean-1115-offline.epc.baidu.com:8080/naserver/newapp/merchantlogintpl", {}, 1);
+                        BNJS.page.start("BaiduNuomiMerchant://component?url=" + merchantlogin, {}, 1);
                         return false;
                         break;
                     }
                 case 2001: 
                     {
-                        BNJS.page.start("BaiduNuomiMerchant://component?url=http://cp01-ocean-1115-offline.epc.baidu.com:8080/naserver/newapp/merchantlogintpl", {}, 1);
+                        BNJS.page.start("BaiduNuomiMerchant://component?url=" + merchantlogin, {}, 1);
                         return false;
                         break;                       
                     }
@@ -258,10 +260,10 @@ export default {
         },   
         forceLogin: function() {
             $('.union-top').on('tap', function() {
-                BNJS.page.start("BaiduNuomiMerchant://component?url=http://cp01-ocean-1115-offline.epc.baidu.com:8080/naserver/newapp/merchantlogintpl", {}, 1);
+                BNJS.page.start("BaiduNuomiMerchant://component?url=" + merchantlogin, {}, 1);
             })
             $('.union-list').on('tap', function() {
-                BNJS.page.start("BaiduNuomiMerchant://component?url=http://cp01-ocean-1115-offline.epc.baidu.com:8080/naserver/newapp/merchantlogintpl", {}, 1);
+                BNJS.page.start("BaiduNuomiMerchant://component?url=" +merchantlogin, {}, 1);
             })
         },
         changeInfo: function(data) {

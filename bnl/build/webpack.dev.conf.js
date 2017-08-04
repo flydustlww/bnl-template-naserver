@@ -10,7 +10,7 @@ var path = require('path');
 var baseWebpackConfig = require('./webpack.base.conf');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var pkg = require(path.resolve(__dirname, '../package.json'));
-console.log('add for DefferedBNJS 是否为开发环境--------------------'+process.argv[1].indexOf('webpack-dev-server') > 0);
+// console.log('add for DefferedBNJS 是否为开发环境--------------------'+process.argv[1].indexOf('webpack-dev-server') > 0);
 
 // add hot-reload related code to entry chunks
 Object.keys(baseWebpackConfig.entry).forEach(function (name) {

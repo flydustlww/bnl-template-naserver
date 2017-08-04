@@ -1,6 +1,6 @@
 // see http://vuejs-templates.github.io/webpack for documentation.
 var path = require('path');
-
+/* eslint-disable */
 module.exports = {
     build: {
         env: require('./prod.env'),
@@ -17,18 +17,7 @@ module.exports = {
         // Before setting to `true`, make sure to:
         // npm install --save-dev compression-webpack-plugin
         productionGzip: false,
-        productionGzipExtensions: ['js', 'css'],
-        // QA验收用,上线前要注释掉
-        port: 8399,
-        proxyTable: {
-            '/api': {
-                target: 'http://cp01-ocean-1115-offline.epc.baidu.com:8080/naserver/newapp',
-                changeOrigin: true,
-                pathRewrite: {
-                    '^/api': '/'
-                }
-            }
-        }
+        productionGzipExtensions: ['js', 'css']
     },
     qa: {
         env: require('./qa.env')
@@ -37,6 +26,7 @@ module.exports = {
         env: require('./dev.env'),
         port: 8399,
         proxyTable: {
+            // 本地开发
             /* '/mock': {
                  target: 'http://172.22.149.65',
                  changeOrigin: true,
@@ -44,6 +34,7 @@ module.exports = {
                    '^/mock': '/mock'
                  }
                }*/
+            // 与RD联调
             '/api': {
                 target: 'http://cp01-ocean-1115-offline.epc.baidu.com:8080/naserver/newapp',
                 changeOrigin: true,
@@ -60,3 +51,4 @@ module.exports = {
         'shoppicker'
     ]
 };
+/* eslint-disable */

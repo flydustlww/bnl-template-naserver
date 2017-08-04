@@ -36,23 +36,20 @@ let gettoken;
 let bindcode;
 let unbindcode;
 let mycustomer2;
-console.log('__DEV__================' + __DEV__);
+console.log('请求接口环境: __DEV__' + __DEV__+ '__QA__ ' + __QA__ +'__PRO__'+__PRO__ );
 // RD开发环境
 if (__DEV__) {
-    // server = 'http://cp01-tsm-baino02.cp01.baidu.com:8200';
     // server = 'http://cp01-ocean-1115-offline.epc.baidu.com:8080/naserver/newapp/';
     // server = location.origin + '/mock/';
     server = location.origin + '/api/';
 }
 // QA环境
-else if (__QA__) {
-    server = 'http://cp01-rdqa-dev322.cp01.baidu.com:8192';
+if (__QA__) {
+    server = 'http://cp01-c-ugc-test00.epc.baidu.com:8999';
 }
 // 线上环境
-else if (__PRO__) {
-    // server = 'http://band.baidu.com';
-    server = 'http://cp01-ocean-1115-offline.epc.baidu.com:8080/naserver/newapp/';
-    // item = 'http://172.22.149.65:8399/mock/item.js';//location.origin + '/mock/item.js';
+if (__PRO__) {
+    server = 'http://band.baidu.com';
 }
 
 item = server + 'item';
@@ -75,7 +72,7 @@ bindcode = server + 'bindcode';
 mycustomer2 = server +'mycustomer2';
 unbindcode = server +'unbindcode';
 
-if (__DEV__ || __QA__) {
+if (__DEV__) {
     if (/(\:8399\/mock\/)/.test(server)) {
         item += '.json';
         newbilllist += '.json';
