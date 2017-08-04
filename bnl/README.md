@@ -16,6 +16,7 @@ npm run build（npm run build:pro）
 
 # build for qa and generate a zip package
 npm run build:qa
+
 ```
 npm install @nfe/DeferredBNJS --registry=http://nfe.baidu.com:8881 --save
 

@@ -5,7 +5,7 @@ var path = require('path');
 
 var pkg = require(path.resolve(__dirname, '../package.json'));
 var utils = require('./utils');
-var NODE_ENV = env.NODE_ENV;
+var NODE_ENV = process.env.NODE_ENV;
 var zipFolder = require('zip-folder');
 var path = require('path');
 var config = require('../config');

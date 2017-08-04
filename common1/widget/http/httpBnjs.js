@@ -23,7 +23,7 @@ util.ready(function (BNJS) {
         
         return new Promise(function (resolve, reject) {
             BNJS.localStorage.getItem('bnl_bduss', function(res){
-                let data = res.data;
+                var data = res.data;
                 options.params.bduss = data;
                 BNJS.http[method]({
                     url: options.url,

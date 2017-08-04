@@ -2,8 +2,11 @@
  * @file guide 引导页面
  * @author name<liuboying@baidu.com>
  */
+/* eslint disable */
 require('./guide.less');
 var $ = require('dep/zepto');
+var server = require('../../config/server').server;
+var LOGIN_URL = encodeURIComponent(server + '/naserver/newapp/merchantloginguidetpl');
 // 确保组件页面能够正常使用BNJS方法，避免造成一些奇怪的错误发生
 var BNJSReady = function (readyCallback) {
     if (readyCallback && typeof readyCallback =='function') {
@@ -28,8 +31,7 @@ var guide = function () {
     	me.setTitle();
     	// 绑定操作
     	me.bindEvents();
-    })
-    
+    })    
 
 };
 
@@ -43,7 +45,7 @@ guide.prototype.bindEvents = function() {
     // 打开登录页
     $('.right').on('touchend', function (e) {
         // 打开登录页
-        var url = 'BaiduNuomiMerchant://component?url=http://cp01-ocean-1115-offline.epc.baidu.com:8080/naserver/newapp/merchantloginguidetpl';
+        var url = 'BaiduNuomiMerchant://component?url=' + LOGIN_URL;
         BNJS.page.start(url,{},1);
     });
 
@@ -51,3 +53,4 @@ guide.prototype.bindEvents = function() {
 
 
 new guide();
+/* eslint disable */
