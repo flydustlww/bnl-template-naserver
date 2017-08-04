@@ -1,8 +1,8 @@
 /**
  * @file 介绍当前文件的说明 
  * @author name<yuchangshuang@baidu.com> 
- */
-
+*/
+/* eslint-disable */
 require('widget/radio/radio.css');
 require('widget/ratchet/ratchet.css');
 require('widget/dialog/dialog.css');
@@ -133,4 +133,8 @@ var init = function(){
     getDom();
     bind();
 }
-init();
+uitl.ready(function(){
+    init();    
+})
+
+/* eslint-disable */
