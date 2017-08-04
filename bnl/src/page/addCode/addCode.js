@@ -1,6 +1,6 @@
 /**
- * @file 介绍当前文件的说明 
- * @author name<yuchangshuang@baidu.com> 
+* @file 介绍当前文件的说明 
+* @author name<yuchangshuang@baidu.com> 
 */
 /* eslint-disable */
 require('widget/radio/radio.css');
@@ -19,36 +19,36 @@ var radiogroup = require('widget/radio/radio.js').RadioGroup;
 
 // var urlParam = require('template-naserver:widget/common/urlParam.js');
 
-var init = function(){
+var init = function () {
     // 原先是从url传过来的
     var curUid = "";
-    let b_uid = typeof(BNJS.account.uid) === "number" ? BNJS.account.uid : 0;
+    let b_uid = typeof (BNJS.account.uid) === "number" ? BNJS.account.uid : 0;
     var dealIdText;
     var merchantIdText;
     var addCodeBtn;
-    var curProduct=1;
+    var curProduct = 1;
     var radioObj;
     var merchantItem;
-    var isAjaxLocked=false;
-    var checkCode = function(uid,deal_id,merchantId,product){
+    var isAjaxLocked = false;
+    var checkCode = function (uid, deal_id, merchantId, product) {
         var naProduct;
-        if(product == 3 && deal_id == ''){
+        if (product == 3 && deal_id == '') {
             $.dialog({
-                showTitle : false,
-                contentHtml : '您录入的为到店付团单，请录入门店ID！',
-                buttonClass : {
-                    ok : 'dialog-font-color-pink'
+                showTitle: false,
+                contentHtml: '您录入的为到店付团单，请录入门店ID！',
+                buttonClass: {
+                    ok: 'dialog-font-color-pink'
                 }
             });
             return;
         }
         var param = {
-            uid : uid,
-            deal_id : deal_id,
-            merchart_id : merchantId,
-            product : product
+            uid: uid,
+            deal_id: deal_id,
+            merchart_id: merchantId,
+            product: product
         };
-        if (!isAjaxLocked){
+        if (!isAjaxLocked) {
             isAjaxLocked = true;
             // $.ajax({
             //     url : '/naserver/user/productcode',
@@ -100,41 +100,40 @@ var init = function(){
             // });
         }
     }
-    var getDom = function (){
+    var getDom = function () {
         dealIdText = $('.deal-id-text');
         merchantIdText = $('.merchant-id-text');
         addCodeBtn = $('.add-code-btn');
         merchantItem = $('.merchant-item');
     }
-    var bind = function(){
-        addCodeBtn.on('click',function(){
+    var bind = function () {
+        addCodeBtn.on('click', function () {
             var curDealId = dealIdText.val();
             var curMerchantId = merchantIdText.val();
             //uid,sign,deal_id,merchant_id,product
-            checkCode(curUid,curDealId,curMerchantId,curProduct);
+            checkCode(curUid, curDealId, curMerchantId, curProduct);
         });
-        radioObj.on('valuechange',function(){
+        radioObj.on('valuechange', function () {
             curProduct = radioObj.getValue();
-            if(radioObj.getValue() == 3){//到店付
+            if (radioObj.getValue() == 3) {//到店付
                 merchantItem.show();
-            }else{
+            } else {
                 merchantIdText.val('');
                 merchantItem.hide();
             }
         });
     }
-    var initPlugins = function(){
+    var initPlugins = function () {
         radioObj = new radiogroup({
-                    container : $('.content')[0],
-                    classname : 'regular-radio'
-                });
+            container: $('.content')[0],
+            classname: 'regular-radio'
+        });
     }
     initPlugins();
     getDom();
     bind();
 }
-uitl.ready(function(){
-    init();    
+uitl.ready(function () {
+    init();
 })
-
 /* eslint-disable */
