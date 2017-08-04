@@ -23,6 +23,7 @@ let radiogroup = require('widget/radio/radio.js').RadioGroup;
 //     app_version = "5.3.1",
 //     bainuo_loaction = "116.280705,40.048766";
 // 提测
+
 let curUid = urlParam.getUrlParam('uid');
 let curSid = urlParam.getUrlParam('sid');
 let app_version = urlParam.getUrlParam('app_version');
@@ -41,23 +42,46 @@ let addCodeBtn;
 let radioObj;
 let curProduct;
 let curId;
-let getCodeList = function (uid, sid, app_version, location, id) {
-    let param = {
-        uid: uid,
-        sid: sid,
-        app_version: app_version,
-        location: location,
-        id: id
-    };
-    // 请求成功就处理，如果请求失败，不处理
-    if (!isAjaxLocked) {
-        isAjaxLocked = true;
-        $.ajax({
-            url: api.codelist,
-            type: 'GET',
-            dataType: 'json',
-            data: param,
-            success: function (data) {
+
+// let renderHTML = function(){
+//     let data = JSON.parse(window.sessionStorage.getItem("lists"));
+//     if(data.count != 0){
+//          $.each(data.list,function(i,item){
+//              if(item.deal_info == ''){
+//                  //alert(item.deal_info );
+//                  item.deal_info = '--';//团单名称可能为空
+//              }
+//              if(item.materiel_info == ''){
+//                  //alert(item.deal_info );
+//                  item.materiel_info = '--';//团单名称可能为空
+//              }
+//          });
+//          let html = template('codeList-item-tpl', data);
+//          $(html).prependTo($('#codeList'));
+//          $('.loadingmore').show();
+//         // $('#codeList').html(html);
+//     }else{//无数据
+//          let html = template('none-list-tpl',{});
+//          $('#codeList').html(html);
+//      }
+// }
+let init = function (id) {
+
+    let b_uid = typeof(BNJS.account.uid) === "number" ? BNJS.account.uid : 0;
+
+    let getCodeList = function (b_uid, id) {
+        let param = {
+            b_uid: b_uid,
+            code_id: id
+        };
+        // 请求成功就处理，如果请求失败，不处理
+        if (!isAjaxLocked) {
+            isAjaxLocked = true;
+            httpBnjs.get({
+                url: api.codelist,
+                params: param
+            })
+            .then(function(res) {
                 isAjaxLocked = false;
                 if (data.errno != 0) {
                     $.dialog({
@@ -90,30 +114,59 @@ let getCodeList = function (uid, sid, app_version, location, id) {
                         $('#codeList').html(html);
                     }
                 }
-            }
-        });
+            }, function(res) {
+                BNJS.ui.showErrorPage();
+            });
+        }
+
+    };
+    // 解绑
+    let unbindCode = function (id) {
+        let param = {
+            code_id: id
+        };
         httpBnjs.post({
             url: api.unbindcode,
-            params: {
-                b_uid: uid,                
-            }
+            params: param
         })
-    }
-
-};
-// 解绑
-let unbindCode = function (uid, sid, id) {
-    let param = {
-        uid: uid,
-        sid: sid,
-        code_id: id
+        .then(function(res) {
+            if (data.errno != 0) {
+                let msg = data.msg;
+                setTimeout(function (data) {
+                    $.dialog({
+                        showTitle: false,
+                        contentHtml: msg,
+                        buttonClass: {
+                            ok: 'dialog-font-color-pink'
+                        },
+                        onClickOk: function () {
+                            $('.solve-tap-bug').remove();
+                        }
+                    });
+                }, 200);
+                return;
+            }
+            else {
+                window.location.reload();
+            }            
+        }, function(res) {
+            BNJS.ui.showErrorPage();
+        })
     };
-    $.ajax({
-        url: '/naserver/common/unbindcode',
-        type: 'POST',
-        dataType: 'json',
-        data: param,
-        success: function (data) {
+    // 重绑 
+    let bindCode = function (b_uid, id, deal_id, merchant_id, product) {
+        let param = {
+            b_uid: b_uid,
+            code_id: id,
+            deal_id: deal_id,
+            merchant_id: merchant_id,
+            product: product
+        };
+        httpBnjs.post({
+            url: api.bindcode,
+            params: param
+        })
+        .then(function(res) {
             if (data.errno != 0) {
                 let msg = data.msg;
                 setTimeout(function (data) {
@@ -133,160 +186,104 @@ let unbindCode = function (uid, sid, id) {
             else {
                 window.location.reload();
             }
-        }
-    });
-
-};
-// 重绑 
-let bindCode = function (app_version, location, uid, sid, id, deal_id, merchant_id, product) {
-    let param = {
-        app_version: app_version,
-        location: location,
-        uid: uid,
-        sid: sid,
-        code_id: id,
-        deal_id: deal_id,
-        merchant_id: merchant_id,
-        // code_url : code_url,
-        product: product
+        }, function(res) {
+             BNJS.ui.showErrorPage();
+        });
     };
-    $.ajax({
-        url: api.bindcode,
-        type: 'POST',
-        dataType: 'json',
-        data: param,
-        success: function (data) {
-            if (data.errno != 0) {
-                let msg = data.msg;
-                setTimeout(function (data) {
-                    $.dialog({
-                        showTitle: false,
-                        contentHtml: msg,
-                        buttonClass: {
-                            ok: 'dialog-font-color-pink'
-                        },
-                        onClickOk: function () {
-                            $('.solve-tap-bug').remove();
-                        }
-                    });
-                }, 200);
-                return;
+    // 解绑对话框
+    let showUnbindDialog = function () {
+        $.dialog({
+            type: 'confirm',
+            showTitle: false,
+            contentHtml: unbindDialogHtml,
+            buttonClass: {
+                ok: 'dialog-font-color-pink',
+                cancel: 'dialog-font-color-pink'
+            },
+            onClickOk: function () {
+                unbindCode(curId);
             }
-            else {
-                window.location.reload();
+        });
+    };
+    // 重绑对话框
+    let showBindDialog = function () {
+        $.dialog({
+            type: 'confirm',
+            titleText: '物料与团单关系重新绑定',
+            contentHtml: bindDialogHtml,
+            // dialogClass : 'dialog-wrap-top',
+            buttonClass: {
+                ok: 'dialog-font-color-pink',
+                cancel: 'dialog-font-color-pink'
+            },
+            onClickOk: function () {
+                let curDealId = $('.dialog-wrap').find('.deal-id-text').val();
+                let curMerchantId = $('.dialog-wrap').find('.merchant-id-text').val();
+                // app_version,bainuo_loaction,uid,sign,sid,id,deal_id,merchant_id,code_url,product
+                curProduct = radioObj.getValue();
+                console.log('bindcode curProduct' + curProduct);
+                bindCode(app_version, location, curUid, curSid, curId, curDealId, curMerchantId, curProduct);
+            },
+            onShow: function () {
+                radioObj = new radiogroup({
+                    container: $('.dialog-wrap')[0],
+                    classname: 'regular-radio'
+                });
+                radioObj.on('valuechange', function () {
+                    if (radioObj.getValue() == 1) { // 到店付
+                        $('.dialog-wrap').find('.dialog-merchant-item').show();
+                    }
+                    else {
+                        $('.dialog-wrap').find('.dialog-merchant-item').find('.merchant-id-text').val('');
+                        $('.dialog-wrap').find('.dialog-merchant-item').hide();
+                    }
+                });
             }
-        }
-    });
-};
-// 解绑对话框
-let showUnbindDialog = function () {
-    $.dialog({
-        type: 'confirm',
-        showTitle: false,
-        contentHtml: unbindDialogHtml,
-        buttonClass: {
-            ok: 'dialog-font-color-pink',
-            cancel: 'dialog-font-color-pink'
-        },
-        onClickOk: function () {
-            unbindCode(curUid, curSid, curId);
-        }
-    });
-};
-// 重绑对话框
-let showBindDialog = function () {
-    $.dialog({
-        type: 'confirm',
-        titleText: '物料与团单关系重新绑定',
-        contentHtml: bindDialogHtml,
-        // dialogClass : 'dialog-wrap-top',
-        buttonClass: {
-            ok: 'dialog-font-color-pink',
-            cancel: 'dialog-font-color-pink'
-        },
-        onClickOk: function () {
-            let curDealId = $('.dialog-wrap').find('.deal-id-text').val();
-            let curMerchantId = $('.dialog-wrap').find('.merchant-id-text').val();
-            // app_version,bainuo_loaction,uid,sign,sid,id,deal_id,merchant_id,code_url,product
-            curProduct = radioObj.getValue();
-            console.log('bindcode curProduct' + curProduct);
-            bindCode(app_version, location, curUid, curSid, curId, curDealId, curMerchantId, curProduct);
-        },
-        onShow: function () {
-            radioObj = new radiogroup({
-                container: $('.dialog-wrap')[0],
-                classname: 'regular-radio'
-            });
-            radioObj.on('valuechange', function () {
-                if (radioObj.getValue() == 1) { // 到店付
-                    $('.dialog-wrap').find('.dialog-merchant-item').show();
-                }
-                else {
-                    $('.dialog-wrap').find('.dialog-merchant-item').find('.merchant-id-text').val('');
-                    $('.dialog-wrap').find('.dialog-merchant-item').hide();
-                }
-            });
-        }
-    });
-};
-let getDom = function () {
-    totalDom = $('.total-amount ');
-    codeListDom = $('#codeList');
-    addCodeBtn = $('.add-code-btn');
-};
-let bind = function () {
-    codeListDom.on('click', function (evt) {
-        let target = $(evt.target);
-        let type = target.attr('type');
-        curId = target.attr('itemid');
-        if (type == 'unbind') { // 解绑
-            showUnbindDialog();
-        }
+        });
+    };
+    let getDom = function () {
+        totalDom = $('.total-amount ');
+        codeListDom = $('#codeList');
+        addCodeBtn = $('.add-code-btn');
+    };
+    let bind = function () {
+        codeListDom.on('click', function (evt) {
+            let target = $(evt.target);
+            let type = target.attr('type');
+            curId = target.attr('itemid');
+            if (type == 'unbind') { // 解绑
+                showUnbindDialog();
+            }
 
-        if (type == 'bind') { // 绑定
-            showBindDialog();
-        }
+            if (type == 'bind') { // 绑定
+                showBindDialog();
+            }
 
-    });
-    addCodeBtn.on('click', function () { // 认领物料
-        // 与NA联调
-        let url = window.location.href = 'band://web?type=materials_claim&url=' + window.location.protocol + '//' + window.location.host + '/naserver/user/addcodetpl?uid=' + curUid;
-        // 上线
-        // window.location.href='/naserver/user/addcodetpl?uid=' + curUid;
-    });
+        });
+        addCodeBtn.on('click', function () { // 认领物料
+            // 与NA联调
+            // let url = window.location.href = 'band://web?type=materials_claim&url=' + window.location.protocol + '//' + window.location.host + '/naserver/user/addcodetpl?uid=' + curUid;
+            // 上线
+            // window.location.href='/naserver/user/addcodetpl?uid=' + curUid;
+            BNJS.page.start('BaiduNuomiMerchant://component?compid=bnl&comppage=addCode', {});           
+        });
 
-};
-let initPlugins = function () {
-    getCodeList(curUid, curSid, app_version, location, id);
-};
-// let renderHTML = function(){
-//     let data = JSON.parse(window.sessionStorage.getItem("lists"));
-//     if(data.count != 0){
-//          $.each(data.list,function(i,item){
-//              if(item.deal_info == ''){
-//                  //alert(item.deal_info );
-//                  item.deal_info = '--';//团单名称可能为空
-//              }
-//              if(item.materiel_info == ''){
-//                  //alert(item.deal_info );
-//                  item.materiel_info = '--';//团单名称可能为空
-//              }
-//          });
-//          let html = template('codeList-item-tpl', data);
-//          $(html).prependTo($('#codeList'));
-//          $('.loadingmore').show();
-//         // $('#codeList').html(html);
-//     }else{//无数据
-//          let html = template('none-list-tpl',{});
-//          $('#codeList').html(html);
-//      }
-// }
-let init = function () {
-    initPlugins();
+    };
+    let initPlugins = function (b_uid) {
+        getCodeList(b_uid, id);
+    };
+    initPlugins(b_uid);
     // renderHTML();
     getDom();
     bind();
 };
-init();
+
+util.ready(function() {
+    BNJS.page.getData(function(res){
+        let id = res.data.id;
+        init(id);
+    }, '2.2');
+})
+
 
 /* eslint-disable */

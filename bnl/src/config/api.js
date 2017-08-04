@@ -36,6 +36,7 @@ let gettoken;
 let bindcode;
 let unbindcode;
 let mycustomer2;
+let productcode;
 console.log('请求接口环境: __DEV__' + __DEV__+ '__QA__ ' + __QA__ +'__PRO__'+__PRO__ );
 // RD开发环境
 if (__DEV__) {
@@ -71,6 +72,7 @@ gettoken = server + 'gettoken';
 bindcode = server + 'bindcode';
 mycustomer2 = server +'mycustomer2';
 unbindcode = server +'unbindcode';
+productcode = server +'unbindcode';
 
 if (__DEV__) {
     if (/(\:8399\/mock\/)/.test(server)) {
@@ -93,6 +95,7 @@ if (__DEV__) {
         bindcode += '.json';
         mycustomer2 += '.json';
         unbindcode += '.json';
+        productcode += '.json';
     }
 }
 
@@ -115,6 +118,7 @@ module.exports = {
     gettoken: gettoken,
     bindcode: bindcode,
     mycustomer2: mycustomer2,
-    unbindcode: unbindcode
+    unbindcode: unbindcode,
+    productcode: productcode
 };
 /* eslint-disable */
