@@ -34,6 +34,7 @@ let checkuserinfo;
 let myuserinfo;
 let gettoken;
 let bindcode;
+let unbindcode;
 let mycustomer2;
 console.log('__DEV__================' + __DEV__);
 // RD开发环境
@@ -72,6 +73,7 @@ myuserinfo = server + 'myuserinfo';
 gettoken = server + 'gettoken';
 bindcode = server + 'bindcode';
 mycustomer2 = server +'mycustomer2';
+unbindcode = server +'unbindcode';
 
 if (__DEV__ || __QA__) {
     if (/(\:8399\/mock\/)/.test(server)) {
@@ -92,6 +94,8 @@ if (__DEV__ || __QA__) {
         myuserinfo += '.json';
         gettoken += '.json';
         bindcode += '.json';
+        mycustomer2 += '.json';
+        unbindcode += '.json';
     }
 }
 
@@ -113,6 +117,7 @@ module.exports = {
     myuserinfo: myuserinfo,
     gettoken: gettoken,
     bindcode: bindcode,
-    mycustomer2: mycustomer2
+    mycustomer2: mycustomer2,
+    unbindcode: unbindcode
 };
 /* eslint-disable */

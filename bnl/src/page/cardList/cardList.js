@@ -7,12 +7,11 @@ import Vue from 'vue';
 require('widget/ratchet/ratchet.less');
 require('widget/dialog/dialog.css');
 require('./cardList.less');
-// import 'DeferredBNJS'
 let $ = require('dep/zepto');
 let api = require('../../config/api');
-// let utilBNJS = require('common/util/bnjs/util-bnjs');
-
 let util = require('widget/util/util');
+let utilBNJS = require('common/util/bnjs/util-bnjs');
+let httpBnjs = require('widget/http/httpBnjs');
 let urlParam = require('static/js/urlParam');
 require('dep/artTemplate');
 let dialog = require('widget/dialog/dialog.js');
@@ -50,6 +49,7 @@ let getCodeList = function (uid, sid, app_version, location, id) {
         location: location,
         id: id
     };
+    // 请求成功就处理，如果请求失败，不处理
     if (!isAjaxLocked) {
         isAjaxLocked = true;
         $.ajax({
@@ -92,6 +92,12 @@ let getCodeList = function (uid, sid, app_version, location, id) {
                 }
             }
         });
+        httpBnjs.post({
+            url: api.unbindcode,
+            params: {
+                b_uid: uid,                
+            }
+        })
     }
 
 };
@@ -129,6 +135,7 @@ let unbindCode = function (uid, sid, id) {
             }
         }
     });
+
 };
 // 重绑 
 let bindCode = function (app_version, location, uid, sid, id, deal_id, merchant_id, product) {
