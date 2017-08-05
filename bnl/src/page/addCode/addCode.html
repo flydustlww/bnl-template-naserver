@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <title>物料详情</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="format-detection" content="telephone=no">
+    </head>
+<body>
+    <div class="content">
+        <p class="content-item content-title">填入团单ID，扫码后与对应的物料进行绑定</p>
+        <p>
+            <label>类型：</label>
+            <input type="radio" id="radio-1" name="product-radio" class="regular-radio" checked value="1"><label for="radio-1"></label>普通
+            <input type="radio" id="radio-2" name="product-radio" class="regular-radio"  value="3"><label for="radio-2"></label>到店付
+            <input type="radio" id="radio-3" name="product-radio" class="regular-radio"  value="2" style="display:none"><label for="radio-3" style="display:none"></label>
+        </p>
+        <p class="content-item"><label>团单ID：</label><input type="number" placeholder="团单ID" class="deal-id-text"></p>
+        <p class="content-item merchant-item"><label>门店ID：</label><input type="number" placeholder="门店ID" class="merchant-id-text"></p>
+        <button class="btn btn-pink btn-block add-code-btn" type="button">绑定物料</button>
+    </div>  
+    <script>
+        // 设置rem单位为屏幕宽度,适配神器
+        !function () {
+            function rem() {
+                document.documentElement.style.fontSize = (document.documentElement.clientWidth || document.body.clientWidth) + 'px';
+                // 设置body字体大小，不影响body内字体大小
+                document.body.style.fontSize = '16px';
+            }
+            rem();
+            window.addEventListener('resize', rem, false);
+        }();
+    </script>
+</body>
+</html>

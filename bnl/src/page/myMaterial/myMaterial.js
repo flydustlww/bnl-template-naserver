@@ -33,6 +33,10 @@ let materialItemView = {
     init: function () {
         let me = this;
         me.load();
+        $(document).on('tap', '.material-item-link', function(e) {
+            let id = $(this).data('id');
+            BNJS.page.start('BaiduNuomiMerchant://component?compid=bnl&comppage=cardList', {id: id});
+        })
     },
     load: function () {
         let me = this;
@@ -79,8 +83,7 @@ let materialItemView = {
     render: function (list) {
         // url待与rd传参对
         var HTML = Baidu.template(tpl, {
-            item: list,
-            url: 'cardList.html?'
+            item: list
         });
         $('section').html(HTML);
     }
@@ -149,8 +152,6 @@ let bindButton = {
                 httpBnjs.get({
                     url: api.bindcode,
                     params: {
-                        b_uid: uid,
-                        bduss: bdussStroage,
                         code_id: code_id,
                         product: 5                      
                     }

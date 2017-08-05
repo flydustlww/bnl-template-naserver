@@ -65,5 +65,10 @@ util.ready(function (BNJS) {
         return ajax(options);
     };
 
+    exports.post = function (options) {
+        options.method = 'post';
+        return ajax(options);
+    };
+
 });
 /* eslint-disable */
