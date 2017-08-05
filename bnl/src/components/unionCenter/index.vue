@@ -91,6 +91,8 @@ export default {
             .then(function(res) {
                 that.checkuserInfoOk(res);
             }, function(res) {
+                console.log(JSON.stringify(res));
+
                 BNJS.page.start("BaiduNuomiMerchant://component?url=" + merchantlogin, {}, 1);
             })
             .then(function(res) {
@@ -145,7 +147,7 @@ export default {
                             console.log("拿到storage");
                             console.log(res);
                             let result = null;
-                            if (res === undefined) {
+                            if (res === '') {
                                 result = undefined;
                             } else {
                                 if (new Date().getTime() - res.time > 10000) {
