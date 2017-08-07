@@ -38,6 +38,7 @@ var guide = function () {
 guide.prototype.setTitle = function() {
     BNJS.ui.hideLoadingPage();
     BNJS.ui.title.setTitle('百度糯米商户联盟');
+    BNJS.ui.title.removeBtnAll();
 };
 
 guide.prototype.bindEvents = function() {

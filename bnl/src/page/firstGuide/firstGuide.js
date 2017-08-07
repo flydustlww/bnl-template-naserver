@@ -27,9 +27,10 @@ let init = {
         });
     },
     initEvent() {
-        $enterLm.on('tap', function () {
+        $enterLm.on('touchend', function (e) {
             var url = 'BaiduNuomiMerchant://component?compid=bnl&comppage=guide';
-            BNJS.page.start(url,{},1)        
+            BNJS.page.start(url,{},1)
+            e.preventDefault();        
         });
     },
     store() {
@@ -49,5 +50,6 @@ util.ready(function() {
     init.initAll();
     BNJS.ui.hideLoadingPage();
     BNJS.ui.title.setTitle('百度糯米商户联盟');
+    BNJS.ui.title.removeBtnAll();
 })
 /* eslint-disable */
