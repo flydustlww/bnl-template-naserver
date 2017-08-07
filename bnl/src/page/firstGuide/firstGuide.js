@@ -50,5 +50,6 @@ util.ready(function() {
     init.initAll();
     BNJS.ui.hideLoadingPage();
     BNJS.ui.title.setTitle('百度糯米商户联盟');
+    BNJS.ui.title.removeBtnAll();
 })
 /* eslint-disable */

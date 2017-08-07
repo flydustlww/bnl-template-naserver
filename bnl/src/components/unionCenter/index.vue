@@ -148,12 +148,16 @@ export default {
                         BNJS.localStorage.getItem('bnl_allianceFlag', function(res){
                             console.log("拿到storage返回值==");
                             console.log(res);
-                            if (res.data && res.data == "") {
+                            if (res.data == "") {
                                 that.addUniondialog();                           
                                 BNJS.localStorage.setItem('bnl_allianceFlag', {
-                                        "name": "ok",
-                                        "time": that.curTime
-                                }, function(){}, function(){});
+                                        name: "ok",
+                                        time: that.curTime
+                                }, function(){
+                                    console.log("成功添加storage")
+                                }, function(){
+                                    console.log('添加失败')
+                                });
                             } else {
                                 if (new Date().getTime() - res.data.time > 10000) {
                                     BNJS.localStorage.removeItem('bnl_allianceFlag', function(){}, function(){}); 
@@ -204,20 +208,22 @@ export default {
                 console.log("用户的数据")
                 console.log(res);
                 let datas = util.cloneObj(res.data);
+                let that = this;
                 switch (res.errno)
                 {
                     case 0: 
                     {
                         that.isLogin = true;
+                        // 添加点击跳转个人中心事件
+                        $('.union-user').on('click', function () {
+                            let url = "BaiduNuomiMerchant://component?compid=bnl&comppage=userCenter";
+                            BNJS.page.start(url, {});
+                        })
                         if (res.data.alliance_name === "") {
+                            console.log(2222);
                             that.alliance_name = "未加入联盟";
                             that.passport_username = datas.passport_username;
-                        } else {
-                        // 添加点击跳转个人中心事件
-                            $('.union-user').on('click', function () {
-                                let url = "BaiduNuomiMerchant://component?compid=bnl&comppage=userCenter";
-                                BNJS.page.start(url, {});
-                            })                         
+                        } else {                         
                             that.is_verified = datas.is_verified;
                             that.alliance_name = datas.alliance_name;
                             that.merchant_name = datas.merchant_name;
@@ -236,10 +242,11 @@ export default {
                         // 判断是否认证
                         if (that.is_verified === 0) {
                             that.isInfo = true;
+                            let verifiedUrl = encodeURIComponent("https://m.baifubao.com/wap/0/wallet/0/cardlist/0");
                             that.changeInfo({
                                 info: "您尚未实名认证，将无法进行佣金结算",
                                 linkInfo: "立即认证",
-                                url: "https://m.baifubao.com/wap/0/wallet/0/cardlist/0"
+                                url: "BaiduNuomiMerchant://component?url=" + verifiedUrl
                             })
                             // 认证弹窗暂时不需要了 未添加48小时弹窗
                             // that.addVertifydialog();
@@ -275,8 +282,8 @@ export default {
             let url = data.url;
             $('.union-info').html(info);
             $('.union-info-link').html(linkInfo+"&nbsp;>");
-            $('.union-info-wrap').on('click', function(ev) {
-                window.location.href = url;
+            $('.union-info-wrap').on('tap', function(ev) {
+                BNJS.page.start(url, {}, 1);
             })
         },
         materialClick: function() {
@@ -286,7 +293,8 @@ export default {
         },
         baiduWalletclick: function() {
             if (this.is_alliance) {
-                window.location.href = "https://m.baifubao.com/?from=singlemessage&isappinstalled=1";
+                let url = encodeURIComponent("https://m.baifubao.com/?from=singlemessage&isappinstalled=1");
+                BNJS.page.start("BaiduNuomiMerchant://component?url=" + url, {}, 1);
             }
         },
         myMessageclick: function() {
@@ -332,7 +340,8 @@ export default {
                     cancel: 'dialog-btn-cancel'
                 },
                 onClickOk: function () {
-                    window.location.href = "https://m.baifubao.com/wap/0/wallet/0/cardlist/0";
+                    window.location.href = encodeURIComponent("https://m.baifubao.com/wap/0/wallet/0/cardlist/0");
+                    BNJS.page.start("BaiduNuomiMerchant://component?url=" +url, {}, 1);
                 },
                 onClickCancel: function () {
                     console.log("error");

@@ -14,7 +14,10 @@ let httpBnjs = require('widget/http/httpBnjs');
 let Baidu = require('dep/baiduTemplate');
 let Promise = require('widget/util/es6-promise.js').Promise;
 let dialog = require('widget/dialog/dialog.js');
+let FastClick  = require('dep/fastclick/index.js');
 
+let server = require('../../config/server').server;
+let merchantlogin = encodeURIComponent(server + '/naserver/newapp/merchantlogintpl');
 let accessParam = {};
 // 物料认领按钮`
 let material_button = $('.claim-button');
@@ -24,6 +27,7 @@ let dialogTpl = require('./view/dialog.tpl');
 // 加载list模板
 let tpl = require('./view/materialItems.tpl');
 
+FastClick.attach(document.body, {});
 /**
  * 获取物料信息，渲染物料列表
  * 
@@ -33,20 +37,16 @@ let materialItemView = {
     init: function () {
         let me = this;
         me.load();
-        $(document).on('tap', '.material-item-link', function(e) {
+        $(document).on('click', '.material-item-link', function(e) {
             let id = $(this).data('id');
             BNJS.page.start('BaiduNuomiMerchant://component?compid=bnl&comppage=cardList', {id: id});
         })
     },
     load: function () {
         let me = this;
-        accessParam.bduss = bdussStroage;  
         httpBnjs.get({
             url: api.codelist,
-            params: {
-                b_uid: uid,
-                bduss: bdussStroage                        
-            }
+            params: {}
         })
         .then(function(res) {
             let data = res;
@@ -60,7 +60,7 @@ let materialItemView = {
                             ok : 'dialog-font-color-pink'
                         },
                         onClickOk: function() {
-                            BNJS.page.start('BaiduNuomiMerchant://component?url=http://cp01-ocean-1115-offline.epc.baidu.com:8080/naserver/newapp/merchantlogintpl', {});
+                            BNJS.page.start("BaiduNuomiMerchant://component?url=" + merchantlogin, {}, 1);
                         }
                     });
                 } else {
@@ -99,20 +99,17 @@ let bindButton = {
         material_button.on('tap', function (ev) {
             httpBnjs.get({
                 url: api.memberMerchant,
-                params: {
-                    b_uid: uid,
-                    bduss: bdussStroage                        
-                }
+                params: {}
             })
             .then(function(resp) {
                 // 弹窗HTML
-                let html = Baidu.template(dialogTpl, {
-                    title: '是否绑定此门店?',
-                    name: res.alliance_name,
-                    id: res.merchant_id
-                });
                 if (resp.data.alliance_name) {
                     let res = resp.data;
+                    let html = Baidu.template(dialogTpl, {
+                        title: '是否绑定此门店?',
+                        name: res.alliance_name,
+                        id: res.merchant_id
+                    });                    
                     // 弹窗方法
                     $.dialog({
                         type: 'confirm',
@@ -165,7 +162,7 @@ let bindButton = {
                                 ok : 'dialog-font-color-pink'
                             },
                             onClickOk: function() {
-                                BNJS.page.start("BaiduNuomiMerchant://component?url=http://cp01-ocean-1115-offline.epc.baidu.com:8080/naserver/newapp/merchantlogintpl", {});
+                                BNJS.page.start("BaiduNuomiMerchant://component?url=" + merchantlogin, {}, 1);
                             }
                         });
                     } else {
@@ -195,7 +192,7 @@ let init = function () {
 
 util.ready(function() {
     BNJS.ui.hideLoadingPage();
-    init();
     BNJS.ui.title.setTitle('我的物料');
+    init();
 })
 /* eslint-disable */

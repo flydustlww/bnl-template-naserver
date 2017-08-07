@@ -46,8 +46,7 @@ let vm = new Vue({
             httpBnjs.get({
                 url: api.myuserinfo,
                 params: {
-                    b_uid: uid,
-                    bduss: bdussStroage                        
+                    b_uid: uid                  
                 }
             })
             .then(function(res) {
@@ -70,7 +69,8 @@ let vm = new Vue({
                     that.is_verified = res.data.is_verified;
                     if (that.is_verified === 0) {
                         $('.user-verified').on('tap', function () {
-                            window.location.href = "https://m.baifubao.com/wap/0/wallet/0/cardlist/0";        
+                            let url = encodeURIComponent("https://m.baifubao.com/wap/0/wallet/0/cardlist/0");
+                            BNJS.page.start("BaiduNuomiMerchant://component?url=" + url, {}, 1);       
                         })        
                     }
                     break;                   
@@ -112,13 +112,6 @@ let vm = new Vue({
 
 util.ready(function() {
     BNJS.ui.hideLoadingPage();
-    BNJS.ui.title.setTitle('个人中心');
-    BNJS.ui.title.addActionButton({
-        tag: '1',
-        text: '帮助',
-        callback: function () {
-            BNJS.page.start("BaiduNuomiMerchant://component?compid=bnl&comppage=help", {}, 1);
-        }
-    });
+    BNJS.ui.title.setTitle('个人资料');
 })
 /* eslint-disable */
