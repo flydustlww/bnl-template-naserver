@@ -1,4 +1,4 @@
-*
+/**
  * @file    接口地址配置
  */
 /* eslint-disable */
@@ -120,4 +120,4 @@ module.exports = {
     unbindcode: unbindcode,
     productcode: productcode
 };
-/* eslint-disable 
+/* eslint-disable */
