@@ -21,7 +21,8 @@ let vm = new Vue({
     }
 });
 
-util.ready(function() {
+/* eslint-disable */
+util.ready(function () {
     BNJS.ui.hideLoadingPage();
     BNJS.ui.title.setTitle('门店查询');
     BNJS.ui.title.addActionButton({
