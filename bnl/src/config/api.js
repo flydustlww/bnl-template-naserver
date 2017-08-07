@@ -1,4 +1,4 @@
-/**
+*
  * @file    接口地址配置
  */
 /* eslint-disable */
@@ -40,7 +40,6 @@ let productcode;
 console.log('请求接口环境: __DEV__' + __DEV__+ '__QA__ ' + __QA__ +'__PRO__'+__PRO__ );
 // RD开发环境
 if (__DEV__) {
-    // server = 'http://cp01-ocean-1115-offline.epc.baidu.com:8080/naserver/newapp/';
     // server = location.origin + '/mock/';
     server = location.origin + '/api/';
 }
@@ -121,4 +120,4 @@ module.exports = {
     unbindcode: unbindcode,
     productcode: productcode
 };
-/* eslint-disable */
+/* eslint-disable 

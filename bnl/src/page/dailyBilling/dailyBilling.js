@@ -88,7 +88,7 @@ var initPlugins = function () {
     isInit = true;
     curPageNum = 1;
     curUserType = 0;
-    
+
     BNJS.page.getData(function (res) {
         if (res.time) {
             curDate = res.time;
@@ -109,7 +109,7 @@ var initPlugins = function () {
         tag: 2,
         text: '日期',
         callback: function() {
-            new iosDatePicker(getPromoteList(curPageNum, curCount, curUserType));
+            new iosDatePicker(getPromoteList(1, curCount, curUserType));
         }
     });
     getPromoteList(1, curCount, 0)(formatDate);
