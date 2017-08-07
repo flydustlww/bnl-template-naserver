@@ -8,7 +8,7 @@ import Vue from 'vue';
 // import 'DeferredBNJS'
 import DeferredBNJS from 'DeferredBNJS';
 import mendianSearch from 'components/search';
-
+let util = require('widget/util/util');
 let dealIdText;
 let addCodeBtn;
 let curProduct = 1;
@@ -19,6 +19,18 @@ let vm = new Vue({
     render(h) {
         return h(mendianSearch);
     }
+});
+
+util.ready(function() {
+    BNJS.ui.hideLoadingPage();
+    BNJS.ui.title.setTitle('门店查询');
+    BNJS.ui.title.addActionButton({
+        tag: '1',
+        text: '帮助',
+        callback: function () {
+            BNJS.page.start("BaiduNuomiMerchant://component?compid=bnl&comppage=help", {});
+        }
+    });
 });
 
 /* eslint-disable */

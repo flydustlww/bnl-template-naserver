@@ -22,7 +22,7 @@ util.ready(function() {
         tag: '1',
         text: '帮助',
         callback: function () {
-            BNJS.page.start("BaiduNuomiMerchant://component?compid=bnl&comppage=help", {}, 1);
+            BNJS.page.start("BaiduNuomiMerchant://component?compid=bnl&comppage=help", {});
         }
     });
     /* 注册广播接收器 */

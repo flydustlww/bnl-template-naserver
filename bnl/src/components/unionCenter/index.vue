@@ -30,26 +30,28 @@
             </div>
         </section>
         <ul class="union-list">
-            <li class="my-material" v-on:tap="materialClick"><span class="icon icon-material"></span><p class="border-bt">我的物料</p></li>
-            <li class="baiduwallet" v-on:tap="baiduWalletclick"><span class="icon icon-baiduwallet"></span><p class="border-bt">百度钱包</p></li>
-            <li class="my-message" v-on:tap="myMessageclick"><span class="icon icon-message"></span><p class="border-bt">我的消息</p></li>
+            <li class="my-material" v-on:click="materialClick"><span class="icon icon-material"></span><p class="border-bt">我的物料</p></li>
+            <li class="baiduwallet" v-on:click="baiduWalletclick"><span class="icon icon-baiduwallet"></span><p class="border-bt">百度钱包</p></li>
+            <li class="my-message" v-on:click="myMessageclick"><span class="icon icon-message"></span><p class="border-bt">我的消息</p></li>
         </ul>
     </div>
 </template>
 <script>
 require('widget/global/global.less');
 require('../../page/unionCenter/unionCenter.less');
-let api = require('../../config/api');
 import $ from 'dep/zepto';
+let api = require('../../config/api');
+let server = require('../../config/server').server;
+let merchantlogin = encodeURIComponent(server + '/naserver/newapp/merchantlogintpl');
+let FastClick  = require('dep/fastclick/index.js');
+let Promise = require('widget/util/es6-promise.js').Promise;
 let Baidu = require('dep/baiduTemplate');
 let dialog = require('widget/dialog/dialog.js');
 let util = require('widget/util/util');
 let utilBNJS = require('widget/util/bnjs/util-bnjs.js');
 let httpBnjs = require('widget/http/httpBnjs');
-let Promise = require('widget/util/es6-promise.js').Promise;
-let server = require('../../config/server').server;
-let merchantlogin = encodeURIComponent(server + '/naserver/newapp/merchantlogintpl');
 
+FastClick.attach(document.body, {});
 export default {
 	name: 'union-center',
 	data: function(){
@@ -91,10 +93,9 @@ export default {
                 }
             })
             .then(function(res) {
-                that.checkuserInfoOk(res);
+                return that.checkuserInfoOk(res);
             }, function(res) {
                 console.log(JSON.stringify(res));
-
                 BNJS.page.start("BaiduNuomiMerchant://component?url=" + merchantlogin, {}, 1);
             })
             .then(function(res) {
@@ -135,7 +136,6 @@ export default {
                     {
                         that.isLogin = false;
                         that.forceLogin();
-                        return false;
                         break;
                     }
                 // 未加入联盟
@@ -144,27 +144,30 @@ export default {
                         // 未加入联盟
                         that.is_alliance = false;
                         that.isInfo = true;
-                        utilBNJS.storage.getItem('allianceFlag').then(function(res) {
-                            console.log("拿到storage返回值=="+res);
-                            let result = null;
-                            if (res === '') {
-                                result = undefined;
+                        that.isLogin = true;
+                        BNJS.localStorage.getItem('bnl_allianceFlag', function(res){
+                            console.log("拿到storage返回值==");
+                            console.log(res);
+                            if (res.data && res.data == "") {
+                                that.addUniondialog();                           
+                                BNJS.localStorage.setItem('bnl_allianceFlag', {
+                                        "name": "ok",
+                                        "time": that.curTime
+                                }, function(){}, function(){});
                             } else {
-                                if (new Date().getTime() - res.time > 10000) {
-                                    result = undefined;
-                                }else{
-                                    result = res;
-                                }             
+                                if (new Date().getTime() - res.data.time > 10000) {
+                                    BNJS.localStorage.removeItem('bnl_allianceFlag', function(){}, function(){}); 
+                                }
                             }
-                            if (result === undefined) {
-                                BNJS.ui.hideLoadingPage();
-                                that.addUniondialog();
-                                utilBNJS.storage.setItem("allianceFlag", {
+                            
+                        }, function(res) {
+                            BNJS.ui.hideLoadingPage();
+                            that.addUniondialog();                           
+                            BNJS.localStorage.setItem('bnl_allianceFlag', {
                                     "name": "ok",
                                     "time": that.curTime
-                                });
-                            }                                
-                        });                            
+                            }, function(){}, function(){});
+                        }, '2.7');                       
 
                         that.changeInfo({
                             info: "您尚未填写角色，故无法加入联盟",
@@ -182,13 +185,11 @@ export default {
                 case 1004:
                     {
                         BNJS.page.start("BaiduNuomiMerchant://component?url=" + merchantlogin, {}, 1);
-                        return false;
                         break;
                     }
                 case 2001: 
                     {
                         BNJS.page.start("BaiduNuomiMerchant://component?url=" + merchantlogin, {}, 1);
-                        return false;
                         break;                       
                     }
                 default:
@@ -208,10 +209,12 @@ export default {
                     case 0: 
                     {
                         that.isLogin = true;
-                        // 加入联盟
-                        if (that.is_alliance) {
+                        if (res.data.alliance_name === "") {
+                            that.alliance_name = "未加入联盟";
+                            that.passport_username = datas.passport_username;
+                        } else {
                         // 添加点击跳转个人中心事件
-                            $('.union-user').on('tap', function () {
+                            $('.union-user').on('click', function () {
                                 let url = "BaiduNuomiMerchant://component?compid=bnl&comppage=userCenter";
                                 BNJS.page.start(url, {});
                             })                         
@@ -221,17 +224,14 @@ export default {
                             that.passport_username = datas.passport_username;
                             that.today_commission = datas.today_commission;
                             that.total_commission = datas.total_commission;
-                            $('.today').on('tap', function () {
+                            $('.today').on('click', function () {
                                 let url = "BaiduNuomiMerchant://component?compid=bnl&comppage=dailyBilling";
                                 BNJS.page.start(url, {});
                             });
-                            $('.total').on('tap', function () {
+                            $('.total').on('click', function () {
                                 let url = "BaiduNuomiMerchant://component?compid=bnl&comppage=totalReward";
                                 BNJS.page.start(url, {});
-                            });
-                        } else {
-                            that.alliance_name = "未加入联盟";
-                            that.passport_username = datas.passport_username;                                
+                            });                            
                         }
                         // 判断是否认证
                         if (that.is_verified === 0) {
@@ -243,7 +243,8 @@ export default {
                             })
                             // 认证弹窗暂时不需要了 未添加48小时弹窗
                             // that.addVertifydialog();
-                        }                        
+                        }
+
                         break;                      
                     }
                     case 2002: 
@@ -261,10 +262,10 @@ export default {
           
         },   
         forceLogin: function() {
-            $('.union-top').on('tap', function() {
+            $('.union-top').on('click', function() {
                 BNJS.page.start("BaiduNuomiMerchant://component?url=" + merchantlogin, {}, 1);
             })
-            $('.union-list').on('tap', function() {
+            $('.union-list').on('click', function() {
                 BNJS.page.start("BaiduNuomiMerchant://component?url=" +merchantlogin, {}, 1);
             })
         },
@@ -274,7 +275,7 @@ export default {
             let url = data.url;
             $('.union-info').html(info);
             $('.union-info-link').html(linkInfo+"&nbsp;>");
-            $('.union-info-wrap').on('tap', function(ev) {
+            $('.union-info-wrap').on('click', function(ev) {
                 window.location.href = url;
             })
         },

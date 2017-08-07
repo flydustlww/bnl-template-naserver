@@ -12,6 +12,8 @@ let utilBNJS = require('widget/util/bnjs/util-bnjs.js');
 let Promise = require('widget/util/es6-promise.js').Promise;
 let dialog = require('widget/dialog/dialog.js');
 let httpBnjs = require('widget/http/httpBnjs');
+let server = require('../../config/server').server;
+let LOGIN_URL = encodeURIComponent(server + '/naserver/newapp/merchantlogintpl');
 require('widget/global/global.less');
 require('./userCenter.less');
 require('widget/retina/1px.less');
@@ -74,7 +76,8 @@ let vm = new Vue({
                     break;                   
                 }
                 case 2002:
-                    BNJS.page.start("BaiduNuomiMerchant://component?url=http://cp01-ocean-1115-offline.epc.baidu.com:8080/naserver/newapp/merchantlogintpl", {});
+                    var url = 'BaiduNuomiMerchant://component?url=' + LOGIN_URL;
+                    BNJS.page.start(url, {}, 1); 
                     break;
                 default:
                     BNJS.ui.showErrorPage();
@@ -95,7 +98,8 @@ let vm = new Vue({
                     cancel: 'dialog-btn-cancel'
                 },
                 onClickOk: function () {
-                    BNJS.page.start("BaiduNuomiMerchant://component?url=http://cp01-ocean-1115-offline.epc.baidu.com:8080/naserver/newapp/merchantlogintpl", {});
+                    var url = 'BaiduNuomiMerchant://component?url=' + LOGIN_URL;
+                    BNJS.page.start(url, {}, 1); 
                 },
                 onClickCancel: function () {
                 }

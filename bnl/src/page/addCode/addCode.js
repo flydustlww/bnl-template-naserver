@@ -49,55 +49,59 @@ var init = function () {
             product: product
         };
         if (!isAjaxLocked) {
+            /*
             isAjaxLocked = true;
-            // $.ajax({
-            //     url : '/naserver/user/productcode',
-            //     type : 'POST',
-            //     dataType : 'json',
-            //     data : param,
-            //     success : function(data){
-            //         isAjaxLocked = false;
-            //         /* var data = {
-            //             errno : '0',
-            //             msg : 'success',
-            //             data : {
-            //                 deal_url : 'http://t10sc.nuomi.com/wap/goods/detail?tiny_url=2ooa91gm&from=bainuolian&bnl_token=840288822&city_id=100010000&merchant_id=9899408&merchant_name=%E5%B0%8F%E7%B1%B3%E9%B8%A1%E6%8E%92',
-            //                 dimension_info : 'bainuo://component?compid=t10pay&comppage=order&tiny_url=2ooa91gm&from=bainuolian&bnl_token=840288822&city_id=100010000&merchant_id=9899408&merchant_name=%E5%B0%8F%E7%B1%B3%E9%B8%A1%E6%8E%92',
-            //                 deal_name : '悦庭人人海鲜到店付',
-            //                 deal_price : '¥85'
-            //             }
-            //         };*/
-            //         if(param.product == 1){//普通团单
-            //             naProduct = 0;
-            //         }
-            //         if(param.product == 3){//到店付
-            //             naProduct = 1;
-            //         }
-            //         if(param.product == 2){//储值卡
-            //             naProduct = 4;
-            //         }
-            //         if(data.errno == 0){
-            //             var url;
-            //             var deal_name = data.data.deal_name;
-            //             if(param.merchart_id == ''){
-            //                 url = 'band://web?type=materials_binding&deal_id='+param.deal_id+'&deal_name='+deal_name+'&deal_statu=在线'+'&product='+naProduct;
-            //             }else{
-            //                 url = 'band://web?type=materials_binding&deal_id='+param.deal_id+'&deal_name='+deal_name+'&deal_statu=在线&merchant_id='+param.merchart_id+'&product='+naProduct;
-            //             }
-            //             // console.log(url);
-            //             window.location.href = url;
-            //         }else{
-            //             $.dialog({
-            //                 showTitle : false,
-            //                 contentHtml : data.msg,
-            //                 buttonClass : {
-            //                     ok : 'dialog-font-color-pink'
-            //                 }
-            //             });
-            //             return;
-            //         }
-            //     }
-            // });
+            $.ajax({
+                url : '/naserver/user/productcode',
+                type : 'POST',
+                dataType : 'json',
+                data : param,
+                success : function(data){
+                    isAjaxLocked = false;
+                    /* var data = {
+                        errno : '0',
+                        msg : 'success',
+                        data : {
+                            deal_url : 'http://t10sc.nuomi.com/wap/goods/detail?tiny_url=2ooa91gm&from=bainuolian&bnl_token=840288822&city_id=100010000&merchant_id=9899408&merchant_name=%E5%B0%8F%E7%B1%B3%E9%B8%A1%E6%8E%92',
+                            dimension_info : 'bainuo://component?compid=t10pay&comppage=order&tiny_url=2ooa91gm&from=bainuolian&bnl_token=840288822&city_id=100010000&merchant_id=9899408&merchant_name=%E5%B0%8F%E7%B1%B3%E9%B8%A1%E6%8E%92',
+                            deal_name : '悦庭人人海鲜到店付',
+                            deal_price : '¥85'
+                        }
+                    };
+                    */
+                    /*
+                    if(param.product == 1){//普通团单
+                        naProduct = 0;
+                    }
+                    if(param.product == 3){//到店付
+                        naProduct = 1;
+                    }
+                    if(param.product == 2){//储值卡
+                        naProduct = 4;
+                    }
+                    if(data.errno == 0){
+                        var url;
+                        var deal_name = data.data.deal_name;
+                        if(param.merchart_id == ''){
+                            url = 'band://web?type=materials_binding&deal_id='+param.deal_id+'&deal_name='+deal_name+'&deal_statu=在线'+'&product='+naProduct;
+                        }else{
+                            url = 'band://web?type=materials_binding&deal_id='+param.deal_id+'&deal_name='+deal_name+'&deal_statu=在线&merchant_id='+param.merchart_id+'&product='+naProduct;
+                        }
+                        // console.log(url);
+                        window.location.href = url;
+                    }else{
+                        $.dialog({
+                            showTitle : false,
+                            contentHtml : data.msg,
+                            buttonClass : {
+                                ok : 'dialog-font-color-pink'
+                            }
+                        });
+                        return;
+                    }
+                }
+            });
+            */
         }
     }
     var getDom = function () {

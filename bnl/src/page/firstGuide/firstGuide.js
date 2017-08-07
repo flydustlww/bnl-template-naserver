@@ -21,7 +21,7 @@ FastClick.attach(document.body, {});
 let init = {
     initAll() {
         mScreen(750, 1205);
-        // this.store();
+        this.store();
         this.initEvent();
         let mySwiper = new Swiper('.swiper-container', {
             loop: true

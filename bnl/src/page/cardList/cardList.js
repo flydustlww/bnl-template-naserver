@@ -279,6 +279,8 @@ let init = function (id) {
 };
 
 util.ready(function() {
+    BNJS.ui.hideLoadingPage();
+    BNJS.ui.title.setTitle('物料详情');
     BNJS.page.getData(function(res){
         let id = res.data.id;
         init(id);
