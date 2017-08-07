@@ -4,7 +4,7 @@
 */
 /* eslint-disable */
 require('widget/radio/radio.css');
-require('widget/ratchet/ratchet.css');
+require('widget/ratchet/ratchet.less');
 require('widget/dialog/dialog.css');
 require('./addCode.less');
 var $ = require('dep/zepto');

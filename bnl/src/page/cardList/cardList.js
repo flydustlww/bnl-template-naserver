@@ -10,7 +10,7 @@ require('./cardList.less');
 let $ = require('dep/zepto');
 let api = require('../../config/api');
 let util = require('widget/util/util');
-let utilBNJS = require('common/util/bnjs/util-bnjs');
+let utilBNJS = require('widget/util/bnjs/util-bnjs');
 let httpBnjs = require('widget/http/httpBnjs');
 let urlParam = require('static/js/urlParam');
 require('dep/artTemplate');

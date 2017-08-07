@@ -13,23 +13,24 @@ let utilBNJS = require('widget/util/bnjs/util-bnjs.js');
 require('dep/zeptoLib/touch.js');
 require('dep/swipe/swiper-3.4.2.jquery.min.js');
 let mScreen = require('widget/mscreen/mscreen');
-
+let FastClick  = require('dep/fastclick/index.js');
 let $enterLm = $('#enterLm');
 let server = require('../../config/server').server;
 let LOGIN_URL = encodeURIComponent(server + '/naserver/newapp/merchantlogintpl');
+FastClick.attach(document.body, {});
 let init = {
     initAll() {
         mScreen(750, 1205);
-        this.store();
+        // this.store();
         this.initEvent();
         let mySwiper = new Swiper('.swiper-container', {
             loop: true
         });
     },
     initEvent() {
-        $enterLm.on('tap', function () {
+        $enterLm.on('click', function () {
             var url = 'BaiduNuomiMerchant://component?compid=bnl&comppage=guide';
-            BNJS.page.start(url,{},1)        
+            BNJS.page.start(url,{},1)
         });
     },
     store() {
