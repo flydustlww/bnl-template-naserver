@@ -6,7 +6,8 @@
 require('dep/zepto');
 require('widget/ratchet/ratchet');
 require('./totalReward.less');
-var utilBNJS = require('widget/util/bnjs/util-bnjs.js');
+
+var httpBnjs = require('widget/http/httpBnjs');
 var formatMoney = require('static/js/formatMoney');
 var api = require('../../config/api');
 var dialog = require('widget/dialog/dialog.js');
@@ -14,7 +15,7 @@ var Baidu = require('dep/baiduTemplate');
 var REWARD_LIST_TPL = require('./view/totalRewardList.tpl');
 
 // 确保组件页面能够正常使用BNJS方法，避免造成一些奇怪的错误发生
-/*var BNJSReady = function (readyCallback) {
+var BNJSReady = function (readyCallback) {
     if (readyCallback && typeof readyCallback =='function') {
         if (window.BNJS && typeof window.BNJS =='object' && BNJS._isAllReady) {
             readyCallback();
@@ -25,7 +26,7 @@ var REWARD_LIST_TPL = require('./view/totalRewardList.tpl');
             }, false);
         }
     }
-};*/
+};
 
 var totalReward = function () {
     // class-map
@@ -44,68 +45,35 @@ var totalReward = function () {
     this.isInit = true;
     // 是否允许滚动
     this.isEnableScroll = true;
-    // bduss
-    this.bduss = '';
     // 加载数据
     var me = this;
-    utilBNJS.ready(function () {
+    //
+    BNJSReady(function () {
         BNJS.ui.hideLoadingPage();
-        utilBNJS.storage.getItem('bnl_bduss', function(bduss){
-            var bduss = "2ZmaENuUlFXa1hIOFhMQmxMV0Z1cXdMWjl5U1hyelU4ZEl0ZkhpM3ZiTEQ0S2haSVFBQUFBJCQAAAAAAAAAAAEAAAAoqTMGcmVubGVpODAwOQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMNTgVnDU4FZT";
-            me.bduss = bduss;
-            this.getBillList(0, 'refresh', bduss);
-        })      
+        // 
+        me.getBillList(0, 'refresh');
+  
     })
     
 
 };
 
-totalReward.prototype.getBillList = function (xid, act, bnl_bduss) {
+totalReward.prototype.getBillList = function (xid, act) {
 
     var me = this;
 
     if (!me.isAjaxLocked) {
         me.isAjaxLocked = true;
-        BNJS.http.get({
+        httpBnjs.get({
             url: api.newbilllist,
             params: {
                 xid: xid,
-                act: act,
-                bduss: bnl_bduss
-            },
-            onSuccess: function(res) {
-                var data = res.data;
-                    if (res.errno != 0) {
-                        $.dialog({  
-                            showTitle : false,
-                            contentHtml : res.msg,
-                            buttonClass : {
-                                ok : 'dialog-font-color-white'
-                            }           
-                        });
-                    }
-                    if (data.data.bill_list.length != 0) {
-                        me.renderHTML(data);
-                    }
-                    else{
-                        $('#none-list-tpl').show();              
-                    }
-                    me.isAjaxLocked = false;
-                    me.isInit = false;
-                    $(window).trigger('enableLoad');
-                }
+                act: act
+            }
+        })
+        .then(function(res) {
 
-            })
-        /*$.ajax({
-            url: api.newbilllist,
-            type: 'GET',
-            dataType: 'json',
-            data: {
-                xid: xid,
-                act: act,
-                bduss: bnl_bduss
-            },
-            success: function (res) {
+            var data = res.data;
                 if (res.errno != 0) {
                     $.dialog({  
                         showTitle : false,
@@ -115,8 +83,8 @@ totalReward.prototype.getBillList = function (xid, act, bnl_bduss) {
                         }           
                     });
                 }
-                if (res.data.bill_list.length != 0) {
-                    me.renderHTML(res);
+                if (data.bill_list.length != 0) {
+                    me.renderHTML(data);
                 }
                 else{
                     $('#none-list-tpl').show();              
@@ -124,8 +92,10 @@ totalReward.prototype.getBillList = function (xid, act, bnl_bduss) {
                 me.isAjaxLocked = false;
                 me.isInit = false;
                 $(window).trigger('enableLoad');
-            }
-        });*/
+
+        }, function(res) {
+            BNJS.ui.showErrorPage();
+        })
 
     }
 }
@@ -172,7 +142,7 @@ totalReward.prototype.bindEvents = function () {
             }
         }
 
-        utilBNJS.ready(function () {
+        BNJSReady.ready(function () {
             BNJS.ui.hideLoadingPage();        
             BNJS.page.start(me.rewardDetailUrl, params, 1)
         })
@@ -189,7 +159,7 @@ totalReward.prototype.check = function () {
         if (bodyHeight - scrollTop - viewHeight < 10) {
             me.addDiv();
             $(window).trigger('disableLoad');
-            me.getBillList(me.getLastXid(), 'loadmore', me.bnl_bduss);
+            me.getBillList(me.getLastXid(), 'loadmore');
         }
     }
 
@@ -226,15 +196,15 @@ totalReward.prototype.addDiv = function () {
 totalReward.prototype.renderHTML = function (res) {
     var me = this;
 
-    $.each(res.data.bill_list, function (i, item) {
+    $.each(res.bill_list, function (i, item) {
 
         item.formatmoney = formatMoney.formatMoney(item.commission);
         item.classname = me.classMap[item.status + ''];
     });
 
     var HTML = Baidu.template(REWARD_LIST_TPL, {
-        item: res.data.bill_list,
-        total_commission: '￥' + formatMoney.formatMoney(res.data.total_commission)
+        item: res.bill_list,
+        total_commission: '￥' + formatMoney.formatMoney(res.total_commission)
     })
 
     $('.content').html(HTML);

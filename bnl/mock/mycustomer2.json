@@ -1,0 +1,80 @@
+{
+"errno": 0,
+"msg": "succ",
+"data": {
+"total_commission": "700",
+"detail": [
+{
+"promote_user": "12333344",
+"alliance_id": "51202",
+"pay_time": "1501058990",
+"consumption_time": "1501060386",
+"order_price": "43412",
+"user_type": "老客",
+"user_type_integer": "2",
+"product_type": null,
+"order_id": "33134",
+"deal_name": "测试到店付",
+"commission": 100,
+"rule_name": "门店联盟2+1计划"
+},
+{
+"promote_user": "12333344",
+"alliance_id": "51202",
+"pay_time": "1501058990",
+"consumption_time": "1501060382",
+"order_price": "43412",
+"user_type": "老客",
+"user_type_integer": "2",
+"product_type": null,
+"order_id": "321233333",
+"deal_name": "测试到店付",
+"commission": 100,
+"rule_name": "门店联盟2+1计划"
+},
+{
+"promote_user": "12333344",
+"alliance_id": "51202",
+"pay_time": "1501058990",
+"consumption_time": "1501060375",
+"order_price": "43412",
+"user_type": "老客",
+"user_type_integer": "2",
+"product_type": null,
+"order_id": "455554",
+"deal_name": "测试到店付",
+"commission": 100,
+"rule_name": "门店联盟2+1计划"
+},
+{
+"promote_user": "12333344",
+"alliance_id": "51202",
+"pay_time": "1501058990",
+"consumption_time": "1501060372",
+"order_price": "43412",
+"user_type": "老客",
+"user_type_integer": "2",
+"product_type": null,
+"order_id": "41344",
+"deal_name": "测试到店付",
+"commission": 100,
+"rule_name": "门店联盟2+1计划"
+},
+{
+"promote_user": "12333344",
+"alliance_id": "51202",
+"pay_time": "1501058990",
+"consumption_time": "1501059920",
+"order_price": "43412",
+"user_type": "老客",
+"user_type_integer": "2",
+"product_type": null,
+"order_id": "43234214",
+"deal_name": "测试到店付",
+"commission": 100,
+"rule_name": "门店联盟2+1计划"
+}
+],
+"total": 19
+}
+}
