@@ -6,22 +6,22 @@
 
 var IosSelect = require('dep/datePickerX');
 require('./iosDatePicker.less');
-var selectDate = function () {
+var selectDate = function (func) {
 	var _this = this;
 	// var selectDateDom = $('#selectDate');
-	var showDateDom = $('.select-date');
+	// var showDateDom = $('.select-date');
 	// 初始化时间
 	var now = new Date();
 	var nowYear = now.getFullYear();
 	var nowMonth = now.getMonth() + 1;
 	var nowDate = now.getDate();
-	showDateDom.attr('data-year', nowYear);
-	showDateDom.attr('data-month', nowMonth);
-	showDateDom.attr('data-date', nowDate);
-	var oneLevelId = showDateDom.attr('data-year');
-	var twoLevelId = showDateDom.attr('data-month');
-	var threeLevelId = showDateDom.attr('data-date');
-	// 数据初始化
+	// showDateDom.attr('data-year', nowYear);
+	// showDateDom.attr('data-month', nowMonth);
+	// showDateDom.attr('data-date', nowDate);
+	// var oneLevelId = showDateDom.attr('data-year');
+	// var twoLevelId = showDateDom.attr('data-month');
+	// var threeLevelId = showDateDom.attr('data-date');
+	// // 数据初始化
 	function formatYear(nowYear) {
 	    var arr = [];
 	    for (var i = nowYear - 5; i <= nowYear + 5; i++) {
@@ -53,17 +53,17 @@ var selectDate = function () {
 	    return arr;
 	}
 	var yearData = function (callback) {
-	    // setTimeout(function() {
+
 	    callback(formatYear(nowYear));
-	    // }, 2000)
+
 	};
 	var monthData = function (year, callback) {
-	    // setTimeout(function() {
+
 	    callback(formatMonth());
-	    // }, 2000);
+
 	};
 	var dateData = function (year, month, callback) {
-	    // setTimeout(function() {
+
 	    if (/^4|6|9|11$/.test(month)) {
 	        callback(formatDate(30));
 	    }
@@ -81,7 +81,6 @@ var selectDate = function () {
 	    else {
 	        throw new Error('month is illegal');
 	    }
-	    // }, 2000);   
 
 	};
 	var tpl = [
@@ -116,21 +115,15 @@ var selectDate = function () {
 	        title: '',
 	        itemHeight: 35,
 	        relation: [1, 1],
-	        oneLevelId: oneLevelId,
-	        twoLevelId: twoLevelId,
-	        threeLevelId: threeLevelId,
+	        oneLevelId: nowYear,
+	        twoLevelId: nowMonth,
+	        threeLevelId: nowDate,
 	        showLoading: true,
 	        callback: function (selectOneObj, selectTwoObj, selectThreeObj) {
-	            // showDateDom.attr('data-year', selectOneObj.id);
-	            // showDateDom.attr('data-month', selectTwoObj.id);
-	            // showDateDom.attr('data-date', selectThreeObj.id);
-	            // showDateDom.html(selectOneObj.id + '.' + selectTwoObj.id + '.' + selectThreeObj.id + '<span id=\'triangle-down\'></span> <div class=\'seporator\'></div>');
-	            var str = selectOneObj.id + '/' + selectTwoObj.id + '/' + selectThreeObj.id;
-	            _this.params.start_time = (new Date(str)).getTime() / 1000;
-	            _this.params.page = 1;
-	            _this.params.end_time = _this.params.start_time + 24 * 60 * 60;
-	            console.log('更新页面');
-	           // _this.getTasklist(_this.params);
+                var monthStr = selectTwoObj.id.toString().length ==1 ? '0' + selectTwoObj.id : selectTwoObj.id;
+                var dateStr = selectThreeObj.id.toString().length ==1 ? '0' + selectThreeObj.id : selectThreeObj.id;
+	            var str = (selectOneObj.id + '/' + monthStr + '/' + dateStr).replace(/\//g, '');
+	            func(str);
 	        }
 	    }, tpl);
 
