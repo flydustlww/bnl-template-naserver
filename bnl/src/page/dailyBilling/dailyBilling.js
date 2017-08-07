@@ -90,29 +90,31 @@ var initPlugins = function () {
     curUserType = 0;
 
     BNJS.page.getData(function (res) {
+        // 如果page params参数中有time字段
         if (res.time) {
             curDate = res.time;
-            curTime = (new Date(curDate).getTime()) / 1000;
+            //curTime = (new Date(curDate).getTime()) / 1000;
         }
         else{
+
             curDate = formatTime(curTime).year + '-' + formatTime(curTime).month + '-' + formatTime(curTime).date;
         }
+        // 处理当前时间
+        formatDate = curDate.replace(/-/g, '');
+        // 根据当前时间获取数据
+        getPromoteList(1, curCount, 0)(formatDate);
 
-    },'2.2')
+    },'2.2');
 
-    formatDate = curDate.replace(/-/g, '');
-
-    /*promoteList.html(timeTpl);
-    promoteList.find('.timeselect').val(curDate);*/
     $('#promote-title').find('.timeselect').val(curDate);
     BNJS.ui.title.addActionButton({
-        tag: 2,
-        text: '日期',
+        tag: 22,
+        text: '日历',
         callback: function() {
             new iosDatePicker(getPromoteList(1, curCount, curUserType));
         }
     });
-    getPromoteList(1, curCount, 0)(formatDate);
+    
 };
 var formatTime = function (time) {
     var time = time * 1000;

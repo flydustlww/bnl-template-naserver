@@ -51,6 +51,8 @@ var totalReward = function () {
     BNJSReady(function () {
         BNJS.ui.hideLoadingPage();
         // 
+        BNJS.ui.title.setTitle('累计佣金');
+
         me.getBillList(0, 'refresh');
   
     })
