@@ -46,11 +46,11 @@ if (__DEV__) {
 }
 // QA环境
 if (__QA__) {
-    server = 'http://cp01-c-ugc-test00.epc.baidu.com:8999';
+    server = 'http://cp01-c-ugc-test00.epc.baidu.com:8999/naserver/newapp/';
 }
 // 线上环境
 if (__PRO__) {
-    server = 'http://band.baidu.com';
+    server = 'http://band.baidu.com/naserver/newapp/';
 }
 
 item = server + 'item';

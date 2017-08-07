@@ -66,7 +66,9 @@ export default {
             promote_count: '',
             today_commission: "---",
             total_commission: "---",
-            alliance_name: ""
+            alliance_name: "",
+            uid: 0,
+            curTime: ''
 		}
 	},
     created: function(){
@@ -78,19 +80,21 @@ export default {
 	methods: {
         getData: function() {
             let that = this;
-            let uid = typeof(BNJS.account.uid) === "number" ? BNJS.account.uid : 0;
+            this.uid = typeof(BNJS.account.uid) === "number" ? BNJS.account.uid : 0;
             // 请求checkuserinfo,请求myuserinfo
             let curTimeDate = new Date();
-            let curTime = curTimeDate.getTime();
+            this.curTime = curTimeDate.getTime();
             httpBnjs.get({
                 url: api.checkuserinfo,
                 params: {
-                    b_uid: uid,                
+                    b_uid: that.uid,                
                 }
             })
             .then(function(res) {
                 that.checkuserInfoOk(res);
             }, function(res) {
+                console.log(JSON.stringify(res));
+
                 BNJS.page.start("BaiduNuomiMerchant://component?url=" + merchantlogin, {}, 1);
             })
             .then(function(res) {
@@ -121,8 +125,7 @@ export default {
                         return httpBnjs.get({
                             url: api.myuserinfo,
                             params: {
-                                b_uid: uid,
-                                bduss: bdussStroage                        
+                                b_uid: that.uid                    
                             }
                         })
                         break;
@@ -142,10 +145,9 @@ export default {
                         that.is_alliance = false;
                         that.isInfo = true;
                         utilBNJS.storage.getItem('allianceFlag').then(function(res) {
-                            console.log("拿到storage");
-                            console.log(res);
+                            console.log("拿到storage返回值=="+res);
                             let result = null;
-                            if (res === undefined) {
+                            if (res === '') {
                                 result = undefined;
                             } else {
                                 if (new Date().getTime() - res.time > 10000) {
@@ -155,10 +157,11 @@ export default {
                                 }             
                             }
                             if (result === undefined) {
+                                BNJS.ui.hideLoadingPage();
                                 that.addUniondialog();
                                 utilBNJS.storage.setItem("allianceFlag", {
                                     "name": "ok",
-                                    "time": curTime
+                                    "time": that.curTime
                                 });
                             }                                
                         });                            
@@ -171,8 +174,7 @@ export default {
                         return httpBnjs.get({
                             url: api.myuserinfo,
                             params: {
-                                b_uid: uid,
-                                bduss: bdussStroage                        
+                                b_uid: that.uid                
                             }
                         })
                         break;                          
