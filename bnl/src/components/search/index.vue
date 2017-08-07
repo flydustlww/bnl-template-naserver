@@ -176,13 +176,11 @@
 <script>
 import $ from 'dep/zepto';
 let api = require('../../config/api');
+let server = require('../../config/server').server;
+let merchantlogin = encodeURIComponent(server + '/naserver/newapp/merchantlogintpl')
 let Baidu = require('dep/baiduTemplate');
-// 为了兼容该死的华为荣誉6
-let Promise = require('widget/util/es6-promise.js').Promise;
 let httpBnjs = require('widget/http/httpBnjs');
 let dialog = require('widget/dialog/dialog.js');
-let urlParam = require('static/js/urlParam');
-let curUid = urlParam.getUrlParam('uid');
 let util = require('widget/util/util');
 let utilBNJS = require('widget/util/bnjs/util-bnjs'); 
 export default {
@@ -211,34 +209,26 @@ export default {
         input.addEventListener('blur',function(e){
             selectWrap.style.position = 'fixed';
             selectWrap.style.top = '0px';
-
         },false)
         input.addEventListener('focus',function(e){
             selectWrap.style.position = 'absolute';
             selectWrap.style.top = '0px'
-
         },false)
 
 	},
 	watch:{
 	    mendianInfo:function(val,oldVal){
+            let that = this;
             util.ready(function(){
-                let that = this;
-                let uid = typeof(BNJS.account.uid) === "number" ? BNJS.account.uid : 0;
-                let bdussStroage = res;
                 let params = function(){
                     let _params = {}
                     if(/^[0-9]*$/.test(that.mendianInfo)){
                         _params = {
-                            merchant_id: that.mendianInfo,
-                            bduss: bdussStroage,
-                            b_uid: uid
+                            merchant_id: that.mendianInfo
                         }
                     }else{
                         _params = {
-                            name: that.mendianInfo,
-                            bduss: bdussStroage,
-                            b_uid: uid
+                            name: that.mendianInfo
                         }
                     }
                     return _params;
@@ -270,7 +260,7 @@ export default {
                             that.items = res.slice(0,20);
                         }
                         if (errno === 2002) {
-                            BNJS.page.start("BaiduNuomiMerchant://component?compid=bnl&comppage=login", {});
+                            BNJS.page.start("BaiduNuomiMerchant://component?url=" + merchantlogin, {}, 1);
                         }
                         
                     },function(res){
@@ -315,7 +305,7 @@ export default {
                                     ok : 'dialog-font-color-pink'
                                 },
                                 onClickOk: function() {
-                                    BNJS.page.start("BaiduNuomiMerchant://component?compid=bnl&comppage=login", {});
+                                    BNJS.page.start("BaiduNuomiMerchant://component?url=" + merchantlogin, {}, 1);
                                 }
                             });
                         } else {

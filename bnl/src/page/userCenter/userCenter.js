@@ -56,6 +56,7 @@ let vm = new Vue({
             });                
         },
         userInfoOk: function(res) {
+            let that = this;
             switch (res.errno) 
             {
                 case 0:

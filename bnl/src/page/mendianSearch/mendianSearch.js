@@ -5,8 +5,6 @@
 
 import style from './mendianSearch.less';
 import Vue from 'vue';
-// import 'DeferredBNJS'
-import DeferredBNJS from 'DeferredBNJS';
 import mendianSearch from 'components/search';
 let util = require('widget/util/util');
 let dealIdText;
@@ -29,7 +27,7 @@ util.ready(function () {
         tag: '1',
         text: '帮助',
         callback: function () {
-            BNJS.page.start("BaiduNuomiMerchant://component?compid=bnl&comppage=help", {});
+            BNJS.page.start("BaiduNuomiMerchant://component?compid=bnl&comppage=help", {}, 1);
         }
     });
 });
