@@ -159,7 +159,7 @@ export default {
                                     console.log('添加失败')
                                 });
                             } else {
-                                if (new Date().getTime() - res.data.time > 10000) {
+                                if (new Date().getTime() - res.data.time > 30000) {
                                     BNJS.localStorage.removeItem('bnl_allianceFlag', function(){}, function(){}); 
                                 }
                             }
@@ -220,7 +220,6 @@ export default {
                             BNJS.page.start(url, {});
                         })
                         if (res.data.alliance_name === "") {
-                            console.log(2222);
                             that.alliance_name = "未加入联盟";
                             that.passport_username = datas.passport_username;
                         } else {                         
@@ -283,7 +282,7 @@ export default {
             $('.union-info').html(info);
             $('.union-info-link').html(linkInfo+"&nbsp;>");
             $('.union-info-wrap').on('tap', function(ev) {
-                BNJS.page.start(url, {}, 1);
+                BNJS.page.start(url, {});
             })
         },
         materialClick: function() {
@@ -294,12 +293,12 @@ export default {
         baiduWalletclick: function() {
             if (this.is_alliance) {
                 let url = encodeURIComponent("https://m.baifubao.com/?from=singlemessage&isappinstalled=1");
-                BNJS.page.start("BaiduNuomiMerchant://component?url=" + url, {}, 1);
+                BNJS.page.start("BaiduNuomiMerchant://component?url=" + url, {});
             }
         },
         myMessageclick: function() {
             if (this.is_alliance) {
-                BNJS.page.start("BaiduNuomiMerchant://mymessagedetail?typeName=公告&typeId=1", {}, 1);
+                BNJS.page.start("BaiduNuomiMerchant://mymessagedetail?typeName=公告&typeId=1", {});
             }
         },
         firstUniondialog: function(data) {
@@ -341,7 +340,7 @@ export default {
                 },
                 onClickOk: function () {
                     window.location.href = encodeURIComponent("https://m.baifubao.com/wap/0/wallet/0/cardlist/0");
-                    BNJS.page.start("BaiduNuomiMerchant://component?url=" +url, {}, 1);
+                    BNJS.page.start("BaiduNuomiMerchant://component?url=" +url, {});
                 },
                 onClickCancel: function () {
                     console.log("error");
@@ -364,7 +363,7 @@ export default {
                     cancel: 'dialog-btn-cancel'
                 },
                 onClickOk: function () {
-                    BNJS.page.start('BaiduNuomiMerchant://bindingphone?channel=alliance&notificationName=com.nuomi.merchant.broadcast.PERSONALPROFILE&bottomText=填写完成,去退出重新登录', {}, 1);
+                    BNJS.page.start('BaiduNuomiMerchant://bindingphone?channel=alliance&notificationName=com.nuomi.merchant.broadcast.PERSONALPROFILE&bottomText=填写完成,去退出重新登录', {});
                 },
                 onClickCancel: function () {
                 }

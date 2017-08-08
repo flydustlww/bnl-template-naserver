@@ -1,6 +1,6 @@
 /**
  * @file 物料详情页面
- * @author name<yuchangshuang@baidu.com>
+ * @author <yuchangshuang@baidu.com>
  */
 /* eslint-disable */
 import Vue from 'vue';
@@ -23,12 +23,6 @@ let radiogroup = require('widget/radio/radio.js').RadioGroup;
 //     app_version = "5.3.1",
 //     bainuo_loaction = "116.280705,40.048766";
 // 提测
-
-let curUid = urlParam.getUrlParam('uid');
-let curSid = urlParam.getUrlParam('sid');
-let app_version = urlParam.getUrlParam('app_version');
-let id = urlParam.getUrlParam('id');
-let location = urlParam.getUrlParam('location');
 let unbindDialogHtml = '<p >确认解除物料与您的绑定关系？解绑后，将无法获得推广佣金！</p>';
 let bindDialogHtml = '<p class="dialog-item"><label>类型：</label><input type="radio" id="radio-1" name="product-radio" class="regular-radio" checked value="0"/><label for="radio-1"></label>普通'
     + '<input type="radio" id="radio-2" name="product-radio" class="regular-radio" value="1"/><label for="radio-2" ></label>到店付'
@@ -66,12 +60,8 @@ let curId;
 //      }
 // }
 let init = function (id) {
-
-    let b_uid = typeof(BNJS.account.uid) === "number" ? BNJS.account.uid : 0;
-
-    let getCodeList = function (b_uid, id) {
+    let getCodeList = function (id) {
         let param = {
-            b_uid: b_uid,
             code_id: id
         };
         // 请求成功就处理，如果请求失败，不处理
@@ -83,6 +73,7 @@ let init = function (id) {
             })
             .then(function(res) {
                 isAjaxLocked = false;
+                let data = res;
                 if (data.errno != 0) {
                     $.dialog({
                         showTitle: false,
@@ -106,7 +97,7 @@ let init = function (id) {
 
                         });
                         let html = template('codeList-item-tpl', data.data);
-                        $(html).prependTo($('#codeList'));
+                        $('#codeList').prepend($(html));
                         $('.loadingmore').show();
                     }
                     else { // 无数据
@@ -130,6 +121,7 @@ let init = function (id) {
             params: param
         })
         .then(function(res) {
+            let data = res;
             if (data.errno != 0) {
                 let msg = data.msg;
                 setTimeout(function (data) {
@@ -154,9 +146,8 @@ let init = function (id) {
         })
     };
     // 重绑 
-    let bindCode = function (b_uid, id, deal_id, merchant_id, product) {
+    let bindCode = function (id, deal_id, merchant_id, product) {
         let param = {
-            b_uid: b_uid,
             code_id: id,
             deal_id: deal_id,
             merchant_id: merchant_id,
@@ -222,7 +213,7 @@ let init = function (id) {
                 // app_version,bainuo_loaction,uid,sign,sid,id,deal_id,merchant_id,code_url,product
                 curProduct = radioObj.getValue();
                 console.log('bindcode curProduct' + curProduct);
-                bindCode(app_version, location, curUid, curSid, curId, curDealId, curMerchantId, curProduct);
+                bindCode(curId, curDealId, curMerchantId, curProduct);
             },
             onShow: function () {
                 radioObj = new radiogroup({
@@ -269,10 +260,10 @@ let init = function (id) {
         });
 
     };
-    let initPlugins = function (b_uid) {
-        getCodeList(b_uid, id);
+    let initPlugins = function (id) {
+        getCodeList(id);
     };
-    initPlugins(b_uid);
+    initPlugins(id);
     // renderHTML();
     getDom();
     bind();
@@ -282,7 +273,8 @@ util.ready(function() {
     BNJS.ui.hideLoadingPage();
     BNJS.ui.title.setTitle('物料详情');
     BNJS.page.getData(function(res){
-        let id = res.data.id;
+        let id = res.id;
+        console.log("取到id"+id);
         init(id);
     }, '2.2');
 })

@@ -71,7 +71,7 @@ let vm = new Vue({
                     if (that.is_verified === 0) {
                         $('.user-verified').on('tap', function () {
                             let url = encodeURIComponent("https://m.baifubao.com/wap/0/wallet/0/cardlist/0");
-                            BNJS.page.start("BaiduNuomiMerchant://component?url=" + url, {}, 1);       
+                            BNJS.page.start("BaiduNuomiMerchant://component?url=" + url, {});       
                         })        
                     }
                     break;                   
@@ -114,5 +114,6 @@ let vm = new Vue({
 util.ready(function() {
     BNJS.ui.hideLoadingPage();
     BNJS.ui.title.setTitle('个人资料');
+    
 })
 /* eslint-disable */

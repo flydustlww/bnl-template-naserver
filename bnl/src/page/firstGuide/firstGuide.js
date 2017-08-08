@@ -34,12 +34,26 @@ let init = {
         });
     },
     store() {
-        let bnl_flag = 1;
+        let url = 'BaiduNuomiMerchant://component?url=' + LOGIN_URL;
+
         BNJS.localStorage.getItem('bnl_flag', function(res){
-            var url = 'BaiduNuomiMerchant://component?url=' + LOGIN_URL;
-            BNJS.page.start(url,{},1);          
+            // 获取登录信息
+            BNJS.localStorage.getItem('bnl_bduss', function(res){
+                if (res.data == "") {
+                    BNJS.page.start(url,{},1);
+                } else {
+                    BNJS.page.start('BaiduNuomiMerchant://component?compid=bnl&comppage=unionCenter',{},1);
+                }
+            }, function(res) {
+                BNJS.page.start(url,{},1);
+            });
+            
+            if (res.data == "") {
+                BNJS.localStorage.setItem('bnl_flag', bnl_flag, function(){
+                }, function(){});
+            }         
         }, function(){
-            BNJS.localStorage.setItem('bnl_flag', bnl_flag, function(){
+            BNJS.localStorage.setItem('bnl_flag', "ok", function(){
             }, function(){});
         }, '2.7');
         // BNJS.localStorage.removeItem("flag");

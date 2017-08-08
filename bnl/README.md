@@ -28,8 +28,7 @@ webpack-dev-server的使用 https://segmentfault.com/a/1190000006964335
 
 ### 页面
 
-登录引导页:   baidunuomimerchant://component?url=http://172.22.149.96:8399/page/guide.html  
-
+guide: 登录引导页 baidunuomimerchant://component?url=http://172.22.149.96:8399/page/guide.html  
 cardList: 物料详情
 
 dailyBilling: 当日详情

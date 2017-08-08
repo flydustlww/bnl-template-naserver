@@ -27,7 +27,7 @@ util.ready(function() {
     });
     /* 注册广播接收器 */
     BNJS.page.registerReceiver('com.nuomi.merchant.broadcast.PERSONALPROFILE', function (res) {
-        BNJS.page.start('baidunuomimerchant://component?url=compid=bnl&comppage=userCenter', {}, 1);
+        BNJS.page.start('baidunuomimerchant://component?compid=bnl&comppage=userCenter', {}, 1);
     });
 });
 /* eslint-disable */

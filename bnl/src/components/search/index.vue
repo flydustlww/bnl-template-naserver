@@ -249,7 +249,8 @@ export default {
                         url: api.searchmerchant,
                         params: params()                   
                     })
-                    .then(function(res){
+                    .then(function(data){
+                        let res = data.data;
                         if (res.length === 0){
                             that.isShowLists=false;
                             that.isShowTps = true;

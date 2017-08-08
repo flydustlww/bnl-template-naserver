@@ -38,8 +38,12 @@ let materialItemView = {
         let me = this;
         me.load();
         $(document).on('click', '.material-item-link', function(e) {
-            let id = $(this).data('id');
-            BNJS.page.start('BaiduNuomiMerchant://component?compid=bnl&comppage=cardList', {id: id});
+            let data_id = $(this).data('id');
+            let params = {
+                id: data_id
+            };
+            console.log("物料上的id" + data_id);
+            BNJS.page.start('BaiduNuomiMerchant://component?compid=bnl&comppage=cardList', params);
         })
     },
     load: function () {
