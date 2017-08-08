@@ -100,7 +100,9 @@ let vm = new Vue({
                 },
                 onClickOk: function () {
                     var url = 'BaiduNuomiMerchant://component?url=' + LOGIN_URL;
-                    BNJS.page.start(url, {}, 1); 
+                    BNJS.localStorage.removeItem("bnl_bduss", function (res) {
+                        BNJS.page.start(url, {}, 1); 
+                    });
                 },
                 onClickCancel: function () {
                 }

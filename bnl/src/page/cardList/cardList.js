@@ -60,9 +60,10 @@ let curId;
 //      }
 // }
 let init = function (id) {
+
     let getCodeList = function (id) {
         let param = {
-            code_id: id
+            id: id
         };
         // 请求成功就处理，如果请求失败，不处理
         if (!isAjaxLocked) {

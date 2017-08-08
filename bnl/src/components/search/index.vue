@@ -69,7 +69,7 @@
        right: 10%;
        display: inline-block;
        height: 55/750rem;
-       line-height: 70/750rem;
+       line-height: 55/750rem;
        // vertical-align: bottom;
    }
    .pink{
@@ -103,10 +103,10 @@
     background-color: #fff;
     top: 108/750rem;
     position: absolute;
-    // overflow-y: scroll;
+    overflow-y: scroll;
     width: 100%;
-    // -webkit-overflow-scrolling: touch;   /*这句是为了滑动更顺畅*/
-    // height:1248/750rem;
+    -webkit-overflow-scrolling: touch;   /*这句是为了滑动更顺畅*/
+    height:1248/750rem;
     .list{
         // background-color: #fff;
         height: 130/750rem;

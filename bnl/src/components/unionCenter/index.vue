@@ -311,7 +311,10 @@ export default {
                     contentHtml : '恭喜您加入<br><span>'+ name +'</span><br>成为百度糯米商户联盟第'+ num +'位会员',
                     buttonClass : {
                         ok : 'dialog-font-color-white'
-                    }           
+                    },
+                    buttonText: {
+                        ok: '我知道了'
+                    }      
                 });
             } else {
                 $.dialog({  

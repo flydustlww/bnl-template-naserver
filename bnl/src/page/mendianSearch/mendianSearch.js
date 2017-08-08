@@ -23,13 +23,6 @@ let vm = new Vue({
 util.ready(function () {
     BNJS.ui.hideLoadingPage();
     BNJS.ui.title.setTitle('门店查询');
-    BNJS.ui.title.addActionButton({
-        tag: '1',
-        text: '帮助',
-        callback: function () {
-            BNJS.page.start("BaiduNuomiMerchant://component?compid=bnl&comppage=help", {}, 1);
-        }
-    });
 });
 
 /* eslint-disable */
