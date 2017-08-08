@@ -40,8 +40,8 @@ let productcode;
 console.log('请求接口环境: __DEV__' + __DEV__+ '__QA__ ' + __QA__ +'__PRO__'+__PRO__ );
 // RD开发环境
 if (__DEV__) {
-    server = location.origin + '/mock/';
-    // server = location.origin + '/api/';
+    // server = location.origin + '/mock/';
+    server = location.origin + '/api/';
 }
 // QA环境
 if (__QA__) {
