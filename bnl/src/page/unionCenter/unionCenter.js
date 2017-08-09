@@ -25,6 +25,9 @@ util.ready(function() {
             BNJS.page.start("BaiduNuomiMerchant://component?compid=bnl&comppage=help", {});
         }
     });
+    BNJS.page.reShow(function () {
+        BNJS.page.start('BaiduNuomiMerchant://component?compid=bnl&comppage=unionCenter', {}, 1);
+    });
     /* 注册广播接收器 */
     BNJS.page.registerReceiver('com.nuomi.merchant.broadcast.PERSONALPROFILE', function (res) {
         BNJS.page.start('baidunuomimerchant://component?compid=bnl&comppage=userCenter', {});
