@@ -99,7 +99,7 @@ let vm = new Vue({
                     cancel: 'dialog-btn-cancel'
                 },
                 onClickOk: function () {
-                    var url = 'BaiduNuomiMerchant://component?url=' + LOGIN_URL;
+                    var url = 'BaiduNuomiMerchant://component?compid=bnl&comppage=unionCenter';
                     BNJS.localStorage.setItem("bnl_bduss", '' , function () {
                         BNJS.page.start(url, {}); 
                     }, function () {

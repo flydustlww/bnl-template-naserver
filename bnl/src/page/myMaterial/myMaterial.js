@@ -134,7 +134,7 @@ let bindButton = {
                         },
                         onClickCancel: function () {
                             // window.location.href = 'band://web?type=query_store&url=' + window.location.protocol + '//' + window.location.host + '/naserver/user/mendiansearch?uid=';
-                            BNJS.page.start("BaiduNuomiMerchant://component?compid=bnl&comppage=mendianSearch", {}, 1);
+                            BNJS.page.start("BaiduNuomiMerchant://component?compid=bnl&comppage=mendianSearch", {});
                         }
                     });                    
                 }
@@ -169,6 +169,17 @@ let bindButton = {
                                 BNJS.page.start("BaiduNuomiMerchant://component?url=" + merchantlogin, {}, 1);
                             }
                         });
+                    } else  if (resp.errno === 0){
+                        $.dialog({
+                            showTitle : false,
+                            contentHtml : "认领成功",
+                            buttonClass : {
+                                ok : 'dialog-font-color-pink'
+                            },
+                            onClickOk: function() {
+                                BNJS.page.start("BaiduNuomiMerchant://component?compid=bnl&comppage=myMaterial", {}, 1);
+                            }
+                        });
                     } else {
                         $.dialog({
                             showTitle : false,
@@ -177,9 +188,10 @@ let bindButton = {
                                 ok : 'dialog-font-color-pink'
                             },
                             onClickOk: function() {
+                                BNJS.page.start("BaiduNuomiMerchant://component?compid=bnl&comppage=myMaterial", {}, 1);
                             }
-                        });
-                    }    
+                        });                        
+                    }
                 }, function(res) {
                     
                 });                
