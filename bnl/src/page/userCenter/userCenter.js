@@ -100,7 +100,7 @@ let vm = new Vue({
                 },
                 onClickOk: function () {
                     var url = 'BaiduNuomiMerchant://component?url=' + LOGIN_URL;
-                    BNJS.localStorage.setItem("bnl_bduss", '' , function (res) {
+                    BNJS.localStorage.setItem("bnl_bduss", '' , function () {
                         BNJS.page.start(url, {}); 
                     }, function () {
                         BNJS.ui.toast.show('移除数据失败');

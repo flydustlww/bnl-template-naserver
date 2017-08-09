@@ -227,7 +227,7 @@ export default {
                             BNJS.page.start(url, {});
                         });
 
-                        getAllianceData(datas);
+                        that.getAllianceData(datas);
 
                         if (res.data.alliance_name === "") {
                             // 未加入联盟 所有TAB点击都提示
