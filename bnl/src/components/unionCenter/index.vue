@@ -30,9 +30,9 @@
             </div>
         </section>
         <ul class="union-list">
-            <li class="my-material" v-on:click="materialClick"><span class="icon icon-material"></span><p class="border-bt">我的物料</p></li>
-            <li class="baiduwallet" v-on:click="baiduWalletclick"><span class="icon icon-baiduwallet"></span><p class="border-bt">百度钱包</p></li>
-            <li class="my-message" v-on:click="myMessageclick"><span class="icon icon-message"></span><p class="border-bt">我的消息</p></li>
+            <li class="my-material"><span class="icon icon-material"></span><p class="border-bt">我的物料</p></li>
+            <li class="baiduwallet"><span class="icon icon-baiduwallet"></span><p class="border-bt">百度钱包</p></li>
+            <li class="my-message"><span class="icon icon-message"></span><p class="border-bt">我的消息</p></li>
         </ul>
     </div>
 </template>
@@ -105,9 +105,6 @@ export default {
             });
         },
         checkuserInfoOk: function(res) {
-            // 拿到登录的数据
-            console.log("登录的数据")
-            console.log(res);
             let that = this;
             // 如果登录状态
             switch (res.errno) {
@@ -146,8 +143,7 @@ export default {
                         that.isInfo = true;
                         that.isLogin = true;
                         BNJS.localStorage.getItem('bnl_allianceFlag', function(res){
-                            console.log("拿到storage返回值==");
-                            console.log(res);
+
                             if (res.data == "") {
                                 that.addUniondialog();                           
                                 BNJS.localStorage.setItem('bnl_allianceFlag', {
@@ -202,13 +198,24 @@ export default {
                     } 
             }
         },
+        // 处理联盟数据
+        getAllianceData: function(datas) {
+
+            this.is_verified = datas.is_verified;
+            this.alliance_name = datas.alliance_name || '未加入联盟';
+            this.merchant_name = datas.merchant_name;
+            this.passport_username = datas.passport_username;
+            this.today_commission = datas.today_commission || '---';
+            this.total_commission = datas.total_commission || '---';
+            
+        },
         myuserInfoOk: function(res) {
             if (res) {
                 // 拿到用户的数据
-                console.log("用户的数据")
-                console.log(res);
                 let datas = util.cloneObj(res.data);
+
                 let that = this;
+
                 switch (res.errno)
                 {
                     case 0: 
@@ -218,10 +225,54 @@ export default {
                         $('.union-user').on('click', function () {
                             let url = "BaiduNuomiMerchant://component?compid=bnl&comppage=userCenter";
                             BNJS.page.start(url, {});
-                        })
+                        });
+
+                        that.getAllianceData(datas);
+
                         if (res.data.alliance_name === "") {
+                            // 未加入联盟 所有TAB点击都提示
+                            $('.union-number, .union-list').on('click', function () {
+                                BNJS.ui.toast.show('您未加入联盟,请先加入联盟');
+                            });
+                        }
+                        else{
+                            // 今日佣金
+                            $('.today').on('click', function () {
+                                let url = "BaiduNuomiMerchant://component?compid=bnl&comppage=dailyBilling";
+                                BNJS.page.start(url, {});
+                            });
+                            // 累计佣金
+                            $('.total').on('click', function () {
+                                let url = "BaiduNuomiMerchant://component?compid=bnl&comppage=totalReward";
+                                BNJS.page.start(url, {});
+                            });
+                            // 我的物料
+                            $('.my-material').on('click', function () {
+                                BNJS.page.start("BaiduNuomiMerchant://component?compid=bnl&comppage=myMaterial", {});
+                            });
+                            // 百度钱包
+                            $('.baiduwallet').on('click', function () {
+                                let url = encodeURIComponent("https://m.baifubao.com/?from=singlemessage&isappinstalled=1");
+                                BNJS.page.start("BaiduNuomiMerchant://component?url=" + url, {});
+                            });
+                            // 我的消息
+                            $('.my-message').on('click', function () {
+                                BNJS.page.start("BaiduNuomiMerchant://mymessagedetail?typeName=公告&typeId=1", {});
+                            });
+
+                        }
+
+                        
+
+                        /*if (res.data.alliance_name === "") {
                             that.alliance_name = "未加入联盟";
                             that.passport_username = datas.passport_username;
+                            $('.today').on('click', function () {
+                                BNJS.ui.toast.show('您未加入联盟,请先加入');
+                            });
+                            $('.total').on('click', function () {
+                                BNJS.ui.toast.show('您未加入联盟,请先加入');
+                            }); 
                         } else {                         
                             that.is_verified = datas.is_verified;
                             that.alliance_name = datas.alliance_name;
@@ -237,7 +288,7 @@ export default {
                                 let url = "BaiduNuomiMerchant://component?compid=bnl&comppage=totalReward";
                                 BNJS.page.start(url, {});
                             });                            
-                        }
+                        }*/
                         // 判断是否认证
                         if (that.is_verified === 0) {
                             that.isInfo = true;
@@ -256,7 +307,7 @@ export default {
                     case 2002: 
                     {
                         that.isLogin = false;
-                        that.forceLogin();
+                        //that.forceLogin();
                         break;
                     }
                     default:
@@ -266,7 +317,8 @@ export default {
                 return ;
             }
           
-        },   
+        },
+
         forceLogin: function() {
             $('.union-top').on('click', function() {
                 BNJS.page.start("BaiduNuomiMerchant://component?url=" + merchantlogin, {}, 1);
@@ -285,7 +337,7 @@ export default {
                 BNJS.page.start(url, {});
             })
         },
-        materialClick: function() {
+       /* materialClick: function() {
             if (this.is_alliance) {
                 BNJS.page.start("BaiduNuomiMerchant://component?compid=bnl&comppage=myMaterial", {});
             }
@@ -295,12 +347,14 @@ export default {
                 let url = encodeURIComponent("https://m.baifubao.com/?from=singlemessage&isappinstalled=1");
                 BNJS.page.start("BaiduNuomiMerchant://component?url=" + url, {});
             }
+
         },
         myMessageclick: function() {
             if (this.is_alliance) {
                 BNJS.page.start("BaiduNuomiMerchant://mymessagedetail?typeName=公告&typeId=1", {});
             }
-        },
+
+        },*/
         firstUniondialog: function(data) {
             let name = data.alliance_info.alliance_name || "";
             let num = data.new_num || 0;

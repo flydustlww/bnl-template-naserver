@@ -38,18 +38,18 @@ let init = {
 
         BNJS.localStorage.getItem('bnl_flag', function(res){
             // 获取登录信息
-            BNJS.localStorage.getItem('bnl_bduss', function(res){
-                if (res.data == "") {
-                    BNJS.page.start(url,{},1);
-                } else {
+            // BNJS.localStorage.getItem('bnl_bduss', function(res){
+                // if (res.data == "") {
+                //     BNJS.page.start(url,{},1);
+                // } else {
                     BNJS.page.start('BaiduNuomiMerchant://component?compid=bnl&comppage=unionCenter',{},1);
-                }
-            }, function(res) {
-                BNJS.page.start(url,{},1);
-            });
+                // }
+            // }, function(res) {
+            //     BNJS.page.start(url,{},1);
+            // });
             
             if (res.data == "") {
-                BNJS.localStorage.setItem('bnl_flag', bnl_flag, function(){
+                BNJS.localStorage.setItem('bnl_flag', 'ok', function(){
                 }, function(){});
             }         
         }, function(){

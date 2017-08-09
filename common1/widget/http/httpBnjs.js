@@ -54,7 +54,7 @@ util.ready(function (BNJS) {
                     }
                 });
             }, function(){
-                alert(1);
+                BNJS.ui.toast.show('请求数据失败');
             }, '2.7');
 
         });
