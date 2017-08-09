@@ -150,7 +150,7 @@ let bindButton = {
                 let url = res.data.content;
                 let result = util.parseQueryString(url);
                 let code_id = result.id;
-                httpBnjs.get({
+                httpBnjs.post({
                     url: api.bindcode,
                     params: {
                         code_id: code_id,

@@ -29,5 +29,9 @@ util.ready(function() {
     BNJS.page.registerReceiver('com.nuomi.merchant.broadcast.PERSONALPROFILE', function (res) {
         BNJS.page.start('baidunuomimerchant://component?compid=bnl&comppage=userCenter', {});
     });
+    // 登录返回到此页面
+    BNJS.page.setPageId({
+        pageId: 'unionCenter'
+    });
 });
 /* eslint-disable */

@@ -34,8 +34,8 @@ let vm = new Vue({
     created: function () {
         var _this = this;
         util.ready(function() {
-            _this.getData();
-        })
+           _this.getData();
+        });
     },
     watch: function () {
     },
@@ -100,8 +100,10 @@ let vm = new Vue({
                 },
                 onClickOk: function () {
                     var url = 'BaiduNuomiMerchant://component?url=' + LOGIN_URL;
-                    BNJS.localStorage.removeItem("bnl_bduss", function (res) {
-                        BNJS.page.start(url, {}, 1); 
+                    BNJS.localStorage.setItem("bnl_bduss", '' , function (res) {
+                        BNJS.page.start(url, {}); 
+                    }, function () {
+                        BNJS.ui.toast.show('移除数据失败');
                     });
                 },
                 onClickCancel: function () {
@@ -116,6 +118,9 @@ let vm = new Vue({
 util.ready(function() {
     BNJS.ui.hideLoadingPage();
     BNJS.ui.title.setTitle('个人资料');
+    BNJS.page.reShow(function () {
+        BNJS.page.start('BaiduNuomiMerchant://component?compid=bnl&comppage=userCenter',{});
+    });
     
 })
 /* eslint-disable */

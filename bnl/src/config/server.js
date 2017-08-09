@@ -9,9 +9,8 @@ console.log('H5链接环境: __DEV__' + __DEV__+ '__QA__ ' + __QA__ +'__PRO__'+_
 var server = 'http://cp01-ocean-1115-offline.epc.baidu.com:8080';
 // 
 if (__DEV__) {
-	//
-	// server = 'http://cp01-ocean-1115-offline.epc.baidu.com:8080';
-	server = 'http://cp01-c-ugc-test00.epc.baidu.com:8999';
+
+	server = 'http://cp01-ocean-1115-offline.epc.baidu.com:8080';
 
 }
 if (__QA__) {
