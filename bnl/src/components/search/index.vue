@@ -309,6 +309,17 @@ export default {
                                     BNJS.page.start("BaiduNuomiMerchant://component?url=" + merchantlogin, {}, 1);
                                 }
                             });
+                        } else  if (resp.errno === 0){
+                            $.dialog({
+                                showTitle : false,
+                                contentHtml : "认领成功",
+                                buttonClass : {
+                                    ok : 'dialog-font-color-pink'
+                                },
+                                onClickOk: function() {
+                                    BNJS.page.start("BaiduNuomiMerchant://component?compid=bnl&comppage=mendianSearch", {}, 1);
+                                }
+                            });
                         } else {
                             $.dialog({
                                 showTitle : false,
@@ -317,8 +328,9 @@ export default {
                                     ok : 'dialog-font-color-pink'
                                 },
                                 onClickOk: function() {
+                                    BNJS.page.start("BaiduNuomiMerchant://component?compid=bnl&comppage=mendianSearch", {}, 1);
                                 }
-                            });
+                            });                        
                         }
                     }, function(res) {
                         BNJS.ui.showErrorPage();

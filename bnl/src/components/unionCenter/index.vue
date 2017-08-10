@@ -162,7 +162,8 @@ export default {
                 }, function(res) {
                     // BNJS.ui.hideLoadingPage();
                     // that.addUniondialog();
-                    // BNJS.ui.toast.show("获取失败")        
+                    console.log("获取失败")     
+                    console.log(res)     
                 }, '2.7');                       
                 
                 that.changeInfo({

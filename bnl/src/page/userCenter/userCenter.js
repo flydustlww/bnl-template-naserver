@@ -74,7 +74,7 @@ let vm = new Vue({
                             BNJS.page.start("BaiduNuomiMerchant://component?url=" + url, {});       
                         })        
                     }
-                    break;                   
+                    break;              
                 }
                 case 2002:
                     var url = 'BaiduNuomiMerchant://component?compid=bnl&comppage=unionCenter';
@@ -103,7 +103,7 @@ let vm = new Vue({
                     BNJS.localStorage.setItem('bnl_bduss', 'invalid', function () {
                         BNJS.page.start(url, {}); 
                     }, function (res) {
-                        BNJS.ui.toast.show(JSON.stringify(res));
+                        // BNJS.ui.toast.show(JSON.stringify(res));
                     });
                 },
                 onClickCancel: function () {

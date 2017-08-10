@@ -211,7 +211,7 @@ util.ready(function() {
     BNJS.ui.title.setTitle('我的物料');
     init();
     BNJS.reShow(function() {
-        init(); 
+        BNJS.page.start('BaiduNuomiMerchant://component?compid=bnl&comppage=myMaterial', {}, 1);
     })
 })
 /* eslint-disable */
