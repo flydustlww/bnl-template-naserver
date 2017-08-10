@@ -103,10 +103,13 @@ var initPlugins = function () {
         formatDate = curDate.replace(/-/g, '');
         // 根据当前时间获取数据
         getPromoteList(1, curCount, 0)(formatDate);
+        // 显示佣金时间
+        $('#promote-title').find('.timeselect').val(curDate);
 
     },'2.2');
 
-    $('#promote-title').find('.timeselect').val(curDate);
+    
+
     BNJS.ui.title.addActionButton({
         tag: 22,
         text: '日历',
@@ -225,15 +228,15 @@ var getPromoteList = function (page, count, user_type) {
                                 add.noMoreDiv();
                             }
                         }
-                        curPageNum = curPageNum + 1;
-                        isAjaxLocked = false;
-                        $(window).trigger('enableLoad');
+                    
                     }
                     else {
-                        isAjaxLocked = false;
-                        alert(data.msg);
-                        isAjaxLocked = false;
+                       BNJS.ui.toast.show(data.msg);
+
                     }
+                    curPageNum = curPageNum + 1;
+                    isAjaxLocked = false;
+                    $(window).trigger('enableLoad');
                 })
             // }) 
            
