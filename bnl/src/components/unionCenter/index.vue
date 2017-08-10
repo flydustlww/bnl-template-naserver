@@ -79,6 +79,7 @@ export default {
             _this.getData();
         })
     },
+
 	methods: {
         getData: function() {
             let that = this;
@@ -113,110 +114,77 @@ export default {
                 //
                 BNJS.ui.showErrorPage(res);
             });
-            // 
-            that.bindLogin();
+  
         },
 
-        bindLogin: function() {
-            // 未登录
-            if (!this.isLogin) {
-                $('.union-top,.union-list').on('click' , function() {
-                    BNJS.page.start("BaiduNuomiMerchant://component?url=" + merchantlogin, {});
-                })
-            }
-            
-        },
         // 若checkuserinfo请求成功则继续请求联盟
         checkAlliance: function(res) {
+
             let that = this;
-            // 如果登录状态
-            switch (res.errno) {
-                // 已登录
-                case 0:
-                    {
-                        // 判断加入联盟弹窗
-                        if (res.data.is_new === 1) {   // 首次加入联盟
-                            that.is_new = 1;
-                            that.firstUniondialog(res.data);
-                        }
-                        if (res.data.alliance_info.alliance_name) {
-                            that.is_alliance = true;
-                        }
+            if (res.errno === 0) {
+                // 判断加入联盟弹窗
+                if (res.data.is_new === 1) {   // 首次加入联盟
+                    that.is_new = 1;
+                    that.firstUniondialog(res.data);
+                }
+                if (res.data.alliance_info.alliance_name) {
+                    that.is_alliance = true;
+                }
 
-                        return httpBnjs.get({
-                            url: api.myuserinfo,
-                            params: {
-                                b_uid: that.uid                    
-                            }
-                        })
-                        break;
+                return httpBnjs.get({
+                    url: api.myuserinfo,
+                    params: {
+                        b_uid: that.uid                    
                     }
-                // 未登录
-                case 2002:
-                    {
-                        that.isLogin = false;
-                        //that.forceLogin();
-                        break;
-                    }
-                // 未加入联盟
-                case 70150:
-                    {
-                        // 未加入联盟
-                        that.is_alliance = false;
-                        that.isInfo = true;
-                        that.isLogin = true;
-                        let value = JSON.stringify({
-                            name: "ok",
-                            time: that.curTime
-                        }); 
-                        BNJS.localStorage.getItem('bnl_allianceFlag', function(res){
-                            let resData = JSON.parse(res.data);
-                            if (res.data == "") {
-                                that.addUniondialog();
-                                BNJS.localStorage.setItem('bnl_allianceFlag', value, function(){}, function(){});
-                            } else {
-                                if (new Date().getTime() - resData.time > 30000) {
-                                    BNJS.localStorage.setItem('bnl_allianceFlag', "", function(){}, function(){}); 
-                                }
-                            }
-                        }, function(res) {
-                            BNJS.ui.hideLoadingPage();
-                            that.addUniondialog();                           
-                            BNJS.localStorage.setItem('bnl_allianceFlag', value, function(){}, function(){});
-                        }, '2.7');                       
-                 
-
-                        that.changeInfo({
-                            info: "您尚未填写角色，故无法加入联盟",
-                            linkInfo: "去填写角色",
-                            url: "BaiduNuomiMerchant://bindingphone?channel=alliance&notificationName=com.nuomi.merchant.broadcast.PERSONALPROFILE&bottomText=填写完成,去退出重新登录"
-                        });
-                        return httpBnjs.get({
-                            url: api.myuserinfo,
-                            params: {
-                                b_uid: that.uid                
-                            }
-                        })
-                        break;                          
-                    }
-                case 1004:
-                    {
-                        that.isLogin = false;
-                        // BNJS.page.start("BaiduNuomiMerchant://component?url=" + merchantlogin, {}, 1);
-                        break;
-                    }
-                case 2001: 
-                    {
-                        that.isLogin = false;
-                        // BNJS.page.start("BaiduNuomiMerchant://component?url=" + merchantlogin, {}, 1);
-                        break;                       
-                    }
-                default:
-                    {
-                        that.isLogin = false;
-                        BNJS.ui.showErrorPage(res.msg);
-                    } 
+                })
+                
             }
+            else if (res.errno === 70150) {
+                // 未加入联盟
+                that.is_alliance = false;
+                that.isInfo = true;
+                that.isLogin = true;
+                let value = JSON.stringify({
+                    name: "ok",
+                    time: that.curTime
+                }); 
+                BNJS.localStorage.getItem('bnl_allianceFlag', function(res){
+                    let resData = JSON.parse(res.data);
+                    if (res.data == "") {
+                        that.addUniondialog();
+                        BNJS.localStorage.setItem('bnl_allianceFlag', value, function(){}, function(){});
+                    } else {
+                        if (new Date().getTime() - resData.time > 30000) {
+                            BNJS.localStorage.setItem('bnl_allianceFlag', "", function(){}, function(){}); 
+                        }
+                    }
+                }, function(res) {
+                    BNJS.ui.hideLoadingPage();
+                    that.addUniondialog();                           
+                    BNJS.localStorage.setItem('bnl_allianceFlag', value, function(){}, function(){});
+                }, '2.7');                       
+                
+
+                that.changeInfo({
+                    info: "您尚未填写角色，故无法加入联盟",
+                    linkInfo: "去填写角色",
+                    url: "BaiduNuomiMerchant://bindingphone?channel=alliance&notificationName=com.nuomi.merchant.broadcast.PERSONALPROFILE&bottomText=填写完成,去退出重新登录"
+                });
+                return httpBnjs.get({
+                    url: api.myuserinfo,
+                    params: {
+                        b_uid: that.uid                
+                    }
+                })
+            }
+            else{
+                that.isLogin = false;
+                // BNJS.ui.showErrorPage(res.msg);
+                $('.union-top,.union-list').on('click' , function() {
+                    BNJS.page.start("BaiduNuomiMerchant://component?url=" + merchantlogin, {});
+                });
+            }
+            
         },
         // 处理联盟数据
         getAllianceData: function(datas) {
@@ -285,33 +253,6 @@ export default {
 
                         }
 
-                        
-
-                        /*if (res.data.alliance_name === "") {
-                            that.alliance_name = "未加入联盟";
-                            that.passport_username = datas.passport_username;
-                            $('.today').on('click', function () {
-                                BNJS.ui.toast.show('您未加入联盟,请先加入');
-                            });
-                            $('.total').on('click', function () {
-                                BNJS.ui.toast.show('您未加入联盟,请先加入');
-                            }); 
-                        } else {                         
-                            that.is_verified = datas.is_verified;
-                            that.alliance_name = datas.alliance_name;
-                            that.merchant_name = datas.merchant_name;
-                            that.passport_username = datas.passport_username;
-                            that.today_commission = datas.today_commission;
-                            that.total_commission = datas.total_commission;
-                            $('.today').on('click', function () {
-                                let url = "BaiduNuomiMerchant://component?compid=bnl&comppage=dailyBilling";
-                                BNJS.page.start(url, {});
-                            });
-                            $('.total').on('click', function () {
-                                let url = "BaiduNuomiMerchant://component?compid=bnl&comppage=totalReward";
-                                BNJS.page.start(url, {});
-                            });                            
-                        }*/
                         // 判断是否认证
                         if (that.is_verified === 0) {
                             that.isInfo = true;
@@ -342,14 +283,6 @@ export default {
           
         },
 
-       /* forceLogin: function() {
-            $('.union-top').on('click', function() {
-                BNJS.page.start("BaiduNuomiMerchant://component?url=" + merchantlogin, {}, 1);
-            })
-            $('.union-list').on('click', function() {
-                BNJS.page.start("BaiduNuomiMerchant://component?url=" +merchantlogin, {}, 1);
-            })
-        },*/
         changeInfo: function(data) {
             let info = data.info;
             let linkInfo = data.linkInfo;

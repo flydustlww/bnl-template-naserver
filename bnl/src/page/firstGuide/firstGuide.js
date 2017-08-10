@@ -38,6 +38,7 @@ let init = {
 
         BNJS.localStorage.getItem('bnl_flag', function(res){
             // 是否展示过轮播图
+            BNJS.ui.toast.show(JSON.stringify(res));
             if (res.data == "") {
                 // 新用户则
                 BNJS.localStorage.setItem('bnl_flag', 'ok', function () {
