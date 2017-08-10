@@ -4,7 +4,8 @@
  */
 
 define(function (require, exports, module) {
-    var onscroll = require('common/util/onscroll/onscroll');
+    var onscroll = require('widget/util/onscroll/onscroll');
+
     /**
      * check if element is in view
      *
@@ -24,6 +25,7 @@ define(function (require, exports, module) {
     };
 
     var lazyload = {
+
         /**
          * load image with given src
          *
@@ -36,7 +38,8 @@ define(function (require, exports, module) {
 
             if (me.isBackground) {
                 element.style.cssText += 'background-image: url(' + src + ');';
-            } else {
+            }
+            else {
                 element.setAttribute('src', src);
             }
 
@@ -48,7 +51,9 @@ define(function (require, exports, module) {
                 };
                 element.onerror = function () {};
             }
+
         },
+
         /**
          * init a set of lazyload <img>s
          *
@@ -79,6 +84,7 @@ define(function (require, exports, module) {
                     if (!element.lazyload && element.hasAttribute(srcAttribute) && inView(element, threshold)) {
                         me.loadImage(element, element.getAttribute(srcAttribute));
                     }
+
                 }
             };
 
@@ -87,7 +93,7 @@ define(function (require, exports, module) {
             window.addEventListener('orientationchange', onViewportChange);
             onViewportChange();
         }
-    }
+    };
 
     /**
      * register a set of elements
@@ -125,6 +131,7 @@ define(function (require, exports, module) {
                     element.inView = false;
                     callback.call(element, false);
                 }
+
             }
         };
 
@@ -142,4 +149,3 @@ define(function (require, exports, module) {
         register: register
     };
 });
-

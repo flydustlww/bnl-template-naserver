@@ -2,8 +2,8 @@
  * 统计相关helper函数
  * @author rangzf
  */
-
-var util = require('common/util/util');
+/* eslint-disable */
+var util = require('widget/util/util');
 
 /**
  * mtj打点功能，支持传递自定义变量
@@ -30,16 +30,19 @@ var addMTJ = function (templates, data) {
         try {
             _templates.eventId = util.format(templates.eventId, data);
             _templates.eventLabel = util.format(templates.eventLabel, data);
-        } catch (e) {
+        }
+        catch (e) {
             if (__DEV__) {
                 console.warn('[addMTJ]', 'format mtj template error with the data passed');
             }
+
         }
     }
 
     if (__DEV__) {
         console.log('[BNJS.statistic.addMTJ]', _templates);
     }
+
     BNJS.statistic.addMTJ(_templates);
 };
 
@@ -55,8 +58,10 @@ var addLog = function (templates, data) {
         if (__DEV__) {
             console.log('[BNJS.statistic.addLog]', templates);
         }
+
         return BNJS.statistic.addLog(templates);
     }
+
     var _templates = $.extend(true, {}, templates);
 
     var _ComExtraParams = _templates.note.ComExtraParams;
@@ -76,3 +81,4 @@ module.exports = {
     addLog: addLog,
     addMTJ: addMTJ
 };
+/* eslint-disable */

@@ -2,8 +2,9 @@
  * @file helper methods
  * @author lb<nighca@live.cn>
  */
-
+/* eslint-disable */
 var $ = require('dep/zepto');
+
 /**
  * @param {string} url, origin url
  * @param {params=} params, additional params
@@ -51,6 +52,7 @@ if (__DEV__) {
                 start(url, params, action, direction);
                 return;
             }
+
             // get params in url (schema)
             var urlParams = {};
             params = params || {};
@@ -61,6 +63,7 @@ if (__DEV__) {
                 if (!params.hasOwnProperty(kv[0])) {
                     params[kv[0]] = kv[1];
                 }
+
             });
             // debugger
             // no comppage given or open page in other packages
@@ -147,6 +150,7 @@ var forEach = function (obj, method) {
             if (method.call(this, obj[i], i) === false) {
                 break;
             }
+
         }
         return;
     }
@@ -155,6 +159,7 @@ var forEach = function (obj, method) {
         if (obj.hasOwnProperty(key) && method.call(this, obj[key], key) === false) {
             return;
         }
+
     }
 };
 
@@ -188,6 +193,7 @@ var filter = function (obj, method) {
         if (method(val, key)) {
             target[key] = val;
         }
+
     });
 };
 
@@ -199,6 +205,22 @@ var extend = function (target, addon, alone) {
         target[key] = val;
     });
     return target;
+};
+
+var cloneObj = function(obj){
+    var str, newobj = obj.constructor === Array ? [] : {};
+    if(typeof obj !== 'object'){
+        return;
+    } else if(window.JSON){
+        str = JSON.stringify(obj), //系列化对象
+        newobj = JSON.parse(str); //还原
+    } else {
+        for(var i in obj){
+            newobj[i] = typeof obj[i] === 'object' ? 
+            cloneObj(obj[i]) : obj[i]; 
+        }
+    }
+    return newobj;
 };
 
 /**
@@ -335,6 +357,7 @@ var formatDate = function (template, date) {
     if (!date) {
         return '';
     }
+
     template = template.replace(/\$([a-zA-Z])/g, function (_, key) {
         return '${' + key + '}';
     });
@@ -362,6 +385,7 @@ var hasAny = function (target, list) {
         if (target.indexOf(list[i]) >= 0) {
             return true;
         }
+
     }
     return false;
 };
@@ -408,6 +432,7 @@ var unique = function (arr) {
             r.push(v);
             o[v] = 1;
         }
+
     });
 
     o = null;
@@ -448,6 +473,20 @@ var reflow = function ($ele, options) {
     }, options.interval || 500);
 };
 
+var parseQueryString = function (url) {
+     var reg_url = /^[^\?]+\?([\w\W]+)$/,
+          reg_para = /([^&=]+)=([\w\W]*?)(&|$|#)/g,
+          arr_url = reg_url.exec(url),
+          ret = {};
+     if (arr_url && arr_url[1]) {
+          var str_para = arr_url[1], result;
+          while ((result = reg_para.exec(str_para)) != null) {
+               ret[result[1]] = result[2];
+          }
+     }
+     return ret;
+}
+
 module.exports = {
     unique: unique,
     doNothing: doNothing,
@@ -458,6 +497,7 @@ module.exports = {
     filter: filter,
     clone: clone,
     extend: extend,
+    cloneObj: cloneObj,
     inherits: inherits,
     center: center,
     isBrowser: isBrowser,
@@ -473,5 +513,7 @@ module.exports = {
     cachable: cachable,
     featureTest: featureTest,
     addSpace: addSpace,
-    reflow: reflow
+    reflow: reflow,
+    parseQueryString: parseQueryString
 };
+/* eslint-disable */
