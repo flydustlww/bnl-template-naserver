@@ -37,26 +37,24 @@ let init = {
         let url = 'BaiduNuomiMerchant://component?url=' + LOGIN_URL;
 
         BNJS.localStorage.getItem('bnl_flag', function(res){
-            // 获取登录信息
-            // BNJS.localStorage.getItem('bnl_bduss', function(res){
-                // if (res.data == "") {
-                //     BNJS.page.start(url,{},1);
-                // } else {
-                    BNJS.page.start('BaiduNuomiMerchant://component?compid=bnl&comppage=unionCenter',{},1);
-                // }
-            // }, function(res) {
-            //     BNJS.page.start(url,{},1);
-            // });
-            
+            // 是否展示过轮播图
             if (res.data == "") {
-                BNJS.localStorage.setItem('bnl_flag', 'ok', function(){
-                }, function(){});
-            }         
-        }, function(){
-            BNJS.localStorage.setItem('bnl_flag', "ok", function(){
-            }, function(){});
+                // 新用户则
+                BNJS.localStorage.setItem('bnl_flag', 'ok', function () {
+                    $('.swiper-container').show();
+                });
+                
+            } 
+            else{
+                BNJS.page.start('BaiduNuomiMerchant://component?compid=bnl&comppage=unionCenter',{},1);
+            }
+                    
+        }, function(res){
+
+             BNJS.ui.toast.show(JSON.stringify(res));
+           
         }, '2.7');
-        // BNJS.localStorage.removeItem("flag");
+
     }
 }
     

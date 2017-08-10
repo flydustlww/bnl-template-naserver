@@ -10,7 +10,7 @@ require('./promoteDetail.less');
 var utilBNJS = require('widget/util/bnjs/util-bnjs.js');
 var api = require('../../config/api');
 var Baidu = require('dep/baiduTemplate');
-
+var httpBnjs = require('widget/http/httpBnjs');
 var cutString = require('static/js/cutString');
 var formatMoney = require('static/js/formatMoney');
 
@@ -85,101 +85,53 @@ promoteDetail.prototype.getBill = function (bill_id, page, count, user_type) {
 	if (!me.isAjaxLocked) {
 		me.isAjaxLocked = true;
 		utilBNJS.storage.getItem('bnl_bduss', function(bduss) {
-			var bduss = "<2ZmaENuUlFXa1hIOFhMQmxMV0Z1cXdMWjl5U1hyelU4ZEl0ZkhpM3ZiTEQ0S2haSVFBQUFBJCQAAAAAAAAAAAEAAAAoqTMGcmVubGVpODAwOQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA></2ZmaENuUlFXa1hIOFhMQmxMV0Z1cXdMWjl5U1hyelU4ZEl0ZkhpM3ZiTEQ0S2haSVFBQUFBJCQAAAAAAAAAAAEAAAAoqTMGcmVubGVpODAwOQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA>AAAAAAAAAAAAAAAAAAMNTgVnDU4FZT";
-			me.bduss = bduss;
-			BNJS.http.get({
+			// var bduss = "<2ZmaENuUlFXa1hIOFhMQmxMV0Z1cXdMWjl5U1hyelU4ZEl0ZkhpM3ZiTEQ0S2haSVFBQUFBJCQAAAAAAAAAAAEAAAAoqTMGcmVubGVpODAwOQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA></2ZmaENuUlFXa1hIOFhMQmxMV0Z1cXdMWjl5U1hyelU4ZEl0ZkhpM3ZiTEQ0S2haSVFBQUFBJCQAAAAAAAAAAAEAAAAoqTMGcmVubGVpODAwOQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA>AAAAAAAAAAAAAAAAAAMNTgVnDU4FZT";
+			// me.bduss = bduss;
+			httpBnjs.get({
 				url: api.billing,
 				params: {
 					bill_id: bill_id,
 					page: page,
 					count: count || 10,
-					user_type: user_type,
-					bduss: bduss
-				},
-				onSuccess: function(res){
-					var data = res.data;
-					console.log('GetPromoteInfo接口返回='+ data);
-					if (data.errno === 0) {
-						if (data.data && data.data.detail.length > 0) {
-							me.renderTotalReward(data);
-							// 移除加载中
-							me.removeDiv();
-						}
-						else{
-							if (me.isInit) {
-
-							    $('#reward-list').addClass('table-noborder');
-
-							    me.removeDiv();
-
-							    if (me.curUserType == 0) {
-							    	// 展示错误信息
-							    	me.showError('当日无推广活动！');
-							    }
-							    else {
-							    	me.showError('不存在该种类型的推广记录！');
-							    }
-							}
-							else {
-							    me.noMoreDiv();
-							}
-						}
-					}
-					else{
-						me.showError(data.msg);
-					}
-					me.curPageNum += 1;
-					me.isAjaxLocked = false;
-					$(window).trigger('enableLoad');
-    
+					user_type: user_type
 				}
 			})
-			/*$.ajax({
-				url: api.billing,
-				type: 'get',
-				dataType: 'json',
-				data: {
-					bill_id: bill_id,
-					page: page,
-					count: count || 10,
-					user_type: user_type,
-					bduss: bduss
-				},
-				success: function (data) {
-					if (data.errno === 0) {
-						if (data.data && data.data.detail.length > 0) {
-							me.renderTotalReward(data);
-							// 移除加载中
-							me.removeDiv();
-						}
-						else{
-							if (me.isInit) {
-
-							    $('#reward-list').addClass('table-noborder');
-
-							    me.removeDiv();
-
-							    if (me.curUserType == 0) {
-							    	// 展示错误信息
-							    	me.showError('当日无推广活动！');
-							    }
-							    else {
-							    	me.showError('不存在该种类型的推广记录！');
-							    }
-							}
-							else {
-							    me.noMoreDiv();
-							}
-						}
+			.then(function (res) {
+				var data = res.data;
+				console.log('GetPromoteInfo接口返回='+ data);
+				if (data.errno === 0) {
+					if (data.data && data.data.detail.length > 0) {
+						me.renderTotalReward(data);
+						// 移除加载中
+						me.removeDiv();
 					}
 					else{
-						me.showError(data.msg);
+						if (me.isInit) {
+
+						    $('#reward-list').addClass('table-noborder');
+
+						    me.removeDiv();
+
+						    if (me.curUserType == 0) {
+						    	// 展示错误信息
+						    	me.showError('当日无推广活动！');
+						    }
+						    else {
+						    	me.showError('不存在该种类型的推广记录！');
+						    }
+						}
+						else {
+						    me.noMoreDiv();
+						}
 					}
-					me.curPageNum += 1;
-					me.isAjaxLocked = false;
-					$(window).trigger('enableLoad');
 				}
-			});*/
+				else{
+					me.showError(data.msg);
+				}
+				me.curPageNum += 1;
+				me.isAjaxLocked = false;
+				$(window).trigger('enableLoad');
+			})
 
 		});
 	}

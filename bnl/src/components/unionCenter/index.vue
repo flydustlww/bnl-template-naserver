@@ -82,29 +82,52 @@ export default {
 	methods: {
         getData: function() {
             let that = this;
+            // 获取B端uid
             this.uid = typeof(BNJS.account.uid) === "number" ? BNJS.account.uid : 0;
             // 请求checkuserinfo,请求myuserinfo
             let curTimeDate = new Date();
             this.curTime = curTimeDate.getTime();
+            // 请求checkuserinfo 接口
             httpBnjs.get({
                 url: api.checkuserinfo,
                 params: {
                     b_uid: that.uid,                
                 }
             })
+             // 若checkuserinfo请求成功则继续请求联盟
             .then(function(res) {
-                return that.checkuserInfoOk(res);
+                // 请求myuserinfo
+                return that.checkAlliance(res);
+
             }, function(res) {
-                console.log(JSON.stringify(res));
-                BNJS.page.start("BaiduNuomiMerchant://component?url=" + merchantlogin, {}, 1);
+                // 请求myuserinfo 失败则弹出失败信息
+                BNJS.ui.showErrorPage(res);
+                // 主页不论何时都不再弹出登录窗
+                // BNJS.page.start("BaiduNuomiMerchant://component?url=" + merchantlogin, {}, 1);
             })
+            // 若联盟接口请求成功
             .then(function(res) {
+                // 点击进入响应页面
                 that.myuserInfoOk(res);
             }, function(res) {
-                BNJS.ui.showErrorPage();
+                //
+                BNJS.ui.showErrorPage(res);
             });
+            // 
+            that.bindLogin();
         },
-        checkuserInfoOk: function(res) {
+
+        bindLogin: function() {
+            // 未登录
+            if (!this.isLogin) {
+                $('.union-top,.union-list').on('click' , function() {
+                    BNJS.page.start("BaiduNuomiMerchant://component?url=" + merchantlogin, {});
+                })
+            }
+            
+        },
+        // 若checkuserinfo请求成功则继续请求联盟
+        checkAlliance: function(res) {
             let that = this;
             // 如果登录状态
             switch (res.errno) {
@@ -132,7 +155,7 @@ export default {
                 case 2002:
                     {
                         that.isLogin = false;
-                        that.forceLogin();
+                        //that.forceLogin();
                         break;
                     }
                 // 未加入联盟
@@ -142,32 +165,26 @@ export default {
                         that.is_alliance = false;
                         that.isInfo = true;
                         that.isLogin = true;
+                        let value = JSON.stringify({
+                            name: "ok",
+                            time: that.curTime
+                        }); 
                         BNJS.localStorage.getItem('bnl_allianceFlag', function(res){
-
+                            let resData = JSON.parse(res.data);
                             if (res.data == "") {
-                                that.addUniondialog();                           
-                                BNJS.localStorage.setItem('bnl_allianceFlag', {
-                                        name: "ok",
-                                        time: that.curTime
-                                }, function(){
-                                    console.log("成功添加storage")
-                                }, function(){
-                                    console.log('添加失败')
-                                });
+                                that.addUniondialog();
+                                BNJS.localStorage.setItem('bnl_allianceFlag', value, function(){}, function(){});
                             } else {
-                                if (new Date().getTime() - res.data.time > 30000) {
-                                    BNJS.localStorage.removeItem('bnl_allianceFlag', function(){}, function(){}); 
+                                if (new Date().getTime() - resData.time > 30000) {
+                                    BNJS.localStorage.setItem('bnl_allianceFlag', "", function(){}, function(){}); 
                                 }
                             }
-                            
                         }, function(res) {
                             BNJS.ui.hideLoadingPage();
                             that.addUniondialog();                           
-                            BNJS.localStorage.setItem('bnl_allianceFlag', {
-                                    "name": "ok",
-                                    "time": that.curTime
-                            }, function(){}, function(){});
+                            BNJS.localStorage.setItem('bnl_allianceFlag', value, function(){}, function(){});
                         }, '2.7');                       
+                 
 
                         that.changeInfo({
                             info: "您尚未填写角色，故无法加入联盟",
@@ -184,17 +201,20 @@ export default {
                     }
                 case 1004:
                     {
-                        BNJS.page.start("BaiduNuomiMerchant://component?url=" + merchantlogin, {}, 1);
+                        that.isLogin = false;
+                        // BNJS.page.start("BaiduNuomiMerchant://component?url=" + merchantlogin, {}, 1);
                         break;
                     }
                 case 2001: 
                     {
-                        BNJS.page.start("BaiduNuomiMerchant://component?url=" + merchantlogin, {}, 1);
+                        that.isLogin = false;
+                        // BNJS.page.start("BaiduNuomiMerchant://component?url=" + merchantlogin, {}, 1);
                         break;                       
                     }
                 default:
                     {
-                        BNJS.ui.showErrorPage();
+                        that.isLogin = false;
+                        BNJS.ui.showErrorPage(res.msg);
                     } 
             }
         },
@@ -205,8 +225,8 @@ export default {
             this.alliance_name = datas.alliance_name || '未加入联盟';
             this.merchant_name = datas.merchant_name;
             this.passport_username = datas.passport_username;
-            this.today_commission = datas.today_commission || '---';
-            this.total_commission = datas.total_commission || '---';
+            this.today_commission = datas.today_commission / 100;
+            this.total_commission = datas.total_commission / 100;
             
         },
         myuserInfoOk: function(res) {
@@ -229,6 +249,9 @@ export default {
 
                         that.getAllianceData(datas);
 
+                        if(!that.isLogin) {
+                            return;
+                        }
                         if (res.data.alliance_name === "") {
                             // 未加入联盟 所有TAB点击都提示
                             $('.union-number, .union-list').on('click', function () {
@@ -319,14 +342,14 @@ export default {
           
         },
 
-        forceLogin: function() {
+       /* forceLogin: function() {
             $('.union-top').on('click', function() {
                 BNJS.page.start("BaiduNuomiMerchant://component?url=" + merchantlogin, {}, 1);
             })
             $('.union-list').on('click', function() {
                 BNJS.page.start("BaiduNuomiMerchant://component?url=" +merchantlogin, {}, 1);
             })
-        },
+        },*/
         changeInfo: function(data) {
             let info = data.info;
             let linkInfo = data.linkInfo;

@@ -210,5 +210,8 @@ util.ready(function() {
     BNJS.ui.hideLoadingPage();
     BNJS.ui.title.setTitle('我的物料');
     init();
+    BNJS.reShow(function() {
+        init(); 
+    })
 })
 /* eslint-disable */

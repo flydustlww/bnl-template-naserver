@@ -99,11 +99,11 @@ let vm = new Vue({
                     cancel: 'dialog-btn-cancel'
                 },
                 onClickOk: function () {
-                    var url = 'BaiduNuomiMerchant://component?compid=bnl&comppage=unionCenter';
-                    BNJS.localStorage.setItem("bnl_bduss", '' , function () {
+                    var url = 'BaiduNuomiMerchant://component?url=' + LOGIN_URL;
+                    BNJS.localStorage.setItem('bnl_bduss', 'invalid', function () {
                         BNJS.page.start(url, {}); 
-                    }, function () {
-                        BNJS.ui.toast.show('移除数据失败');
+                    }, function (res) {
+                        BNJS.ui.toast.show(JSON.stringify(res));
                     });
                 },
                 onClickCancel: function () {
