@@ -119,7 +119,7 @@ util.ready(function() {
     BNJS.ui.hideLoadingPage();
     BNJS.ui.title.setTitle('个人资料');
     BNJS.page.reShow(function () {
-        BNJS.page.start('BaiduNuomiMerchant://component?compid=bnl&comppage=userCenter',{});
+        vm.getData();
     });
     
 })

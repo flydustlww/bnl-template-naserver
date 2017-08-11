@@ -110,8 +110,7 @@ require('./dialog.css');(function (win, $) {
         touchEvent.tap($(okBtn), function () {
             settings.onClickOk();
             $.dialog.close();
-            //return false;
-            // alert('')
+            return false;
         });
 
         touchEvent.tap($(cancelBtn), function () {
@@ -245,7 +244,6 @@ require('./dialog.css');(function (win, $) {
                     if (Math.abs(startTx - endTx) < 6 && Math.abs(startTy - endTy) < 6) {
                         fn(e);
                     }
-
                     // e.preventDefault();
                 });
             }

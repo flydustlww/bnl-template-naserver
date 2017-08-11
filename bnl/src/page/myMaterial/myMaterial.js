@@ -5,7 +5,6 @@
 /* eslint-disable */
 import style from './myMaterial.less';
 import Vue from 'vue';
-// import 'DeferredBNJS'
 let $ = require('dep/zepto');
 let api = require('../../config/api');
 let util = require('widget/util/util');
@@ -35,9 +34,10 @@ FastClick.attach(document.body, {});
 let materialItemView = {
     pageData: {},
     init: function () {
+        alert("33333");
         let me = this;
         me.load();
-        $(document).on('click', '.material-item-link', function(e) {
+        $('.items-wrapper').on('click', '.material-item-link', function(e) {
             let data_id = $(this).data('id');
             let params = {
                 id: data_id
@@ -100,6 +100,7 @@ let materialItemView = {
 let bindButton = {
     init: function () {
         let _this = this;
+        alert("#####");
         material_button.on('tap', function (ev) {
             httpBnjs.get({
                 url: api.memberMerchant,
@@ -210,9 +211,20 @@ let init = function () {
 util.ready(function() {
     BNJS.ui.hideLoadingPage();
     BNJS.ui.title.setTitle('我的物料');
+    var flag = false;
     init();
     BNJS.page.reShow(function() {
-        init();
+        // init();
+        alert("1111");
     })
 })
+// BNJSReady(function(){
+//     BNJS.ui.hideLoadingPage();
+//     BNJS.ui.title.setTitle('我的物料');
+//     init();
+//     BNJS.page.reShow(function() {
+//         alert(111);
+//         // init();
+//     })
+// });
 /* eslint-disable */
