@@ -153,7 +153,7 @@ export default {
                         that.addUniondialog();
                         BNJS.localStorage.setItem('bnl_allianceDialog', value, function(){}, function(){});
                     }else {
-                        let resData = JSON.parse(res.data);
+                        let resData = res.data;
                         if (new Date().getTime() - resData.time > 30000) {
                             BNJS.localStorage.setItem('bnl_allianceDialog', "overtime", function(){}, function(){}); 
                         }
