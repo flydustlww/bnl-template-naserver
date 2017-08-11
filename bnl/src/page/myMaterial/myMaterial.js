@@ -34,7 +34,6 @@ FastClick.attach(document.body, {});
 let materialItemView = {
     pageData: {},
     init: function () {
-        alert("33333");
         let me = this;
         me.load();
         $('.items-wrapper').on('click', '.material-item-link', function(e) {
@@ -100,7 +99,6 @@ let materialItemView = {
 let bindButton = {
     init: function () {
         let _this = this;
-        alert("#####");
         material_button.on('tap', function (ev) {
             httpBnjs.get({
                 url: api.memberMerchant,
@@ -135,7 +133,7 @@ let bindButton = {
                         },
                         onClickCancel: function () {
                             // window.location.href = 'band://web?type=query_store&url=' + window.location.protocol + '//' + window.location.host + '/naserver/user/mendiansearch?uid=';
-                            BNJS.page.start("BaiduNuomiMerchant://component?compid=bnl&comppage=mendianSearch", {});
+                            BNJS.page.start("BaiduNuomiMerchant://component?compid=bnl&comppage=mendianSearch", {}, 1);
                         }
                     });                    
                 }
@@ -211,20 +209,8 @@ let init = function () {
 util.ready(function() {
     BNJS.ui.hideLoadingPage();
     BNJS.ui.title.setTitle('我的物料');
-    var flag = false;
+    BNJS.page.setPageId('myMaterial');
     init();
-    BNJS.page.reShow(function() {
-        // init();
-        alert("1111");
-    })
 })
-// BNJSReady(function(){
-//     BNJS.ui.hideLoadingPage();
-//     BNJS.ui.title.setTitle('我的物料');
-//     init();
-//     BNJS.page.reShow(function() {
-//         alert(111);
-//         // init();
-//     })
-// });
+
 /* eslint-disable */
