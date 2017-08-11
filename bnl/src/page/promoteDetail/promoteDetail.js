@@ -7,7 +7,7 @@
 require('dep/zepto');
 require('widget/ratchet/ratchet');
 require('./promoteDetail.less');
-var utilBNJS = require('widget/util/bnjs/util-bnjs.js');
+// var utilBNJS = require('widget/util/bnjs/util-bnjs.js');
 var api = require('../../config/api');
 var Baidu = require('dep/baiduTemplate');
 var httpBnjs = require('widget/http/httpBnjs');
@@ -86,7 +86,7 @@ promoteDetail.prototype.getBill = function (bill_id, page, count, user_type) {
 	var me = this;
 	if (!me.isAjaxLocked) {
 		me.isAjaxLocked = true;
-		utilBNJS.storage.getItem('bnl_bduss', function(bduss) {
+		// utilBNJS.storage.getItem('bnl_bduss', function(bduss) {
 			// var bduss = "<2ZmaENuUlFXa1hIOFhMQmxMV0Z1cXdMWjl5U1hyelU4ZEl0ZkhpM3ZiTEQ0S2haSVFBQUFBJCQAAAAAAAAAAAEAAAAoqTMGcmVubGVpODAwOQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA></2ZmaENuUlFXa1hIOFhMQmxMV0Z1cXdMWjl5U1hyelU4ZEl0ZkhpM3ZiTEQ0S2haSVFBQUFBJCQAAAAAAAAAAAEAAAAoqTMGcmVubGVpODAwOQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA>AAAAAAAAAAAAAAAAAAMNTgVnDU4FZT";
 			// me.bduss = bduss;
 			httpBnjs.get({
@@ -99,11 +99,10 @@ promoteDetail.prototype.getBill = function (bill_id, page, count, user_type) {
 				}
 			})
 			.then(function (res) {
-				var data = res.data;
-				console.log('GetPromoteInfo接口返回='+ data);
-				if (data.errno === 0) {
-					if (data.data && data.data.detail.length > 0) {
-						me.renderTotalReward(data);
+
+				if (res.errno === 0) {
+					if (res.data && res.data.detail.length > 0) {
+						me.renderTotalReward(res);
 						// 移除加载中
 						me.removeDiv();
 					}
@@ -128,14 +127,14 @@ promoteDetail.prototype.getBill = function (bill_id, page, count, user_type) {
 					}
 				}
 				else{
-					me.showError(data.msg);
+					me.showError(res.msg);
 				}
 				me.curPageNum += 1;
 				me.isAjaxLocked = false;
 				$(window).trigger('enableLoad');
 			})
 
-		});
+		// });
 	}
 };
 
@@ -230,33 +229,19 @@ promoteDetail.prototype.formatTime = function (time) {
 promoteDetail.prototype.getPromoteInfo = function (bill_id, target) {
 	
 	var me = this;
-    BNJS.http.get({
-    	url: api.GetPromoteInfo,
-    	params: {
-    		billing_id: me.bill_id,
-    		bduss: me.bduss
-    	},
-    	onSuccess: function(res) {
-    		var data = res.data;
-    		var arr = me.dealDetailData(data);
-    		// 渲染详情列表
-    		me.renderPromoteDetailList(arr, target);
-    	}
-    })
-	/*$.ajax({
+	// bduss 在httpBnjs方法内获取
+	httpBnjs.get({
 		url: api.GetPromoteInfo,
-		type: 'get',
-		dataType: 'json',
-		data: {
-            billing_id: bill_id
-        },
-		success: function (data) {
-            var arr = me.dealDetailData(data);
-            // 渲染详情列表
-            me.renderPromoteDetailList(arr, target);
-
+		params: {
+			billing_id: bill_id
 		}
-	})*/
+	})
+	.then(function(res) {
+		var data = res.data;
+		var arr = me.dealDetailData(data);
+		// 渲染详情列表
+		me.renderPromoteDetailList(arr, target);
+	});
 
 };
 // 处理详情数据
@@ -389,7 +374,7 @@ promoteDetail.prototype.showError = function (msg) {
 		msg: msg
 	});
 
-	$('.content').append(html);
+	$('.reward-list').html(html);
 };
 
 // 渲染佣金总计金额

@@ -24,7 +24,13 @@ util.ready(function (BNJS) {
         return new Promise(function (resolve, reject) {
             BNJS.localStorage.getItem('bnl_bduss', function(res){
                 var data = res.data;
-                options.params.bduss = data;
+                if (data == 'invalid') {
+                    options.params.bduss = '';
+                }
+                else{
+                    options.params.bduss = data;
+                }
+
                 BNJS.http[method]({
                     url: options.url,
                     params: options.params || {},
@@ -54,7 +60,7 @@ util.ready(function (BNJS) {
                     }
                 });
             }, function(){
-                BNJS.ui.toast.show('请求数据失败');
+                BNJS.ui.toast.show(JSON.stringify(res));
             }, '2.7');
 
         });
