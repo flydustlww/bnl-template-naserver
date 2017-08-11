@@ -248,7 +248,7 @@ promoteDetail.prototype.getPromoteInfo = function (bill_id, target) {
 promoteDetail.prototype.dealDetailData = function (data) {
 	var arr = [];
 	var me = this;
-	$.each(data.data, function (key, value) {
+	$.each(data, function (key, value) {
 	    if (me.promoteInfoMap[key]) {
 	        if (key == 'pay_time' || key == 'consumption_time') { 
 	            // 购买时间，消费时间特型处理
