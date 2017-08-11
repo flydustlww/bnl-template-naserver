@@ -9,7 +9,7 @@ require('dep/swipe/swiper-3.4.2.min.css');
 require('./firstGuide.less');
 let $ = require('dep/zepto');
 let util = require('widget/util/util.js');
-let utilBNJS = require('widget/util/bnjs/util-bnjs.js');
+
 require('dep/zeptoLib/touch.js');
 require('dep/swipe/swiper-3.4.2.jquery.min.js');
 let mScreen = require('widget/mscreen/mscreen');

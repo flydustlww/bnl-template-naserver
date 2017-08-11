@@ -8,7 +8,7 @@ let $ = require('dep/zepto');
 require('dep/zeptoLib/touch.js');
 let api = require('../../config/api');
 let util = require('widget/util/util');
-let utilBNJS = require('widget/util/bnjs/util-bnjs.js');
+
 let Promise = require('widget/util/es6-promise.js').Promise;
 let dialog = require('widget/dialog/dialog.js');
 let httpBnjs = require('widget/http/httpBnjs');

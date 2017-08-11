@@ -144,9 +144,10 @@ totalReward.prototype.bindEvents = function () {
             }
         }
 
-        BNJSReady.ready(function () {
-            BNJS.ui.hideLoadingPage();        
-            BNJS.page.start(me.rewardDetailUrl, params, 1)
+        BNJSReady(function () {
+            BNJS.ui.hideLoadingPage();      
+            console.log('页面传递参数='+JSON.stringify(params));  
+            BNJS.page.start(me.rewardDetailUrl, params)
         })
     })
 }

@@ -19,7 +19,7 @@ var ERROR_TPL = require('./view/error.tpl');
 var DETAIL_LIST_TPL = require('./view/promoteDetailList.tpl');
 
 // 确保组件页面能够正常使用BNJS方法，避免造成一些奇怪的错误发生
-/*var BNJSReady = function (readyCallback) {
+var BNJSReady = function (readyCallback) {
     if (readyCallback && typeof readyCallback =='function') {
         if (window.BNJS && typeof window.BNJS =='object' && BNJS._isAllReady) {
             readyCallback();
@@ -30,7 +30,7 @@ var DETAIL_LIST_TPL = require('./view/promoteDetailList.tpl');
             }, false);
         }
     }
-};*/
+};
 
 var promoteDetail = function () {
 	// 每页请求20个
@@ -65,13 +65,15 @@ var promoteDetail = function () {
     this.bduss = '';
     // 获取日账单明细
     var me = this;
-    utilBNJS.ready(function () {
+    BNJSReady(function () {
         BNJS.ui.hideLoadingPage();
+        BNJS.ui.title.setTitle('当日佣金');
         BNJS.page.getData(function(res){
-        	me.bill_id = res.data.bill_id;
-            me.time = res.data.time;
+            console.log('读取页面参数:' + JSON.stringify(res) );
+        	me.bill_id = res.bill_id;
+            me.time = res.time;
             me.getBill(me.bill_id, me.curPageNum, me.curCount, me.curUserType);
-        });   
+        }, '2.2');   
         // tab事件监听
         me.bindTabEvents();
         // 监听剪头事件
