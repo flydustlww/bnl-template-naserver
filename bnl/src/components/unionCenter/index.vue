@@ -149,12 +149,11 @@ export default {
                     time: that.curTime
                 }); 
                 BNJS.localStorage.getItem('bnl_allianceDialog', function(res){
-                    let resData = JSON.parse(res.data);
-                    BNJS.ui.toast.show(JSON.stringify(res) + "获取成功")
-                    if (res.data == "overtime" || res.data == '') {
+                    if (res.data == "" || res.data === "overtime") {
                         that.addUniondialog();
                         BNJS.localStorage.setItem('bnl_allianceDialog', value, function(){}, function(){});
                     }else {
+                        let resData = JSON.parse(res.data);
                         if (new Date().getTime() - resData.time > 30000) {
                             BNJS.localStorage.setItem('bnl_allianceDialog', "overtime", function(){}, function(){}); 
                         }

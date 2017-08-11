@@ -7,9 +7,9 @@
   "scripts": {
     "server": "webpack-dev-server --config build/new/webpack-config.js --host 0.0.0.0 --port 8527 --history-api-fallback --inline --progress --proxyfile build/new/webpack.proxy.js",
     "dev": "node build/dev-server.js",
-    "build": "export NODE_ENV=production&&node build/build.js",
-    "build:pro": "export NODE_ENV=production&&node build/build.js",
-    "build:qa": "export NODE_ENV=qa&&node build/build.js",
+    "build": "set NODE_ENV=production&&node build/build.js",
+    "build:pro": "set NODE_ENV=production&&node build/build.js",
+    "build:qa": "set NODE_ENV=qa&&node build/build.js",
     "test": "",
     "lint": "eslint --ext .js,.vue src test/unit/specs test/e2e/specs"
   },
