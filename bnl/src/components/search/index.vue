@@ -260,9 +260,6 @@ export default {
                             that.isShowLists = true;      
                             that.items = res.slice(0,20);
                         }
-                        if (errno === 2002) {
-                            BNJS.page.start("BaiduNuomiMerchant://component?url=" + merchantlogin, {}, 1);
-                        }
                         
                     },function(res){
                         $.dialog({

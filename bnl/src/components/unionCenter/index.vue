@@ -151,10 +151,10 @@ export default {
                 BNJS.localStorage.getItem('bnl_allianceDialog', function(res){
                     let resData = JSON.parse(res.data);
                     BNJS.ui.toast.show(JSON.stringify(res) + "获取成功")
-                    if (res.data == "overtime") {
+                    if (res.data == "overtime" || res.data == '') {
                         that.addUniondialog();
                         BNJS.localStorage.setItem('bnl_allianceDialog', value, function(){}, function(){});
-                    } else {
+                    }else {
                         if (new Date().getTime() - resData.time > 30000) {
                             BNJS.localStorage.setItem('bnl_allianceDialog', "overtime", function(){}, function(){}); 
                         }
@@ -189,14 +189,12 @@ export default {
         },
         // 处理联盟数据
         getAllianceData: function(datas) {
-
             this.is_verified = datas.is_verified;
             this.alliance_name = datas.alliance_name || '未加入联盟';
             this.merchant_name = datas.merchant_name;
             this.passport_username = datas.passport_username;
             this.today_commission = datas.today_commission / 100;
             this.total_commission = datas.total_commission / 100;
-            
         },
         myuserInfoOk: function(res) {
             if (res) {
@@ -221,7 +219,6 @@ export default {
                         if(!that.isLogin) {
                             return;
                         }
-                        console.log(datas.alliance_name);
                         if (datas.alliance_name == '') {
                             // 未加入联盟 所有TAB点击都提示
                             $('.union-number, .union-list').on('click', function () {

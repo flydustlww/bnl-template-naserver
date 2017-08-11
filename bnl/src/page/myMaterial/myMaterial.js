@@ -130,7 +130,7 @@ let bindButton = {
                         res: res,
                         onClickOk: function () {
                             // window.location.href = 'band://web?type=materials_binding&deal_id=' + this.res.merchant_id + '&deal_name=' + this.res.alliance_name + '&deal_statu=在线&merchant_id=' + this.res.merchant_id + '&product=5';
-                            _this.bindMaterial();
+                            _this.bindMaterial(res.merchant_id);
                         },
                         onClickCancel: function () {
                             // window.location.href = 'band://web?type=query_store&url=' + window.location.protocol + '//' + window.location.host + '/naserver/user/mendiansearch?uid=';
@@ -143,7 +143,7 @@ let bindButton = {
             });
         });
     },
-    bindMaterial:function(){
+    bindMaterial:function(merchant_id){
         var _this = this;
         util.ready(function() {
             BNJS.hardware.scanQRCode(function(res) {
@@ -154,7 +154,8 @@ let bindButton = {
                     url: api.bindcode,
                     params: {
                         code_id: code_id,
-                        product: 5                      
+                        product: 5,
+                        merchant_id: merchant_id                      
                     }
                 })                
                 .then(function(resp){
@@ -210,8 +211,8 @@ util.ready(function() {
     BNJS.ui.hideLoadingPage();
     BNJS.ui.title.setTitle('我的物料');
     init();
-    BNJS.reShow(function() {
-        BNJS.page.start('BaiduNuomiMerchant://component?compid=bnl&comppage=myMaterial', {}, 1);
+    BNJS.page.reShow(function() {
+        init();
     })
 })
 /* eslint-disable */
