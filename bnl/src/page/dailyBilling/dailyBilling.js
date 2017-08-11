@@ -12,7 +12,7 @@ require('widget/ratchet/ratchet');
 require('./css/reward.css');
 require('./dailyBilling.less');
 var util = require('widget/util/util');
-// var urlParam = require('static/js/urlParam');
+
 var formatMoney = require('static/js/formatMoney');
 var api = require('../../config/api');
 var cutString = require('static/js/cutString');
@@ -89,16 +89,16 @@ var initPlugins = function () {
     curPageNum = 1;
     curUserType = 0;
 
-    BNJS.page.getData(function (res) {
+    // BNJS.page.getData(function (res) {
         // 如果page params参数中有time字段
-        if (res.time) {
-            curDate = res.time;
+        // if (res.time) {
+            // curDate = res.time;
             //curTime = (new Date(curDate).getTime()) / 1000;
-        }
-        else{
+        // }
+        // else{
 
             curDate = formatTime(curTime).year + '-' + formatTime(curTime).month + '-' + formatTime(curTime).date;
-        }
+        // }
         // 处理当前时间
         formatDate = curDate.replace(/-/g, '');
         // 根据当前时间获取数据
@@ -106,14 +106,16 @@ var initPlugins = function () {
         // 显示佣金时间
         $('#promote-title').find('.timeselect').val(curDate);
 
-    },'2.2');
+
+   // },'2.2');
 
     
-
+   // add by liuboying for 时间组件
     BNJS.ui.title.addActionButton({
         tag: 22,
         text: '日历',
         callback: function() {
+            // search_date是从iosPicker内回传的
             new iosDatePicker(getPromoteList(1, curCount, curUserType));
         }
     });
@@ -163,7 +165,9 @@ var getPromoteList = function (page, count, user_type) {
                             else {
                                 total_commission = '￥0.00';
                             }
+                            // 累计佣金
                             $('.total-amount').html(total_commission);
+
                             add.removeDiv();
                             $.each(data.data.detail, function (i, item) {
                                 item.formatcommission = formatMoney.formatMoney(item.commission);

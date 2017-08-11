@@ -233,7 +233,7 @@ promoteDetail.prototype.getPromoteInfo = function (bill_id, target) {
 	httpBnjs.get({
 		url: api.GetPromoteInfo,
 		params: {
-			bill_id: bill_id
+			billing_id: bill_id
 		}
 	})
 	.then(function(res) {
@@ -374,7 +374,7 @@ promoteDetail.prototype.showError = function (msg) {
 		msg: msg
 	});
 
-	$('.content').html(html);
+	$('.reward-list').html(html);
 };
 
 // 渲染佣金总计金额
