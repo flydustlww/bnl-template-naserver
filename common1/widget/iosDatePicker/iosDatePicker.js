@@ -8,19 +8,13 @@ var IosSelect = require('dep/datePickerX');
 require('./iosDatePicker.less');
 var selectDate = function (func) {
 	var _this = this;
-	// var selectDateDom = $('#selectDate');
-	// var showDateDom = $('.select-date');
+
 	// 初始化时间
 	var now = new Date();
 	var nowYear = now.getFullYear();
 	var nowMonth = now.getMonth() + 1;
 	var nowDate = now.getDate();
-	// showDateDom.attr('data-year', nowYear);
-	// showDateDom.attr('data-month', nowMonth);
-	// showDateDom.attr('data-date', nowDate);
-	// var oneLevelId = showDateDom.attr('data-year');
-	// var twoLevelId = showDateDom.attr('data-month');
-	// var threeLevelId = showDateDom.attr('data-date');
+
 	// // 数据初始化
 	function formatYear(nowYear) {
 	    var arr = [];
@@ -122,7 +116,10 @@ var selectDate = function (func) {
 	        callback: function (selectOneObj, selectTwoObj, selectThreeObj) {
                 var monthStr = selectTwoObj.id.toString().length ==1 ? '0' + selectTwoObj.id : selectTwoObj.id;
                 var dateStr = selectThreeObj.id.toString().length ==1 ? '0' + selectThreeObj.id : selectThreeObj.id;
-	            var str = (selectOneObj.id + '/' + monthStr + '/' + dateStr).replace(/\//g, '');
+	            var str = selectOneObj.id + monthStr  + dateStr;
+	            var curDate = selectOneObj.id + '-' + monthStr + '-' + dateStr;
+	            $('#promote-title').find('.timeselect').val(curDate);
+
 	            func(str);
 	        }
 	    }, tpl);
