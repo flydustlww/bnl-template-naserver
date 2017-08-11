@@ -110,6 +110,7 @@ totalReward.prototype.bindEvents = function () {
         me.check();
     });
     // 佣金详情
+    BNJSReady(function () {
     $('.navigate-right').on('click', function (e) {
         var target = $(e.target);
         var bill_id = $(target[0]).data('billid');
@@ -144,12 +145,13 @@ totalReward.prototype.bindEvents = function () {
             }
         }
 
-        BNJSReady(function () {
+        
             BNJS.ui.hideLoadingPage();      
             console.log('页面传递参数='+JSON.stringify(params));  
             BNJS.page.start(me.rewardDetailUrl, params)
-        })
+        
     })
+})
 }
 totalReward.prototype.check = function () {
     var me = this;

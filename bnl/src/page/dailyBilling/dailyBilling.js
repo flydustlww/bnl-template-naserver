@@ -269,7 +269,8 @@ var bind = function () {
         target.addClass('active');
         var user_type = target.attr('user_type');
         curUserType = user_type;
-        getPromoteList(curPageNum, curCount, curUserType)(formatDate);       
+        var timeselect = $('#promote-title').find('.timeselect').val().replace(/-/g, '');
+        getPromoteList(curPageNum, curCount, curUserType)(timeselect);       
         
     });
     // 展开收起
