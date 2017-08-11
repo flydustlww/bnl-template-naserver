@@ -22,9 +22,6 @@ let init = {
         mScreen(750, 1205);
         this.store();
         this.initEvent();
-        let mySwiper = new Swiper('.swiper-container', {
-            loop: true
-        });
     },
     initEvent() {
         $enterLm.on('click', function () {
@@ -37,12 +34,14 @@ let init = {
 
         BNJS.localStorage.getItem('bnl_flag', function(res){
             // 是否展示过轮播图
-            // BNJS.ui.toast.show(JSON.stringify(res));
             if (res.data == "") {
-                // 新用户则
-                BNJS.localStorage.setItem('bnl_flag', 'ok', function () {
-                    $('.swiper-container').show();
-                });
+               // 新用户则
+               BNJS.localStorage.setItem('bnl_flag', 'ok', function () {
+
+                    let mySwiper = new Swiper('.swiper-container', {
+                        loop: true
+                    });
+               });
                 
             } 
             else{
