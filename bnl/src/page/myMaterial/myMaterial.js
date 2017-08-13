@@ -36,12 +36,22 @@ let materialItemView = {
     init: function () {
         let me = this;
         me.load();
+        // 下拉刷新
+        BNJS.ui.nativeInterfere({
+            pullDown: true,     // 是否要开启下拉刷新功能
+            pullDownCallback: function () {
+
+                setTimeout(function () {
+                    BNJS.ui.closePullAction('pulldown');
+                }, 2000);
+            }  
+
+        });
         $('.items-wrapper').on('click', '.material-item-link', function(e) {
             let data_id = $(this).data('id');
             let params = {
                 id: data_id
             };
-            console.log("物料上的id" + data_id);
             BNJS.page.start('BaiduNuomiMerchant://component?compid=bnl&comppage=cardList', params);
         })
     },

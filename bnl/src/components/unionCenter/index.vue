@@ -77,21 +77,17 @@ export default {
         let _this = this;
         
         // liuboying add for bugz之每次返回主页面闪屏
-        // util.ready(function(){
-            _this.getData();
-            BNJS.ui.nativeInterfere({
-                pullDown: true,     // 是否要开启下拉刷新功能
-                pullDownCallback: function () {
-                    // BNJS.ui.toast.show('下拉完毕，2秒后收起下拉框');
-                    
-                    setTimeout(function () {
-                                BNJS.ui.closePullAction('pulldown');
-                            }, 2000);
-                }  
+        _this.getData();
+        BNJS.ui.nativeInterfere({
+            pullDown: true,     // 是否要开启下拉刷新功能
+            pullDownCallback: function () {
 
-            });
-            
-        // })
+                setTimeout(function () {
+                    BNJS.ui.closePullAction('pulldown');
+                }, 2000);
+            }  
+
+        });
     },
 
 	methods: {
@@ -240,10 +236,7 @@ export default {
             }
             
         },
-        // 设置弹窗flag
-        setPopFlag: function () {
 
-        },
         // 处理联盟数据
         getAllianceData: function(datas) {
             this.is_verified = datas.is_verified;
