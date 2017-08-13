@@ -118,9 +118,16 @@ let vm = new Vue({
 util.ready(function() {
     BNJS.ui.hideLoadingPage();
     BNJS.ui.title.setTitle('个人资料');
-    BNJS.page.reShow(function () {
+    //BNJS.page.reShow(function () {
         vm.getData();
+    //});
+    // liuboying add for bug 1553
+    BNJS.page.onBtnBackClick({
+        callback: function () {
+            BNJS.page.start('BaiduNuomiMerchant://component?compid=bnl&comppage=unionCenter', {}); 
+        }
     });
+
     
 })
 /* eslint-disable */

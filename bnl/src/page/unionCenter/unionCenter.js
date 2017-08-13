@@ -6,14 +6,7 @@
 import Vue from 'vue';
 import unionCenter from 'components/unionCenter';
 let util = require('widget/util/util');
-// sign    string  8280C3B14E95B2563687631DFABB31BA    签名
 
-let vm = new Vue({
-    el: '#app',
-    render(h) {
-        return h(unionCenter);
-    }
-});
 /* eslint-disable */
 util.ready(function() {
     BNJS.ui.hideLoadingPage();
@@ -25,16 +18,20 @@ util.ready(function() {
             BNJS.page.start("BaiduNuomiMerchant://component?compid=bnl&comppage=help", {});
         }
     });
-    BNJS.page.reShow(function () {
-        BNJS.page.start('BaiduNuomiMerchant://component?compid=bnl&comppage=unionCenter', {}, 1);
-    });
     /* 注册广播接收器 */
     BNJS.page.registerReceiver('com.nuomi.merchant.broadcast.PERSONALPROFILE', function (res) {
-        BNJS.page.start('baidunuomimerchant://component?compid=bnl&comppage=userCenter', {});
+        BNJS.page.start('baidunuomimerchant://component?compid=bnl&comppage=userCenter', {}, 1);
     });
-    // 登录返回到此页面
-    BNJS.page.setPageId({
-        pageId: 'unionCenter'
+    // liuboying delete for bug 1553
+    // BNJS.page.reShow(function () {
+    //     BNJS.page.start('BaiduNuomiMerchant://component?compid=bnl&comppage=unionCenter', {}, 1);
+    // });
+    let vm = new Vue({
+        el: '#app',
+        render(h) {
+            return h(unionCenter);
+        }
     });
 });
+
 /* eslint-disable */

@@ -48,7 +48,7 @@ let Promise = require('widget/util/es6-promise.js').Promise;
 let Baidu = require('dep/baiduTemplate');
 let dialog = require('widget/dialog/dialog.js');
 let util = require('widget/util/util');
-let utilBNJS = require('widget/util/bnjs/util-bnjs.js');
+// let utilBNJS = require('widget/util/bnjs/util-bnjs.js');
 let httpBnjs = require('widget/http/httpBnjs');
 
 FastClick.attach(document.body, {});
@@ -75,9 +75,23 @@ export default {
 	},
     created: function(){
         let _this = this;
-        util.ready(function(){
+        
+        // liuboying add for bugz之每次返回主页面闪屏
+        // util.ready(function(){
             _this.getData();
-        })
+            BNJS.ui.nativeInterfere({
+                pullDown: true,     // 是否要开启下拉刷新功能
+                pullDownCallback: function () {
+                    // BNJS.ui.toast.show('下拉完毕，2秒后收起下拉框');
+                    
+                    setTimeout(function () {
+                                BNJS.ui.closePullAction('pulldown');
+                            }, 2000);
+                }  
+
+            });
+            
+        // })
     },
 
 	methods: {
@@ -144,10 +158,13 @@ export default {
                 that.is_alliance = false;
                 that.isInfo = true;
                 that.isLogin = true;
-                let value = JSON.stringify({
+                // 这段代码写的有问题, resData.time 只设置了一次,new Date().getTime() - resData.time 永远是和第一次进入的时间相比,另外存入time 类型值不对,应该存string啊同学
+                // del by liuboying
+                /*let value = JSON.stringify({
                     name: "ok",
                     time: that.curTime
                 }); 
+               
                 BNJS.localStorage.getItem('bnl_allianceDialog', function(res){
                     if (res.data == "" || res.data === "overtime") {
                         that.addUniondialog();
@@ -162,8 +179,46 @@ export default {
                     BNJS.ui.hideLoadingPage();
                     console.log("获取失败")     
                     console.log(res)     
-                }, '2.7');                       
-                
+                }, '2.7'); */                      
+                // add by liuboying for bug 1568 & 1575
+                let curTime = (new Date().getTime()).toString();
+                BNJS.localStorage.getItem('bnl_allianceDialog', function(res) {
+                   // BNJS.ui.toast.show('bnl_allianceDialog: ' + JSON.stringify(res));
+                    // 如果是首次进入
+                    if(res.data === '') {
+                        // 弹窗
+                        that.addUniondialog();
+                        // 弹窗setFlag
+                        BNJS.localStorage.setItem('bnl_allianceDialog', curTime, function(res) {
+                            // BNJS.ui.toast.show('bnl_allianceDialog set success!' + JSON.stringify(res));
+                        });
+
+                    }
+                    // 弹窗在有效期内
+                    else{
+                        // 超过48小时时间限制
+                        if( new Date().getTime() - res.data > 30000) {
+                            that.addUniondialog();
+                            BNJS.localStorage.setItem('bnl_allianceDialog', curTime, function(res){
+                                // BNJS.ui.toast.show('bnl_allianceDialog set again!' + JSON.stringify(res));
+
+                             }); 
+                        }
+                    }
+
+
+                }, function(res){
+                    // BNJS.ui.toast.show('bnl_allianceDialog get fail: ' + JSON.stringify(res));
+                    that.addUniondialog();
+                    // 弹窗setFlag
+                    BNJS.localStorage.setItem('bnl_allianceDialog', curTime, function(res) {
+                        // BNJS.ui.toast.show('bnl_allianceDialog set success!' + JSON.stringify(res));
+                    }, function(){
+                        // BNJS.ui.toast.show('bnl_allianceDialog set failure!' + JSON.stringify(res));
+                    });
+                },'2.2');
+
+                // 小黄条提示语
                 that.changeInfo({
                     info: "您尚未填写角色，故无法加入联盟",
                     linkInfo: "去填写角色",
@@ -184,6 +239,10 @@ export default {
                 });
             }
             
+        },
+        // 设置弹窗flag
+        setPopFlag: function () {
+
         },
         // 处理联盟数据
         getAllianceData: function(datas) {
