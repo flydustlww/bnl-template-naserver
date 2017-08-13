@@ -23,6 +23,12 @@ let vm = new Vue({
 util.ready(function () {
     BNJS.ui.hideLoadingPage();
     BNJS.ui.title.setTitle('门店查询');
+    BNJS.page.setPageId('mendianSearch');
+    BNJS.page.onBtnBackClick({
+        callback: function(){
+            BNJS.page.start('BaiduNuomiMerchant://component?compid=bnl&comppage=myMaterial', {}, 1);
+        }
+    })
 });
 
 /* eslint-disable */

@@ -159,8 +159,7 @@ export default {
                         }
                     }
                 }, function(res) {
-                    // BNJS.ui.hideLoadingPage();
-                    // that.addUniondialog();
+                    BNJS.ui.hideLoadingPage();
                     console.log("获取失败")     
                     console.log(res)     
                 }, '2.7');                       
