@@ -111,14 +111,14 @@ totalReward.prototype.bindEvents = function () {
     });
     // 佣金详情
     BNJSReady(function () {
-    $('.navigate-right').on('click', function (e) {
-        var target = $(e.target);
-        var bill_id = $(target[0]).data('billid');
-        var time = $(target[0]).data('time');
-        var commission = $(target[0]).data('commission');
-        var status = $(target[0]).data('status');
-        var status_str = $(target[0]).data('statusstr');
-        var billcycle = $(target[0]).data('billcycle');
+    $('.navigate-right').on('click', function () {
+
+        var bill_id = $('.navigate-right').data('billid');
+        var time = $('.navigate-right').data('time');
+        var commission = $('.navigate-right').data('commission');
+        var status = $('.navigate-right').data('status');
+        var status_str = $('.navigate-right').data('statusstr');
+        var billcycle = $('.navigate-right').data('billcycle');
 
         if (billcycle=== 1) {
             var params = {

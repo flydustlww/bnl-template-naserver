@@ -284,55 +284,59 @@ export default {
             var _this = this;
             util.ready(function() {
                 BNJS.hardware.scanQRCode(function(res) {
-                    let url = res.data.content;
-                    let result = util.parseQueryString(url);
-                    let code_id = result.id;
-                    if (res.errno === 0) {
-                        httpBnjs.post({
-                            url: api.bindcode,
-                            params: {
-                                code_id: code_id,
-                                product: 5
-                            }                  
-                        })                    
-                        .then(function(resp) {
-                            if (resp.errno === 2002) {
-                                $.dialog({
-                                    showTitle : false,
-                                    contentHtml : resp.msg,
-                                    buttonClass : {
-                                        ok : 'dialog-font-color-pink'
-                                    },
-                                    onClickOk: function() {
-                                        BNJS.page.start("BaiduNuomiMerchant://component?url=" + merchantlogin, {}, 1);
-                                    }
-                                });
-                            } else  if (resp.errno === 0){
-                                $.dialog({
-                                    showTitle : false,
-                                    contentHtml : "认领成功",
-                                    buttonClass : {
-                                        ok : 'dialog-font-color-pink'
-                                    },
-                                    onClickOk: function() {
-                                        BNJS.page.start("BaiduNuomiMerchant://component?compid=bnl&comppage=mendianSearch", {}, 1);
-                                    }
-                                });
-                            } else {
-                                $.dialog({
-                                    showTitle : false,
-                                    contentHtml : resp.msg,
-                                    buttonClass : {
-                                        ok : 'dialog-font-color-pink'
-                                    },
-                                    onClickOk: function() {
-                                        BNJS.page.start("BaiduNuomiMerchant://component?compid=bnl&comppage=mendianSearch", {}, 1);
-                                    }
-                                });                        
-                            }
-                        }, function(res) {
-                            BNJS.ui.showErrorPage();
-                        })
+                    if(res.errno===0){
+
+                        let url = res.data.content;
+                        let result = util.parseQueryString(url);
+                        let code_id = result.id;
+                        
+                            httpBnjs.post({
+                                url: api.bindcode,
+                                params: {
+                                    code_id: code_id,
+                                    product: 5,
+                                    merchant_id: merchart_id
+                                }                  
+                            })                    
+                            .then(function(resp) {
+                                if (resp.errno === 2002) {
+                                    $.dialog({
+                                        showTitle : false,
+                                        contentHtml : resp.msg,
+                                        buttonClass : {
+                                            ok : 'dialog-font-color-pink'
+                                        },
+                                        onClickOk: function() {
+                                            BNJS.page.start("BaiduNuomiMerchant://component?url=" + merchantlogin, {}, 1);
+                                        }
+                                    });
+                                } else  if (resp.errno === 0){
+                                    $.dialog({
+                                        showTitle : false,
+                                        contentHtml : "认领成功",
+                                        buttonClass : {
+                                            ok : 'dialog-font-color-pink'
+                                        },
+                                        onClickOk: function() {
+                                            BNJS.page.start("BaiduNuomiMerchant://component?compid=bnl&comppage=mendianSearch", {}, 1);
+                                        }
+                                    });
+                                } else {
+                                    $.dialog({
+                                        showTitle : false,
+                                        contentHtml : resp.msg,
+                                        buttonClass : {
+                                            ok : 'dialog-font-color-pink'
+                                        },
+                                        onClickOk: function() {
+                                            BNJS.page.start("BaiduNuomiMerchant://component?compid=bnl&comppage=mendianSearch", {}, 1);
+                                        }
+                                    });                        
+                                }
+                            }, function(res) {
+                                BNJS.ui.toast.show(res)
+                            })
+                      
                     }
                 });
             });

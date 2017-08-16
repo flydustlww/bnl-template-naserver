@@ -31,7 +31,7 @@ let init = {
     },
     store() {
         let url = 'BaiduNuomiMerchant://component?url=' + LOGIN_URL;
-
+        // IOS getItem为空值室也会走失败逻辑,因此在取到空值时需要在失败逻辑中setItem
         BNJS.localStorage.getItem('bnl_flag', function(res){
             // 是否展示过轮播图
             if (res.data == "") {
@@ -50,7 +50,14 @@ let init = {
                     
         }, function(res){
 
-             BNJS.ui.toast.show(JSON.stringify(res));
+             // add for bug 1581
+             BNJS.localStorage.setItem('bnl_flag', 'ok', function() {
+                // 轮播
+                let mySwiper = new Swiper('.swiper-container', {
+                    loop: true
+                });
+
+             });
            
         }, '2.7');
 

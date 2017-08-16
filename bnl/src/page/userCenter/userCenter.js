@@ -124,7 +124,7 @@ util.ready(function() {
     // liuboying add for bug 1553
     BNJS.page.onBtnBackClick({
         callback: function () {
-            BNJS.page.start('BaiduNuomiMerchant://component?compid=bnl&comppage=unionCenter', {}); 
+            BNJS.page.start('BaiduNuomiMerchant://component?compid=bnl&comppage=unionCenter', {}, 1); 
         }
     });
 

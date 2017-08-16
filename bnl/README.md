@@ -17,6 +17,17 @@ npm run build（npm run build:pro）
 # build for qa and generate a zip package
 npm run build:qa
 
+windows启动该项目需将package.json中export改为set
+本地开发运行npm run dev,同时将src/config/api.js设置为
+if (__DEV__) {
+    server = location.origin + '/mock/';
+}
+-----------------------------------------------------
+与RD联调运行npm run dev,同时将src/config/api.js设置为
+if (__DEV__) {
+    server = location.origin + '/api/';
+}
+同时
 ```
 npm install @nfe/DeferredBNJS --registry=http://nfe.baidu.com:8881 --save
 

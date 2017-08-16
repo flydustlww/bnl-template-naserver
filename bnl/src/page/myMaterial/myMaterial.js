@@ -138,11 +138,9 @@ let bindButton = {
                         },
                         res: res,
                         onClickOk: function () {
-                            // window.location.href = 'band://web?type=materials_binding&deal_id=' + this.res.merchant_id + '&deal_name=' + this.res.alliance_name + '&deal_statu=在线&merchant_id=' + this.res.merchant_id + '&product=5';
                             _this.bindMaterial(res.merchant_id);
                         },
                         onClickCancel: function () {
-                            // window.location.href = 'band://web?type=query_store&url=' + window.location.protocol + '//' + window.location.host + '/naserver/user/mendiansearch?uid=';
                             BNJS.page.start("BaiduNuomiMerchant://component?compid=bnl&comppage=mendianSearch", {}, 1);
                         }
                     });                    
@@ -153,58 +151,61 @@ let bindButton = {
         });
     },
     bindMaterial:function(merchant_id){
+
         var _this = this;
         util.ready(function() {
             BNJS.hardware.scanQRCode(function(res) {
-                let url = res.data.content;
-                let result = util.parseQueryString(url);
-                let code_id = result.id;
-                httpBnjs.post({
-                    url: api.bindcode,
-                    params: {
-                        code_id: code_id,
-                        product: 5,
-                        merchant_id: merchant_id                      
-                    }
-                })                
-                .then(function(resp){
-                    if (resp.errno === 2002) {
-                        $.dialog({
-                            showTitle : false,
-                            contentHtml : resp.msg,
-                            buttonClass : {
-                                ok : 'dialog-font-color-pink'
-                            },
-                            onClickOk: function() {
-                                BNJS.page.start("BaiduNuomiMerchant://component?url=" + merchantlogin, {}, 1);
-                            }
-                        });
-                    } else  if (resp.errno === 0){
-                        $.dialog({
-                            showTitle : false,
-                            contentHtml : "认领成功",
-                            buttonClass : {
-                                ok : 'dialog-font-color-pink'
-                            },
-                            onClickOk: function() {
-                                BNJS.page.start("BaiduNuomiMerchant://component?compid=bnl&comppage=myMaterial", {}, 1);
-                            }
-                        });
-                    } else {
-                        $.dialog({
-                            showTitle : false,
-                            contentHtml : resp.msg,
-                            buttonClass : {
-                                ok : 'dialog-font-color-pink'
-                            },
-                            onClickOk: function() {
-                                BNJS.page.start("BaiduNuomiMerchant://component?compid=bnl&comppage=myMaterial", {}, 1);
-                            }
-                        });                        
-                    }
-                }, function(res) {
+                // 扫码成功再请求bindcode fixbug 1570
+                    let url = res.data.content;
+                    let result = util.parseQueryString(url);
+                    let code_id = result.id;
+                    httpBnjs.post({
+                        url: api.bindcode,
+                        params: {
+                            code_id: code_id,
+                            product: 5,
+                            merchant_id: merchant_id                      
+                        }
+                    })                
+                    .then(function(resp){
+                        if (resp.errno === 2002) {
+                            $.dialog({
+                                showTitle : false,
+                                contentHtml : resp.msg,
+                                buttonClass : {
+                                    ok : 'dialog-font-color-pink'
+                                },
+                                onClickOk: function() {
+                                    BNJS.page.start("BaiduNuomiMerchant://component?url=" + merchantlogin, {}, 1);
+                                }
+                            });
+                        } else  if (resp.errno === 0){
+                            $.dialog({
+                                showTitle : false,
+                                contentHtml : "认领成功",
+                                buttonClass : {
+                                    ok : 'dialog-font-color-pink'
+                                },
+                                onClickOk: function() {
+                                    BNJS.page.start("BaiduNuomiMerchant://component?compid=bnl&comppage=myMaterial", {}, 1);
+                                }
+                            });
+                        } else {
+                            $.dialog({
+                                showTitle : false,
+                                contentHtml : resp.msg,
+                                buttonClass : {
+                                    ok : 'dialog-font-color-pink'
+                                },
+                                onClickOk: function() {
+                                    BNJS.page.start("BaiduNuomiMerchant://component?compid=bnl&comppage=myMaterial", {}, 1);
+                                }
+                            });                        
+                        }
+                    }, function(res) {
+                        BNJS.ui.toast.show(res.msg)
+                    });                
                     
-                });                
             })
         })
 
